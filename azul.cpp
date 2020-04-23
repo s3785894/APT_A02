@@ -3,22 +3,24 @@
 #include "Types.h"
 
 int displayMenu();
-void prntCredits();
+void printCredits();
+void newGame();
+void loadGame();
 
 int main(void)
 {
     int mode = displayMenu();
     if (mode == 1)
     {
-        // new game
+        newGame();
     }
     else if (mode == 2)
     {
-        // load game
+        loadGame();
     }
     else if (mode == 3)
     {
-        prntCredits();
+        printCredits();
     }
     else if (mode == 4)
     {
@@ -31,7 +33,7 @@ int displayMenu()
 {
     std::cout << "Welcome to Azul!" << std::endl;
     std::cout << "---------------------" << std::endl;
-    std::cout << "Menu" << std::endl;
+    std::cout << "\nMenu" << std::endl;
     std::cout << "---------" << std::endl;
     std::cout << "1. New Game" << std::endl;
     std::cout << "2. Load Game" << std::endl;
@@ -64,13 +66,33 @@ int displayMenu()
     return input;
 }
 
-void prntCredits(){
+void printCredits()
+{
     std::cout << "Student 1:" << std::endl;
-    std::cout << STUDENT_ONE << std::endl << std::endl;
+    std::cout << "Name: " << STUDENT_ONE_NAME << std::endl;
+    std::cout << "Student ID: " << STUDENT_ONE_ID << std::endl;
+    std::cout << "Email: " << STUDENT_ONE_EMAIL << std::endl
+              << std::endl;
 
     std::cout << "Student 2:" << std::endl;
-    std::cout << STUDENT_TWO << std::endl << std::endl;
+    std::cout << "Name: " << STUDENT_TWO_NAME << std::endl;
+    std::cout << "Student ID: " << STUDENT_TWO_ID << std::endl;
+    std::cout << "Email: " << STUDENT_TWO_EMAIL << std::endl
+              << std::endl;
 
     std::cout << "Student 3:" << std::endl;
-    std::cout << STUDENT_THREE << std::endl << std::endl;
+    std::cout << "Name: " << STUDENT_THREE_NAME << std::endl;
+    std::cout << "Student ID: " << STUDENT_THREE_ID << std::endl;
+    std::cout << "Email: " << STUDENT_THREE_EMAIL << std::endl
+              << std::endl;
+}
+
+void newGame()
+{
+    std::cout << "Functionality not implemented yet." << std::endl;
+}
+
+void loadGame()
+{
+    std::cout << "Functionality not implemented yet." << std::endl;
 }
