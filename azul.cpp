@@ -1,6 +1,9 @@
 #include <iostream>
 
+#include "Types.h"
+
 int displayMenu();
+void prntCredits();
 
 int main(void)
 {
@@ -15,11 +18,12 @@ int main(void)
     }
     else if (mode == 3)
     {
-        // print credits
+        prntCredits();
     }
     else if (mode == 4)
     {
-        // quit
+        std::cout << "Exiting Program!" << std::endl;
+        return EXIT_SUCCESS;
     }
 }
 
@@ -58,4 +62,21 @@ int displayMenu()
     }
 
     return input;
+}
+
+void prntCredits(){
+    std::cout << "Student 1:" << std::endl;
+    std::cout << "Name: " << STUDENT_ONE_NAME << std::endl;
+    std::cout << "Student ID: " << STUDENT_ONE_ID << std::endl;
+    std::cout << "Email: " << STUDENT_ONE_EMAIL << std::endl << std::endl;
+
+    std::cout << "Student 2:" << std::endl;
+    std::cout << "Name: " << STUDENT_TWO_NAME << std::endl;
+    std::cout << "Student ID: " << STUDENT_TWO_ID << std::endl;
+    std::cout << "Email: " << STUDENT_TWO_EMAIL << std::endl << std::endl;
+
+    std::cout << "Student 3:" << std::endl;
+    std::cout << "Name: " << STUDENT_THREE_NAME << std::endl;
+    std::cout << "Student ID: " << STUDENT_THREE_ID << std::endl;
+    std::cout << "Email: " << STUDENT_THREE_EMAIL << std::endl << std::endl;
 }
