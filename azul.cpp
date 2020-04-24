@@ -66,25 +66,15 @@ int displayMenu()
     return input;
 }
 
-void printCredits()
-{
+void printCredits(){
     std::cout << "Student 1:" << std::endl;
-    std::cout << "Name: " << STUDENT_ONE_NAME << std::endl;
-    std::cout << "Student ID: " << STUDENT_ONE_ID << std::endl;
-    std::cout << "Email: " << STUDENT_ONE_EMAIL << std::endl
-              << std::endl;
+    std::cout << STUDENT_ONE << std::endl << std::endl;
 
     std::cout << "Student 2:" << std::endl;
-    std::cout << "Name: " << STUDENT_TWO_NAME << std::endl;
-    std::cout << "Student ID: " << STUDENT_TWO_ID << std::endl;
-    std::cout << "Email: " << STUDENT_TWO_EMAIL << std::endl
-              << std::endl;
+    std::cout << STUDENT_TWO << std::endl << std::endl;
 
     std::cout << "Student 3:" << std::endl;
-    std::cout << "Name: " << STUDENT_THREE_NAME << std::endl;
-    std::cout << "Student ID: " << STUDENT_THREE_ID << std::endl;
-    std::cout << "Email: " << STUDENT_THREE_EMAIL << std::endl
-              << std::endl;
+    std::cout << STUDENT_THREE << std::endl << std::endl;
 }
 
 void newGame()
