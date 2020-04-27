@@ -20,9 +20,13 @@
 
 #define LINE_DIVIDER    std::cout << "---------------------------------" << std::endl;
 
+// Game Parameters
 #define NUM_FACTORIES 5
 #define FACTORY_SIZE 4
 #define MOSAIC_DIM 5
+#define MAX_TILES 100
+
+
 
 
 #define EXIT_SUCESS 0
