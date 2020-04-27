@@ -4,9 +4,7 @@
 #include <vector>
 #include <string>
 #include "Player.h"
-
-#define NUM_FACTORIES 5
-#define FACTORY_SIZE 4
+#include "Types.h"
 
 class Table
 {

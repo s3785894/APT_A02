@@ -1,7 +1,7 @@
 #ifndef BOARD_H
 #define BOARD_H
 
-#define MOSAIC_DIM 5
+#include "Types.h"
 
 typedef char Mosaic[MOSAIC_DIM][MOSAIC_DIM];
 

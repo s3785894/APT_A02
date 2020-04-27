@@ -20,6 +20,10 @@
 
 #define LINE_DIVIDER    std::cout << "---------------------------------" << std::endl;
 
+#define NUM_FACTORIES 5
+#define FACTORY_SIZE 4
+#define MOSAIC_DIM 5
+
 
 #define EXIT_SUCESS 0
 
