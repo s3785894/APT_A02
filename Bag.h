@@ -3,7 +3,6 @@
 
 #include <vector>
 #include <string>
-#include "Tile.h"
 #include "Types.h"
 
 class Bag
@@ -16,15 +15,18 @@ public:
     void refillBag();
 
     //Grab a random tile from our bag
-    Tile grabTile();
+    char grabTile();
+
+    //For testing, not sure if would ever be needed in the actual game
+    void viewContents();
 
 
 private:
-    //Fixed size 1D Array for the tiles stored inside the bag
-    Tile bag[MAX_TILES];
+    //Dynamically sized vector for tiles in play
+    std::vector<char> bag;
 
     //Dynamically sized vector for discarded tiles ("Box Lid")
-    std::vector<Tile> discardedTiles;
+    std::vector<char> discardedTiles;
 
     
 };

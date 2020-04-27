@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "Types.h"
+#include "Bag.h"
 
 int displayMenu();
 void printCredits();
@@ -33,7 +34,8 @@ int main(void)
             exit = true;
         }
     }
-return EXIT_SUCCESS;
+
+    return EXIT_SUCCESS;
 }
 
 int displayMenu()
