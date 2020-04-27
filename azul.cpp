@@ -9,32 +9,39 @@ void loadGame();
 
 int main(void)
 {
-    int mode = displayMenu();
-    if (mode == 1)
-    {
-        newGame();
+
+    bool exit = false;
+    
+    while(!exit){
+        int mode = displayMenu();
+
+        if (mode == 1)
+        {
+            newGame();
+        }
+        else if (mode == 2)
+        {
+            loadGame();
+        }
+        else if (mode == 3)
+        {
+            printCredits();
+        }
+        else if (mode == 4)
+        {
+            std::cout << "Exiting Program!" << std::endl;
+            exit = true;
+        }
     }
-    else if (mode == 2)
-    {
-        loadGame();
-    }
-    else if (mode == 3)
-    {
-        printCredits();
-    }
-    else if (mode == 4)
-    {
-        std::cout << "Exiting Program!" << std::endl;
-        return EXIT_SUCCESS;
-    }
+return EXIT_SUCCESS;
 }
 
 int displayMenu()
 {
     std::cout << "Welcome to Azul!" << std::endl;
-    std::cout << "---------------------" << std::endl;
+    LINE_DIVIDER
     std::cout << "\nMenu" << std::endl;
-    std::cout << "---------" << std::endl;
+    LINE_DIVIDER
     std::cout << "1. New Game" << std::endl;
     std::cout << "2. Load Game" << std::endl;
     std::cout << "3. Credits (Show student information)" << std::endl;
@@ -67,6 +74,9 @@ int displayMenu()
 }
 
 void printCredits(){
+    
+    std::cout << "CREDITS: " << std::endl;
+    LINE_DIVIDER
     std::cout << "Student 1:" << std::endl;
     std::cout << STUDENT_ONE << std::endl << std::endl;
 
@@ -74,7 +84,10 @@ void printCredits(){
     std::cout << STUDENT_TWO << std::endl << std::endl;
 
     std::cout << "Student 3:" << std::endl;
-    std::cout << STUDENT_THREE << std::endl << std::endl;
+    std::cout << STUDENT_THREE << std::endl;
+    LINE_DIVIDER 
+
+    std::cout << std::endl;
 }
 
 void newGame()
