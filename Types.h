@@ -25,9 +25,7 @@
 #define FACTORY_SIZE 4
 #define MOSAIC_DIM 5
 #define MAX_TILES 100
-
-
-
+#define NUM_COLOURS 5
 
 #define EXIT_SUCESS 0
 

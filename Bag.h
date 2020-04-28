@@ -2,6 +2,7 @@
 #define BAG_H
 
 #include <vector>
+#include <algorithm>
 #include <string>
 #include "Types.h"
 
@@ -11,10 +12,13 @@ public:
     Bag();
     ~Bag();
 
-    //Refill the bag from the discardedTiles vector, used when not enough tiles left to fill all factories
-    void refillBag();
+    //Fill the bag
+    void fillBag();
 
-    //Grab a random tile from our bag
+    //Shuffle the bag randomly 
+    void shuffleBag();
+
+    //Grab a tile from our bag
     char grabTile();
 
     //For testing, not sure if would ever be needed in the actual game
@@ -28,6 +32,7 @@ private:
     //Dynamically sized vector for discarded tiles ("Box Lid")
     std::vector<char> discardedTiles;
 
+    const char tileColours[NUM_COLOURS] = {'R', 'Y', 'B', 'L', 'U'};
     
 };
 
