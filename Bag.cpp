@@ -17,6 +17,13 @@ void Bag::viewContents(){
 void Bag::fillBag(){
     //Fill the bag with our tiles, number of tiles per colour is determined by the max amount of tiles / the number of colours (even split)
     for(int i = 0; i < NUM_COLOURS; i++){
+
+            /*
+            *   The for loop will loop as many times as there are different tiles
+            *   
+            *   The syntax for insert() is (position, amount, value)
+            *   So what we have is (at end of our vector, insert an amount of tiles based on the calculation (20), insert the char at the index of the array that holds our possible tile colours)
+            */
             bag.insert(bag.end(), (MAX_TILES / NUM_COLOURS), tileColours[i]);
     }
 
@@ -32,10 +39,6 @@ void Bag::shuffleBag(){
     //Loops through each element of the vector
 	for (int i = 0; i < size - 1; i++)
 	{
-		// generate a random number j such that i <= j < n and
-		// swap the element present at index j with the element 
-		// present at current index i
-
         //Generate a random number, j, in the range of our vector size
 		int j = i + rand() % (size - i);
 

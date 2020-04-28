@@ -32,6 +32,7 @@ private:
     //Dynamically sized vector for discarded tiles ("Box Lid")
     std::vector<char> discardedTiles;
 
+    //1D array of chars, indicating our tiles
     const char tileColours[NUM_COLOURS] = {'R', 'Y', 'B', 'L', 'U'};
     
 };
