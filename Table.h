@@ -13,8 +13,8 @@ public:
     Table();
     ~Table();
 
-    // Grab tiles from chosen factory 
-    void grabTiles(int factory, char tileColour, Player &player);
+    // Grab tiles from chosen factory (renamed to avoid confusion with getTiles method in bag)
+    void takeTiles(int factory, char tileColour, Player &player);
 
     // Initialises factories at start of each round
     void initialiseRound();
@@ -31,6 +31,9 @@ private:
 
     // Stores standard factories
     Factories factories;
+
+    // Our bag of tiles is create through the table, this is because table is the only class that ever interacts with our bag of tiles
+    Bag* bag;
 };
 
 #endif
