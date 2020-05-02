@@ -13,7 +13,7 @@ public:
     // initialises new game
     void playGame();
     // loads new game from file
-    //void playGame(std::ifstream &fileInput);
+    void playGame(std::ifstream &fileInput);
 
 private:
     Player *player1;

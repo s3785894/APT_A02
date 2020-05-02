@@ -12,7 +12,7 @@ std::string Player::getName(){
     return name;
 }
 
-int getScore(){
+int Player::getScore(){
     //score = board->calculateScore;
     //return score;
 }

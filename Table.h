@@ -22,8 +22,8 @@ public:
     // Checks if any tiles are left in factories (to determine end of round)
     bool tilesLeft();
 
-    // Returns contents of factory as formatted string
-    std::string printFactoryContents();
+    // Prints contents of factory
+    void printFactoryContents();
 
 private:
     // Stores tiles in the 'table' centre. Dynamically sized as tiles will be continually added throughout the game

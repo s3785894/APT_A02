@@ -20,7 +20,7 @@ void Table::initialiseRound() {
     }*/
 }
 
-bool tilesLeft(){
+bool Table::tilesLeft(){
     bool tilesLeft;
 
     /*
@@ -34,6 +34,6 @@ bool tilesLeft(){
     return tilesLeft;
 }
 
-std::string printFactoryContents(){
+void Table::printFactoryContents(){
 
 }

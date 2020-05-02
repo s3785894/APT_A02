@@ -12,7 +12,9 @@ public:
     // insert collection of tiles into pattern line
     void placeInPatternLine(int patternLine, char tileType, int tileCount);
 
-    // move from pattern lines to mosaic
+    void placeInFloor(char tileType, int tileCount);
+
+    // Move from pattern lines to mosaic
     void patternLineToMosaic();
 
 private:
