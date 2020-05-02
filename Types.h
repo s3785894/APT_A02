@@ -29,5 +29,8 @@
 
 #define EXIT_SUCESS 0
 
+typedef char Mosaic[MOSAIC_DIM][MOSAIC_DIM];
+typedef char Factories[NUM_FACTORIES][FACTORY_SIZE];
+
 
 #endif 

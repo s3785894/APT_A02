@@ -24,6 +24,8 @@ public:
     //For testing, not sure if would ever be needed in the actual game
     void viewContents();
 
+    int numTiles();
+
 
 private:
     //Dynamically sized vector for tiles in play

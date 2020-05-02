@@ -3,8 +3,6 @@
 
 #include "Types.h"
 
-typedef char Mosaic[MOSAIC_DIM][MOSAIC_DIM];
-
 class Board
 {
 public:
@@ -13,6 +11,7 @@ public:
 
     // insert collection of tiles into pattern line
     void placeInPatternLine(int patternLine, char tileType, int tileCount);
+
     // move from pattern lines to mosaic
     void patternLineToMosaic();
 

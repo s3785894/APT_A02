@@ -57,3 +57,7 @@ char Bag::grabTile(){
     //Return our tile
     return tile;
 }
+
+int Bag::numTiles(){
+    return bag.size();
+}

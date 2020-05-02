@@ -5,6 +5,7 @@
 #include <string>
 #include "Player.h"
 #include "Types.h"
+#include "Bag.h"
 
 class Table
 {
@@ -12,20 +13,24 @@ public:
     Table();
     ~Table();
 
-    // method used by players to draw from factory
-    void draw(int factory, char tileType, Player &player);
-    // initialises factories at start of each round
+    // Grab tiles from chosen factory 
+    void grabTiles(int factory, char tileColour, Player &player);
+
+    // Initialises factories at start of each round
     void initialiseRound();
-    // checks if any tiles are left in factories (to determine end of round)
+
+    // Checks if any tiles are left in factories (to determine end of round)
     bool tilesLeft();
-    // returns contents of factory as formatted string
+
+    // Returns contents of factory as formatted string
     std::string printFactoryContents();
 
 private:
-    // stores tiles of factory zero (which can contain greater than four tiles)
-    std::vector<char> factory_zero;
-    // stores standard factories
-    char factories[NUM_FACTORIES][FACTORY_SIZE];
+    // Stores tiles in the 'table' centre. Dynamically sized as tiles will be continually added throughout the game
+    std::vector<char> tableCentre;
+
+    // Stores standard factories
+    Factories factories;
 };
 
 #endif
