@@ -31,6 +31,21 @@ void Bag::fillBag(){
     shuffleBag();
 }
 
+void Bag::refillBag(){
+    int size = discardedTiles.size();
+
+    // Iterate through for the length of the Box-Lid, inserting our tiles from the Box-Lid into the i-th index of the bag, starting from the beginning. 
+    for (int i = 0; i < size; i++){
+        bag.insert(bag.begin() + i, discardedTiles[i]);
+    }
+
+    // Clear our Box-Lid
+    discardedTiles.clear();
+
+    // Shuffle the bag
+    shuffleBag();
+}
+
 void Bag::shuffleBag(){
 	int size = bag.size();
     //Set the seed based on the current system time to ensure a different seed every tme
@@ -58,6 +73,14 @@ char Bag::grabTile(){
     return tile;
 }
 
-int Bag::numTiles(){
-    return bag.size();
+bool Bag::isEmpty(){
+    bool isEmpty;
+
+    if (bag.size() > 0){
+        isEmpty = false;
+    } else {
+        isEmpty = true;
+    }
+
+    return isEmpty;
 }
