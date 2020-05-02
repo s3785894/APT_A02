@@ -2,6 +2,7 @@
 
 #include "Types.h"
 #include "Bag.h"
+#include "Game.h"
 
 int displayMenu();
 void printCredits();
@@ -94,7 +95,16 @@ void printCredits(){
 
 void newGame()
 {
-    std::cout << "Functionality not implemented yet." << std::endl;
+        std::string playerOneName;
+        std::string playerTwoName;
+    
+        std::cout << "Enter name for Player 1: " << std::endl;
+        std::cin >> playerOneName;
+
+        std::cout << "Enter name for Player 2: " << std::endl;
+        std::cin >> playerTwoName;
+
+        Game* game = new Game(playerOneName, playerTwoName);
 }
 
 void loadGame()
