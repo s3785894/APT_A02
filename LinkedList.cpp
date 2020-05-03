@@ -1,118 +1,101 @@
 #include "LinkedList.h"
-
 #include <exception>
 #include <iostream>
 #include <fstream>
 
-List::List() 
-{
-   list = new LinkedList();
-   list->head = nullptr;
-   list->tail = nullptr;
+    Node::Node(TileCode tile, Node* next) {
+    if (tile == R) {
+      this->tileValue = 'R';
+   } else if (tile == Y) {
+      this->tileValue = 'Y';
+   } else if (tile == B) {
+      this->tileValue = 'B';
+   } else if (tile == L) {
+      this->tileValue = 'L';
+   } else if (tile == U) {
+      this->tileValue = 'U';
+   }            
+   this->next=next;
 }
-
-List::List(List& other) 
-{
-}
-
-List::~List() {
-   clear();
-}
-
-// Starting from the front (head), iterate through the list and count the amount of elements. Stop when our current node is null (meaning we have reached the end)
-unsigned int List::size() {
-   Node* current = list->head;
-   int counter = 0;
-   while (current != nullptr) {
-      ++counter;
-      current = current->next;
+   LinkedList::LinkedList(){
+       head=nullptr;
+       tail=nullptr;
+       listSize=0;
    }
-   return counter;
-}
-
-char List::get(unsigned int index) {
-   Node* current = list->head;
-
-   if (index < size()) {
-      int counter = 0;
-      while (counter < index) {
-         ++counter;
-         current = current->next;
-      }
-   } else {
-      throw std::out_of_range("Index too big");
+   LinkedList::~LinkedList(){
+       clear();
+   }
+   unsigned int LinkedList::size(){
+       return listSize;
    }
 
-   return current->value;
-}
-
-
-void List::addTile(char tile) {
-   Node* toAdd = new Node();
-   toAdd->value = tile;
-   toAdd->next = nullptr;
-
-   if (list->head == nullptr) {
-      list->head = toAdd;
-   } else {
-      Node* current = list->head;
-      while (current->next != nullptr) {
-         current = current->next;
-      }
-      current->next = toAdd;
-   }
-}
-
-// This assumes the index is not at the front or back - can add checking for this in future
-void List::addTile(char tile, unsigned int index) {
-   Node* toAdd = new Node();
-   Node* current = list->head;
-
-   toAdd->value = tile;
-
-    if (index < size()) {
-      int counter = 0;
-        while (counter < index) {
-         ++counter;
-         current = current->next;
-      }
-   } else {
-      throw std::out_of_range("Index too big");
+   void LinkedList::clear(){
+       while (head != nullptr) {
+        removeFront();
+        }
    }
 
-    /*
-    * Insert our node at the given index with the following steps:
-    * 1. Make our previous node equal to the current's previous
-    * 2. Make our next node equal to current
-    * 3. Make current previous equal to our new node
-    */
+    void LinkedList::removeBack(){
+        if(tail!=nullptr){
+            Node* current = head;
+            while (current->next->next !=nullptr) {
+                current = current->next;
+            }
+            delete current->next;
+            current->next=nullptr;
+            listSize--;
+        } 
+    }
+    void LinkedList::removeFront(){
+            if(head!=nullptr){
+                Node* current = head;
+                Node* nextNode = current->next;
+                head=nextNode;
+                delete current;
+                listSize--;
+        } 
+    }
 
-    toAdd->prev = current->prev;
-    toAdd->next = current;
-    current->prev = toAdd;
-}
-
-void List::removeTile(unsigned int index) {
-
-}
-
-void List::removeTileFront() {
-   if (list->head != nullptr) {
-      Node* toDelete = list->head;
-      list->head = list->head->next;
-      delete toDelete;
-   } else {
-      throw std::logic_error("Deleting on empty list");
+    void LinkedList::printList() const{
+        Node* current = head;
+        while (current != nullptr) {
+            std::cout<<current->tileValue<<" ";
+            current = current->next;
+        }
+        std::cout<<std::endl;
    }
-}
-
-// TO-DO
-void List::removeTileBack() {
-
-}
-
-void List::clear() {
-   while (list->head != nullptr) {
-      removeTileFront();
+   char LinkedList::get(unsigned int i){
+       Node* current =head;
+       for(int j = 0; j<i;++j){
+           current=current->next;
+       }
+       return current->tileValue;
    }
-}
+
+   void LinkedList::addFront(TileCode tile){
+       Node* node = new Node(tile,nullptr);
+       if (head==nullptr){
+           head=node;
+           tail=node;
+       }else{
+           node->next=head;
+           head=node;
+       }
+        listSize++;
+
+
+   }
+   void LinkedList::addBack(TileCode tile){
+        Node* node = new Node(tile,nullptr);
+       if (head==nullptr){
+           head=node;
+           tail=node;
+
+       }else{
+           tail->next=node;
+           tail=node;
+       }
+        listSize++;
+
+
+   }

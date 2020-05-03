@@ -1,56 +1,57 @@
-#ifndef LIST_H
-#define LIST_H 
+#ifndef LINKED_LIST_H
+#define LINKED_LIST_H
 
-#include <istream>
-#include <string>
-#include <vector>
+//#include "Tile.h"
 
+ enum TileCode{
+    R,
+    Y, 
+    B, 
+    L, 
+    U
+};
 class Node {
 public:
-   char value; //Tile value
-   Node* next; //Pointer to next node
-   Node* prev; //Pointer to previous node
-};
+   //Node(Tile* tile, Node* next);
+   Node(TileCode tile, Node* next);
 
+   char getTile();
+   char tileValue;
+   Node* next;
+};	
 class LinkedList {
 public:
-   Node* head;
-   Node* tail;
-};
-
-// Represents a list of Tiles. Terminology is purposely kept generic so that a list can be used in multiple places if required
-class List {
-public:
-   List();
-   List(List& other);
-   ~List();
-
-// Return the current size of the List
+   LinkedList();
+   ~LinkedList();
+   
+   //return list size
    unsigned int size();
 
-// Get a tile at the given index (likely to not be used - can possible remove in future)
-   char get(unsigned int index);
-
-// Add a tile to the back of the list
-   void addTile(char tile);
-
-// Add a tile in the given spot (likely to not be used - can possibly remove in future)
-   void addTile(char tile, unsigned int index);
-
-// Remove a tile in the given spot (likely to not be used - can possibly remove in future)
-   void removeTile(unsigned int index);
-
-// Remove a tile from the front of the list
-   void removeTileFront();
-
-// Remove a tile from the back of the list
-   void removeTileBack();
-
-// Remove's all tiles from the list
+   //remove all nodes from list
    void clear();
 
+   //get string representation of tile at given index
+   char get(unsigned int i);
+
+   //add tile to front of the list
+   void addFront(TileCode tile);
+
+   //add tile to back of the list
+   void addBack(TileCode tile);
+
+   //remove tile from back of the list
+   void removeBack();
+   //remove tile from front of the list
+   void removeFront();
+
+   //print all nodes in the list
+   void printList() const;
+
 private:
-   LinkedList* list;
+   Node* head;
+   Node* tail;
+   int listSize;
+
 };
 
-#endif
+#endif // LINKED_LIST_H
