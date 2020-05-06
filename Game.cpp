@@ -1,4 +1,5 @@
 #include "Game.h"
+#include <sstream>
 
 Game::Game(std::string playerOneName, std::string playerTwoName)
 {
@@ -16,6 +17,10 @@ Game::Game(std::ifstream &fileInput)
 
 Game::~Game()
 {
+    delete this->player1;
+    delete this->player2;
+    delete this->table;
+    delete this->current;
 }
 
 void Game::playGame()
@@ -38,14 +43,16 @@ void Game::playRound()
     std::cout << "====== Start Round ======" << std::endl;
 
     // Checks if there is no "current player" (i.e. this is a new game or round) and automatically assigns the player's turn
+    // This condition is not met for a turn of a loaded round - therefore, it allows for rounds to continue from their last position
     if (this->current == nullptr)
     {
-        this->current = player1;
+        this->current = this->player1;
     }
 
     // Loops turns within rounds (and turns) until round end condition is met
     while (table->tilesLeft())
     {
+        std::cout << "Turn for player: " << this->current->getName() << std::endl;
         std::string turnInput;
         bool validInput = false;
         while (!validInput)
@@ -70,10 +77,16 @@ void Game::playRound()
                 std::cout << "Invalid input." << std::endl;
             }
         }
-        // switch current player to other player
+        // Switch current player to the opposite player in the game
+        if (this->current == this->player1)
+        {
+            this->current = this->player2;
+        }
+        else if (this->current == this->player2)
+        {
+            this->current = this->player1;
+        }
     }
-
-    // Execute scoring part of round
 
     std::cout << "====== End Round ======" << std::endl;
 }
@@ -83,7 +96,7 @@ void Game::checkEnd()
     // Check the players board for a full horizontal row (maybe call on a function in player that does this)
 
     // if(horizontal row complete){
-    //     gameEnd = true;
+    //     this->gameEnd = true;
     // }
 }
 

@@ -3,10 +3,20 @@
 Player::Player(std::string name)
 {
     this->name = name;
+    this->board = new Board();
+    this->score = 0;
+}
+
+Player::Player(std::string name, Board *board, int score)
+{
+    this->name = name;
+    this->board = board;
+    this->score = score;
 }
 
 Player::~Player()
 {
+    delete board;
 }
 
 std::string Player::getName()
@@ -16,8 +26,12 @@ std::string Player::getName()
 
 int Player::getScore()
 {
-    //score = board->calculateScore;
-    //return score;
+    return score;
+}
+
+void Player::setScore(int score)
+{
+    this->score = score;
 }
 
 Board Player::getBoard()

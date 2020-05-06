@@ -8,8 +8,11 @@
 class Game
 {
 public:
+    // Constructor for new game
     Game(std::string player1, std::string player2);
+    // Constructor for loaded game (takes file input as parameter)
     Game(std::ifstream &fileInput);
+    // Deconstructor
     ~Game();
 
     // Initialises new game
@@ -25,12 +28,17 @@ public:
     void saveGame();
 
 private:
+    // Generic player pointers
     Player *player1;
     Player *player2;
+    // Pointer used to track current player
     Player *current;
+    // Table ADT
     Table *table;
-
+    // Tracks current state of game - true if game has ended
     bool gameEnd;
+
+    // Also need to add bag / lid
 };
 
 #endif //GAME_H

@@ -10,7 +10,11 @@
 class Table
 {
 public:
+    // Constructor for new gamees
     Table();
+    // Constructor for loaded games
+    Table(std::vector<char> tableCentre, Factories factories, Bag *bag);
+    // Deconstructor
     ~Table();
 
     // Grab tiles from chosen factory (renamed to avoid confusion with getTiles method in bag)
@@ -33,7 +37,7 @@ private:
     Factories factories;
 
     // Our bag of tiles is create through the table, this is because table is the only class that ever interacts with our bag of tiles
-    Bag* bag;
+    Bag *bag;
 };
 
 #endif
