@@ -1,4 +1,6 @@
 #include <iostream>
+#include <fstream>
+#include <exception>
 
 #include "Types.h"
 #include "Bag.h"
@@ -13,8 +15,9 @@ int main(void)
 {
 
     bool exit = false;
-    
-    while(!exit){
+
+    while (!exit)
+    {
         int mode = displayMenu();
 
         if (mode == 1)
@@ -76,38 +79,59 @@ int displayMenu()
     return input;
 }
 
-void printCredits(){
-    
+void printCredits()
+{
+
     std::cout << "CREDITS: " << std::endl;
     LINE_DIVIDER
     std::cout << "Student 1:" << std::endl;
-    std::cout << STUDENT_ONE << std::endl << std::endl;
+    std::cout << STUDENT_ONE << std::endl
+              << std::endl;
 
     std::cout << "Student 2:" << std::endl;
-    std::cout << STUDENT_TWO << std::endl << std::endl;
+    std::cout << STUDENT_TWO << std::endl
+              << std::endl;
 
     std::cout << "Student 3:" << std::endl;
     std::cout << STUDENT_THREE << std::endl;
-    LINE_DIVIDER 
+    LINE_DIVIDER
 
     std::cout << std::endl;
 }
 
 void newGame()
 {
-        std::string playerOneName;
-        std::string playerTwoName;
-    
-        std::cout << "Enter name for Player 1: " << std::endl;
-        std::cin >> playerOneName;
+    std::string playerOneName;
+    std::string playerTwoName;
 
-        std::cout << "Enter name for Player 2: " << std::endl;
-        std::cin >> playerTwoName;
+    std::cout << "Enter name for Player 1: " << std::endl;
+    std::cin >> playerOneName;
 
-        Game* game = new Game(playerOneName, playerTwoName);
+    std::cout << "Enter name for Player 2: " << std::endl;
+    std::cin >> playerTwoName;
+
+    Game *game = new Game(playerOneName, playerTwoName);
+    game->playGame();
 }
 
 void loadGame()
 {
-    std::cout << "Functionality not implemented yet." << std::endl;
+    // TODO: improve filename input validation, fix errors with throwing file stream exception, fix game constructor
+    std::cout << "Enter the filename from which to load the game" << std::endl;
+    try
+    {
+        std::string filename;
+        std::cin >> filename;
+        std::ifstream fileInput(filename);
+        if (!fileInput.good())
+        {
+            //throw std::ios_base::failure;
+        }
+        Game *game = new Game(fileInput);
+        game->playGame();
+    }
+    catch (std::ios_base::failure e)
+    {
+        std::cout << "Error when accessing file - please ensure file exists before attempting to load it.";
+    }
 }

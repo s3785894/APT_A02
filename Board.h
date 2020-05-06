@@ -17,6 +17,8 @@ public:
     // Move from pattern lines to mosaic
     void patternLineToMosaic();
 
+    Mosaic getMosaic();
+
 private:
     Mosaic mosaic;
     // pattern lines

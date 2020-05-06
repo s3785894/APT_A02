@@ -11,8 +11,9 @@ public:
     ~Player();
 
     std::string getName();
-    
     int getScore();
+    Board getBoard();
+    std::string toString();
 
 private:
     Board *board;
