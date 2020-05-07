@@ -26,10 +26,13 @@ public:
     // Prints mosaic
     void prntMosaic();
 
+    // Prints the whole player board
+    void prntBoard();
+
 private:
     Mosaic mosaic;
-    // pattern lines
-    // tile line
+
+    Mosaic patternLines;
 };
 
 #endif //BOARD_H

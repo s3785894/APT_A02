@@ -34,10 +34,11 @@ void Player::setScore(int score)
     this->score = score;
 }
 
-Board Player::getBoard()
+void Player::prntBoard()
 {
-    // Since Board is stored as a pointer, maybe we should have the function return a pointer?
-    return *(this->board);
+    std::cout << "Board for Player: " << name << std::endl;
+    board->prntBoard();
+    std::cout << std::endl;
 }
 
 std::string Player::toString()

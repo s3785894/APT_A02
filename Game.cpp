@@ -3,10 +3,11 @@
 
 Game::Game(std::string playerOneName, std::string playerTwoName)
 {
-    player1 = std::unique_ptr<Player>(new Player(playerOneName));
-    player2 = std::unique_ptr<Player>(new Player(playerTwoName));
+    player1 = std::shared_ptr<Player>(new Player(playerOneName));
+    player2 = std::shared_ptr<Player>(new Player(playerTwoName));
 
-    this->table = new Table();
+    table = std::shared_ptr<Table>(new Table());
+
     this->current = nullptr;
     this->gameEnd = false;
 }
@@ -18,7 +19,6 @@ Game::Game(std::ifstream &fileInput)
 
 Game::~Game()
 {
-    delete this->table;
     //delete this->current; -- Throws an error because ptr value is null
 }
 
@@ -29,6 +29,7 @@ void Game::playGame()
 
     while (!gameEnd)
     {
+        initialiseRound();
         playRound();
         checkEnd();
 
@@ -39,25 +40,36 @@ void Game::playGame()
     // Finish last scoring and then determine winner
 }
 
+void Game::initialiseRound(){
+    table->initialiseRound();
+}
+
 void Game::playRound()
 {
     std::cout << "====== Start Round ======" << std::endl;
+    std::cout << std::endl;
     
-
     // Checks if there is no "current player" (i.e. this is a new game or round) and automatically assigns the player's turn
     // This condition is not met for a turn of a loaded round - therefore, it allows for rounds to continue from their last position
+    // By default, player 1 is assigned to be the first player for the game
     if (this->current == nullptr)
     {
         this->current = player1.get();
     }
 
-    std::cout << this->current->getName() << std::endl;
-/*
     // Loops turns within rounds (and turns) until round end condition is met
-    while (table->tilesLeft())
-    {
-        std::cout << "Turn for player: " << this->current->getName() << std::endl;
-        std::string turnInput;
+    // while (table->tilesLeft())
+    // {
+        std::cout << "TURN FOR PLAYER: " << this->current->getName() << std::endl;
+        std::cout << std::endl;
+
+        table->printFactoryContents();
+
+        current->prntBoard();
+
+
+
+       /* std::string turnInput;
         bool validInput = false;
         while (!validInput)
         {
@@ -80,19 +92,15 @@ void Game::playRound()
             {
                 std::cout << "Invalid input." << std::endl;
             }
-        }
-        // Switch current player to the opposite player in the game
-        if (this->current == this->player1)
-        {
-            this->current = this->player2;
-        }
-        else if (this->current == this->player2)
-        {
-            this->current = this->player1;
-        }
-    }*/
+        }*/
+
+        // The player who takes the first run in the round is decided by who has the first player token, it's not alternating
+
+        // Need to check for frst player token
+    //}
 
     std::cout << "====== End Round ======" << std::endl;
+    std::cout << std::endl;
 }
 
 void Game::checkEnd()

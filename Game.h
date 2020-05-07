@@ -21,6 +21,9 @@ public:
     // Holds the logic for playing a round of the game
     void playRound();
 
+    // Sets up the game for a new round
+    void initialiseRound();
+
     // Check if the game end condition has been met (horizontal line completed)
     void checkEnd();
 
@@ -34,8 +37,10 @@ private:
 
     // Pointer used to track current player
     Player *current;
+
     // Table ADT
-    Table *table;
+    std::shared_ptr<Table> table;
+
     // Tracks current state of game - true if game has ended
     bool gameEnd;
 

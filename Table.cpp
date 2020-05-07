@@ -57,7 +57,7 @@ void Table::initialiseRound()
 
 bool Table::tilesLeft()
 {
-    bool tilesLeft = false;
+    bool tilesLeft = true;
 
     /*
     * if (tableCentre.empty() || (iterate  through factory array and check if tiles are there)) {
@@ -75,11 +75,13 @@ void Table::printFactoryContents()
     std::cout << "Factories:" << std::endl;
 
     // First print our table centre as 'factory 0'
-    std::cout << "0:" << std::endl;
+    std::cout << "0: ";
     for (int i = 0; i < tableCentre.size(); i++)
     {
         std::cout << tableCentre.at(i) << " ";
     }
+
+    std::cout << std::endl;
 
     // Then print our array containing our tile factories
     for (int factory = 0; factory < NUM_FACTORIES; factory++)
@@ -95,4 +97,6 @@ void Table::printFactoryContents()
         // Go to next line after all tiles in a factory are printed
         std::cout << std::endl;
     }
+
+    std::cout << std::endl;
 }

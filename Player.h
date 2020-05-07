@@ -21,7 +21,7 @@ public:
     // Sets new score
     void setScore(int score);
     // Returns player's board
-    Board getBoard();
+    void prntBoard();
     // Converts all attributes to string (for use in saving to file)
     std::string toString();
 
