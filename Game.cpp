@@ -3,8 +3,9 @@
 
 Game::Game(std::string playerOneName, std::string playerTwoName)
 {
-    this->player1 = new Player(playerOneName);
-    this->player2 = new Player(playerTwoName);
+    player1 = std::unique_ptr<Player>(new Player(playerOneName));
+    player2 = std::unique_ptr<Player>(new Player(playerTwoName));
+
     this->table = new Table();
     this->current = nullptr;
     this->gameEnd = false;
@@ -17,10 +18,8 @@ Game::Game(std::ifstream &fileInput)
 
 Game::~Game()
 {
-    delete this->player1;
-    delete this->player2;
     delete this->table;
-    delete this->current;
+    //delete this->current; -- Throws an error because ptr value is null
 }
 
 void Game::playGame()
@@ -32,6 +31,8 @@ void Game::playGame()
     {
         playRound();
         checkEnd();
+
+        gameEnd = true;
     }
 
     // Game over
@@ -41,14 +42,17 @@ void Game::playGame()
 void Game::playRound()
 {
     std::cout << "====== Start Round ======" << std::endl;
+    
 
     // Checks if there is no "current player" (i.e. this is a new game or round) and automatically assigns the player's turn
     // This condition is not met for a turn of a loaded round - therefore, it allows for rounds to continue from their last position
     if (this->current == nullptr)
     {
-        this->current = this->player1;
+        this->current = player1.get();
     }
 
+    std::cout << this->current->getName() << std::endl;
+/*
     // Loops turns within rounds (and turns) until round end condition is met
     while (table->tilesLeft())
     {
@@ -86,7 +90,7 @@ void Game::playRound()
         {
             this->current = this->player1;
         }
-    }
+    }*/
 
     std::cout << "====== End Round ======" << std::endl;
 }

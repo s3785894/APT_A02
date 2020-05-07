@@ -110,7 +110,7 @@ void newGame()
     std::cout << "Enter name for Player 2: " << std::endl;
     std::cin >> playerTwoName;
 
-    Game *game = new Game(playerOneName, playerTwoName);
+    std::unique_ptr<Game> game(new Game(playerOneName, playerTwoName));
     game->playGame();
 }
 
@@ -127,7 +127,8 @@ void loadGame()
         {
             //throw std::ios_base::failure;
         }
-        Game *game = new Game(fileInput);
+
+        std::unique_ptr<Game> game(new Game(fileInput));
         game->playGame();
     }
     catch (std::ios_base::failure e)

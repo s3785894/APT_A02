@@ -29,8 +29,9 @@ public:
 
 private:
     // Generic player pointers
-    Player *player1;
-    Player *player2;
+    std::shared_ptr<Player> player1;
+    std::shared_ptr<Player> player2;
+
     // Pointer used to track current player
     Player *current;
     // Table ADT
