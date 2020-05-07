@@ -2,7 +2,8 @@
 #define BOARD_H
 
 #include "Types.h"
-#include "Player.h"
+
+#include <iostream>
 
 class Board
 {
@@ -18,10 +19,12 @@ public:
     void placeInPatternLine(int patternLine, char tileType, int tileCount);
     // Insert leftover tiles in floor line
     void placeInFloor(char tileType, int tileCount);
+
     // Move from pattern lines to mosaic
-    void patternLineToMosaic(Player &player);
-    // Returns mosaic (for use in printing to console)
-    Mosaic getMosaic();
+    void patternLineToMosaic();
+
+    // Prints mosaic
+    void prntMosaic();
 
 private:
     Mosaic mosaic;

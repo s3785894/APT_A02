@@ -57,7 +57,7 @@ void Table::initialiseRound()
 
 bool Table::tilesLeft()
 {
-    bool tilesLeft;
+    bool tilesLeft = false;
 
     /*
     * if (tableCentre.empty() || (iterate  through factory array and check if tiles are there)) {

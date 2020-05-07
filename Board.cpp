@@ -2,12 +2,16 @@
 
 Board::Board()
 {
-    this->mosaic = new Mosaic();
+
 }
 
 Board::Board(Mosaic mosaic)
 {
-    this->mosaic = mosaic;
+    for(int i = 0; i < MOSAIC_DIM; i++){
+        for(int j = 0; j < MOSAIC_DIM; j++){
+            this->mosaic[i][j] = mosaic[i][j];
+        }
+    }
 }
 
 Board::~Board()
@@ -31,7 +35,7 @@ void Board::placeInPatternLine(int patternLine, char tileType, int tileCount)
     // Endif
 }
 
-void Board::patternLineToMosaic(Player &player)
+void Board::patternLineToMosaic()
 {
     // For all pattern lines (top to bottom, or small to large)
     //     If pattern line is complete
@@ -53,7 +57,12 @@ void Board::placeInFloor(char tileType, int tileCount)
     // Iterate over tile line, adding identical char 'tileType' tileCount times
 }
 
-Mosaic Board::getMosaic()
+void Board::prntMosaic()
 {
-    return this->mosaic;
+    for(int i = 0; i < MOSAIC_DIM; i++){
+        for(int j = 0; j < MOSAIC_DIM; j++){
+            std::cout << mosaic[i][j];
+        }
+        std::cout << std::endl;
+    }
 }

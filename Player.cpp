@@ -43,4 +43,7 @@ Board Player::getBoard()
 std::string Player::toString()
 {
     // gets player info (name, score) and board information for use in saving
+
+    // Placeholder return statement
+    return name;
 }
