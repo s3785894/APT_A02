@@ -30,6 +30,12 @@ public:
     // Saves game at any time
     void saveGame();
 
+    // Validate the input for a player turn, takes out a bulk of code from the round
+    bool validateTurn(int factory, char tile, int patternLine);
+
+    // Logic for moving tiles after player input
+    void playerTurn(int factory, char tile, int patternLine);
+
 private:
     // Generic player pointers
     std::shared_ptr<Player> player1;
@@ -45,6 +51,8 @@ private:
     bool gameEnd;
 
     // Also need to add bag / lid
+
+    const char tileColours[NUM_COLOURS] = {'R', 'Y', 'B', 'L', 'U'};
 };
 
 #endif //GAME_H

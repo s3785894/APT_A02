@@ -152,13 +152,16 @@ void howTo()
         Follow the basic input instructions on screen to begin the game. If at any point you enter an input that is not valid, \n \
         you will simply be asked to try again until you enter a valid input. \n \
         \n \
-        When playing the game, the input for a turn is in the format of [FACTORY] [TILE] [PATTERN LINE]. \n \
+        When playing the game, the input for a turn is in the format of [FACTORY][TILE][PATTERN LINE]. No spaces should be used. \n \
         \n \
         For example, if you want to take all the blue tiles from factory 2, and place them in your 3rd pattern line,\n \
         the input would be: \n \
-        2 B 3 \n \
+        2B3 \n \
         \n \
-        If at any point you would like to save your game, type 'save'\n \
+        If at any point you would like to save your game, type 'save'. This will save the game in it's current state and then\n \
+        continue the current turn\n \
+        \n \
+        To exit the game, type 'exit'. This will exit WITHOUT saving.\n \
         ";
 
     std::cout << string << std::endl;
