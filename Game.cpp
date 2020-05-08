@@ -69,7 +69,7 @@ void Game::playRound()
 
 
 
-       /* std::string turnInput;
+       std::string turnInput;
         bool validInput = false;
         while (!validInput)
         {
@@ -92,7 +92,7 @@ void Game::playRound()
             {
                 std::cout << "Invalid input." << std::endl;
             }
-        }*/
+        }
 
         // The player who takes the first run in the round is decided by who has the first player token, it's not alternating
 
@@ -116,4 +116,6 @@ void Game::saveGame()
 {
     // Needs to get Players, their Boards, Bag, Lid(?), and Table via getters and setters
     // Alternatively, make use of custom toString methods to convert everything to string
+
+    std::cout << "GAME SAVED" << std::endl;
 }

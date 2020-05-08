@@ -10,6 +10,7 @@ int displayMenu();
 void printCredits();
 void newGame();
 void loadGame();
+void howTo();
 
 int main(void)
 {
@@ -34,6 +35,10 @@ int main(void)
         }
         else if (mode == 4)
         {
+            howTo();
+        }
+        else if (mode == 5)
+        {
             std::cout << "Exiting Program!" << std::endl;
             exit = true;
         }
@@ -51,7 +56,8 @@ int displayMenu()
     std::cout << "1. New Game" << std::endl;
     std::cout << "2. Load Game" << std::endl;
     std::cout << "3. Credits (Show student information)" << std::endl;
-    std::cout << "4. Quit" << std::endl;
+    std::cout << "4. How To" << std::endl;
+    std::cout << "5. Quit" << std::endl;
 
     int input = -1;
     bool validInput = false;
@@ -61,7 +67,7 @@ int displayMenu()
         if (std::cin.good())
         {
             std::cin >> input;
-            if (input > 0 && input <= 4)
+            if (input > 0 && input <= 5)
             {
                 validInput = true;
             }
@@ -135,4 +141,26 @@ void loadGame()
     {
         std::cout << "Error when accessing file - please ensure file exists before attempting to load it.";
     }
+}
+
+void howTo()
+{
+    std::string string =
+        "\n \
+        HOW TO: \n \
+        \n \
+        Follow the basic input instructions on screen to begin the game. If at any point you enter an input that is not valid, \n \
+        you will simply be asked to try again until you enter a valid input. \n \
+        \n \
+        When playing the game, the input for a turn is in the format of [FACTORY] [TILE] [PATTERN LINE]. \n \
+        \n \
+        For example, if you want to take all the blue tiles from factory 2, and place them in your 3rd pattern line,\n \
+        the input would be: \n \
+        2 B 3 \n \
+        \n \
+        If at any point you would like to save your game, type 'save'\n \
+        ";
+
+    std::cout << string << std::endl;
+
 }
