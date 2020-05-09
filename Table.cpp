@@ -11,33 +11,41 @@ Table::~Table()
     delete bag;
 }
 
-void Table::takeTiles(int factory, char tileColour, Player &player)
+int Table::takeTiles(int factory, char tileColour)
 {
-    // Should we check to see if the move is valid? Should we delegate that to another function?
-
-    // For factory picked
-    //   Iterate over entire factory
-    //   Log how many times the character showed up
-    //   Set each instance of the character to a filler value, such as null or nullptr
-
     int tileFrequency = 0;
+
+    // If taking from factory 0, iterate through our tableCentre vector
     if (factory == 0)
     {
-        // do it fot the vector
-    }
-    else
-    {
-        for (int i = 0; i < FACTORY_SIZE; i++)
-        {
-            if (this->factories[0][i] == tileColour)
-            {
+        for (std::vector<char>::iterator i = tableCentre.begin() ; i != tableCentre.end(); ++i){
+            // For each tile found matching the chosen colour, increase tile frequency and then erase that tile from the vector
+            if(*i == tileColour){
                 tileFrequency++;
-                // set current position to a filler value to signify none left (e.g. null, nullptr)
+                tableCentre.erase(i);
             }
         }
     }
 
-    // may need to intergrate this with other logic or change return type - it needs to be inserted in specific line on player board
+    // Otherwise, if factory is not 0 we are taking from our 2D array 
+    else
+    {
+        // Iterate through the array
+        for(int i = 0; i < FACTORY_SIZE; i++){
+
+            // For the given factory (which is our row), check if the element at the current position i matches the chosen tile colour
+            // If it does, increase the tile frequency
+            if(factories[factory - 1][i] == tileColour){
+                tileFrequency++;
+            }
+
+            // Since we always remove all tiles from the factory, all of the chosen factories elements will be set to null
+            factories[factory - 1][i] = '\0';
+        }
+    }
+
+    // Return the frequency count back to the game
+    return tileFrequency;
 }
 
 void Table::initialiseRound()

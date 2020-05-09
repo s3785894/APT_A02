@@ -52,9 +52,9 @@ void Game::playRound()
     // Checks if there is no "current player" (i.e. this is a new game or round) and automatically assigns the player's turn
     // This condition is not met for a turn of a loaded round - therefore, it allows for rounds to continue from their last position
     // By default, player 1 is assigned to be the first player for the game
-    if (this->current == nullptr)
+    if (current == nullptr)
     {
-        this->current = player1.get();
+        current = player1.get();
     }
 
     // User input variables
@@ -65,7 +65,7 @@ void Game::playRound()
     // Loops turns within rounds (and turns) until round end condition is met
     // while (table->tilesLeft())
     // {
-        std::cout << "TURN FOR PLAYER: " << this->current->getName() << std::endl;
+        std::cout << "TURN FOR PLAYER: " << current->getName() << std::endl;
         std::cout << std::endl;
 
         table->printFactoryContents();
@@ -85,7 +85,7 @@ void Game::playRound()
                 // Save the game, then continue the turn
                 if (turnInput == "save")
                 {
-                    this->saveGame();
+                    saveGame();
                 }
 
                 if (turnInput == "exit")
@@ -121,7 +121,7 @@ void Game::playRound()
         // We've been given a valid user input, so we can now execute the logic for taking the turn
         // Move tiles to their respective spots. 
 
-        playerTurn(factory, tile, patternLine);
+       // playerTurn(factory, tile, patternLine);
 
 
         // The player who takes the first run in the round is decided by who has the first player token, it's not alternating

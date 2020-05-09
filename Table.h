@@ -17,8 +17,17 @@ public:
     // Deconstructor
     ~Table();
 
-    // Grab tiles from chosen factory (renamed to avoid confusion with getTiles method in bag)
-    void takeTiles(int factory, char tileColour, Player &player);
+    /* 
+    * 'Grab' tiles from chosen factory (renamed to avoid confusion with getTiles method in bag)
+    * 
+    * What this function actually does is take in the parameters of which factory and which tile, and then it will count the number of that tile type within the given factory.
+    * It will then return an int which represents the amount of tiles the player has taken, which is then used to place that amount of the chosen tile on to the player's board.
+    * 
+    * The idea is that we never actually pass around char values or tile objects, we instead just tell different components of our program how many tiles to place/remove from certain containers.
+    * 
+    * The remaining tiles from a factory will be transferred to the table centre (unless the player took from the table centre), and all the elements of the factory will be set to \0 (null char) to indicate that it is empty
+    */ 
+    int takeTiles(int factory, char tileColour);
 
     // Initialises factories at start of each round
     void initialiseRound();
