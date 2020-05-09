@@ -27,13 +27,10 @@ void Game::playGame()
     // Loop while end game condition is not met
     // For each loop, playRound(), then checkEnd()
 
-    while (!gameEnd)
+    while (!checkEnd())
     {
         initialiseRound();
         playRound();
-        checkEnd();
-
-        gameEnd = true;
     }
 
     // Game over
@@ -140,13 +137,16 @@ void Game::playerTurn()
         // playerTurn(factory, tile, patternLine);
 }
 
-void Game::checkEnd()
+bool Game::checkEnd()
 {
+    bool gameEnd = false;
     // Check the players board for a full horizontal row (maybe call on a function in player that does this)
 
     // if(horizontal row complete){
     //     this->gameEnd = true;
     // }
+
+    return gameEnd;
 }
 
 void Game::saveGame()

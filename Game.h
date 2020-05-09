@@ -28,7 +28,7 @@ public:
     void initialiseRound();
 
     // Check if the game end condition has been met (horizontal line completed)
-    void checkEnd();
+    bool checkEnd();
 
     // Saves game at any time
     void saveGame();
