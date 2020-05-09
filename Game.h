@@ -21,6 +21,9 @@ public:
     // Holds the logic for playing a round of the game
     void playRound();
 
+    // Logic for an individual players turn
+    void playerTurn();
+
     // Sets up the game for a new round
     void initialiseRound();
 
@@ -33,8 +36,7 @@ public:
     // Validate the input for a player turn, takes out a bulk of code from the round
     bool validateTurn(int factory, char tile, int patternLine);
 
-    // Logic for moving tiles after player input
-    void playerTurn(int factory, char tile, int patternLine);
+
 
 private:
     // Generic player pointers

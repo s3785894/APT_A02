@@ -8,8 +8,8 @@ Game::Game(std::string playerOneName, std::string playerTwoName)
 
     table = std::shared_ptr<Table>(new Table());
 
-    this->current = nullptr;
-    this->gameEnd = false;
+    current = nullptr;
+    gameEnd = false;
 }
 
 Game::Game(std::ifstream &fileInput)
@@ -57,27 +57,44 @@ void Game::playRound()
         current = player1.get();
     }
 
+    // Loops turns within rounds until round end condition (no tiles left) is met
+    while (table->tilesLeft())
+    {
+        // Take the player's turn
+        playerTurn();
+
+        // After each turn, switch the current player
+        if (current == player1.get()){
+            current = player2.get();
+        } else {
+            current = player1.get();
+        }
+    }
+
+    std::cout << "====== End Round ======" << std::endl;
+    std::cout << std::endl;
+}
+
+void Game::playerTurn()
+{
     // User input variables
     int factory;
     int patternLine;
     char tile;
+    
+    std::string turnInput;
+    bool validInput = false;
 
-    // Loops turns within rounds (and turns) until round end condition is met
-    // while (table->tilesLeft())
-    // {
-        std::cout << "TURN FOR PLAYER: " << current->getName() << std::endl;
-        std::cout << std::endl;
+    std::cout << "TURN FOR PLAYER: " << current->getName() << std::endl;
+    std::cout << std::endl;
 
+        // Print player board and table so the player can see what they're doing
         table->printFactoryContents();
         current->prntBoard();
 
-
-        std::string turnInput;
-        bool validInput = false;
         while (!validInput)
         {
             std::cout << "> ";
-
             if (std::cin.good())
             {
                 std::cin >> turnInput;
@@ -111,26 +128,16 @@ void Game::playRound()
                 std::cout << "Invalid input." << std::endl;
             }
 
-            // Check if input is still invalid to print out a message to the user before re-entering the loop
+            // Check if input is still invalid to print out a message to the user before re-entering the loop so they can try again
             if(!validInput){
                 std::cout << "Invalid input." << std::endl;
             }
         }
 
-
-        // We've been given a valid user input, so we can now execute the logic for taking the turn
+        // If we've reach here we know we've been given a valid user input, so we can now execute the logic for taking the turn
         // Move tiles to their respective spots. 
 
-       // playerTurn(factory, tile, patternLine);
-
-
-        // The player who takes the first run in the round is decided by who has the first player token, it's not alternating
-
-        // Need to check for frst player token
-    //}
-
-    std::cout << "====== End Round ======" << std::endl;
-    std::cout << std::endl;
+        // playerTurn(factory, tile, patternLine);
 }
 
 void Game::checkEnd()
@@ -178,7 +185,3 @@ bool Game::validateTurn(int factory, char tile, int patternLine)
     return validInput;
 }
 
-void playerTurn(int factory, char tile, int patternLine)
-{
-
-}

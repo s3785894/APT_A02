@@ -67,13 +67,26 @@ bool Table::tilesLeft()
 {
     bool tilesLeft = true;
 
-    /*
-    * if (tableCentre.empty() || (iterate  through factory array and check if tiles are there)) {
-    *   tilesLeft = false;
-    * } else {
-    *   tilesLeft = true;
-    * }
-    */
+    // Starts true by default because of the logic of our checking
+    bool factoryEmpty = true;
+
+    // ----- There's probably a more efficient way of doing this, worth having a looking at 
+    // We first need to iterate through and check if our 2D array is empty since there is no simple function of doing this like with our vector
+    // Loop through our factories array
+    for(int i = 0; i < NUM_FACTORIES; i++){
+        for(int j = 0; j < FACTORY_SIZE; j++){
+            // For each element, check if the element is null
+            if(factories[i][j] != '\0'){
+                // If at any point, there is an element that is not null, this means at least one factory is not empty and so factoryEmpty is set to false
+                factoryEmpty = false;
+            }
+        }
+    }
+
+    // If our table centre is empty, and our 2D factories array has all elements as null, then we can say there are no tiles left on the table
+    if(tableCentre.empty() && factoryEmpty){
+        tilesLeft = false;
+    }
 
     return tilesLeft;
 }
