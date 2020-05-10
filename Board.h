@@ -37,6 +37,9 @@ public:
     //Clear floor
     void clearFloor();
 
+    // Check if the chosen tile is able to be placed in the chosen pattern line (Meaning the pattern line doesn't already contain another colour or the chosen colour isn't already placed in that row on the mosaic)
+    bool checkBoard(int patternLine, char tileType);
+
 private:
     Mosaic mosaic;
 

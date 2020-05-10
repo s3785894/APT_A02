@@ -29,16 +29,12 @@ void Game::playGame()
 
     while (!checkEnd())
     {
-        initialiseRound();
+        table->initialiseRound();
         playRound();
     }
 
     // Game over
     // Finish last scoring and then determine winner
-}
-
-void Game::initialiseRound(){
-    table->initialiseRound();
 }
 
 void Game::playRound()
@@ -141,6 +137,8 @@ void Game::playerTurn()
         // Move tiles to their respective spots. 
 
         current->placeTiles(patternLine, tile, table->takeTiles(factory,tile));
+
+        current->prntBoard();
 
         // playerTurn(factory, tile, patternLine);
 }

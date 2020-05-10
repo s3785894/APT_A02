@@ -13,6 +13,7 @@ Board::Board()
     }
 
     // Initialise our Pattern Lines to default values
+    // The spaces in the pattern line that are available to have a tile in them are represented by a '.' whilst the rest of the row is filled with ' ' 
     for(int i = 0; i < MOSAIC_DIM; i++){
         for(int j = 0; j < MOSAIC_DIM; j++){
             if(j + 1 >= MOSAIC_DIM - i){
@@ -44,49 +45,34 @@ Board::~Board()
 
 void Board::placeInPatternLine(int patternLine, char tileType, int tileCount)
 {
-    // If the pattern line doesn't already has tiles in it
-    //     If the pattern line isn't already complete
-    //         Place tiles in line
-    //         If overflow occurs
-    //             Place overflowed tiles in floor
-    //         Endif
-    //     Else
-    //         Throw error?
-    //     Endif
-    // Else
-    //     Throw error?
-    // Endif
-
-//if pattern line have no more space, and the pattern line is empty to start, move excess tiles to floor
-//and fill the pattern line
-int emptySlot = 0;
-int overflow = 0;
-
-//find how many tile slots are empty
-    for(int i=0; i<2*patternLine; i++){
-        if(patternLines[patternLine-1][MOSAIC_DIM-i]=='.'){
-            emptySlot++;
-        }
-    }
-//place the overflow tiles to floor
-    if(tileCount>emptySlot){
-        overflow=tileCount-emptySlot;
-        placeInFloor(tileType, overflow);
-    }
-
-//place the tiles to pattern line
-    int count=tileCount;
-    for(int i=0; i<2*patternLine; ++i){
-        if(patternLines[patternLine-1][MOSAIC_DIM-i]=='.' && count>0){
-                patternLines[patternLine-1][MOSAIC_DIM-i]=tileType;
-                --count;
-        }
-    }
-
+    // To place the tiles in the pattern line, we need to check how many spaces are empty in that pattern line, and then place tiles to the pattern line or the floor appopriately
+    int emptySlot = 0;
+    int overflow = 0;
     
-    }
+    // Find how many tile slots are empty
+        for(int i = 0; i < patternLine; i++){
+            if(patternLines[patternLine - 1][(MOSAIC_DIM - 1) - i]=='.'){
+                emptySlot++;
+            }
+        }
 
+    // Place the overflow tiles to floor
+        if(tileCount > emptySlot){
+            overflow  = tileCount - emptySlot;
+            placeInFloor(tileType, overflow);
+        }
 
+    // Find our starting index place the tiles (skip over tiles already in the pattern line)
+    int startIndex = (MOSAIC_DIM - 1) - (patternLine - emptySlot);
+    // Place the tiles to pattern line
+        for(int i = 0; i < tileCount; i++){
+            if(emptySlot > 0){
+                    patternLines[patternLine-1][startIndex - i] = tileType;
+                    --emptySlot;
+            }
+        }
+    
+}
 
 void Board::patternLineToMosaic()
 {
@@ -113,6 +99,7 @@ void Board::placeInFloor(char tileType, int tileCount)
     }
 }
 
+// I think this function  is not needed anymore?
 void Board::prntMosaic()
 {
     for(int i = 0; i < MOSAIC_DIM; i++){
@@ -166,4 +153,14 @@ void Board::prntBoard()
 
 void Board::clearFloor(){
     floorTile->clear();
+}
+
+bool Board::checkBoard(int patternLine, char tileType){
+    // Check that the chosen pattern line does not contain another tile colour
+    // Check that the mosaic in the same row does not already contain a tile of the chosen colour
+    // If both checks pass, then return true (valid move)
+
+    // for(int i = 0; i < MOSAIC_DIM; )
+
+    return true;
 }

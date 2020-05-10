@@ -51,6 +51,10 @@ void Player::endRound(){
     board->clearFloor();
 }
 
+bool Player::checkBoard(int patternLine, char tileType){
+    return board->checkBoard(patternLine, tileType);
+}
+
 
 
 std::string Player::toString()
