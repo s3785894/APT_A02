@@ -34,7 +34,7 @@ public:
     void saveGame();
 
     // Validate the input for a player turn, takes out a bulk of code from the round
-    bool validateTurn(int factory, char tile, int patternLine);
+    bool validateInput(int factory, char tile, int patternLine);
 
 
 

@@ -155,12 +155,33 @@ void Board::clearFloor(){
     floorTile->clear();
 }
 
-bool Board::checkBoard(int patternLine, char tileType){
+bool Board::checkBoard(int patternLine, char tileType)
+{
+    bool validMove = true;
     // Check that the chosen pattern line does not contain another tile colour
     // Check that the mosaic in the same row does not already contain a tile of the chosen colour
     // If both checks pass, then return true (valid move)
 
-    // for(int i = 0; i < MOSAIC_DIM; )
+    // Check that the chosen pattern line contains ONLY either empty spaces OR tiles of the chosen colour, if not, validMove is false
+    for(int i = 0; i < patternLine; i++){
+        if(patternLines[patternLine - 1][(MOSAIC_DIM - 1) - i] != '.'){
+            if(patternLines[patternLine - 1][(MOSAIC_DIM - 1) - i] != tileType){
+                validMove = false;
+            }
+        }
+    }
 
-    return true;
+    // Check that the mosaic in the chosen row does not contain a tile of the chosen colour, if it does, validMove is false
+    for(int i = 0; i < MOSAIC_DIM; i++){
+        if(mosaic[patternLine - 1][(MOSAIC_DIM - 1) - i] == tileType){
+            validMove = false;
+        }
+    }
+
+    // If either of 1 of these conditions are met, the move cannot be made by the player and they must re-enter their input. Print a meaningful message for the player
+    if(!validMove){
+        std::cout << "The chosen pattern line contains tiles of another colour, or that row already has a tile of that colour on the mosaic." << std::endl;
+    }
+
+    return validMove;
 }

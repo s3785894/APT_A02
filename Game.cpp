@@ -113,11 +113,16 @@ void Game::playerTurn()
                     tile = toupper(turnInput[1]);
 
                     // Pass the variables into our validation function so that range checking can be completed.
-                    validInput = validateTurn(factory, tile, patternLine);
+                    validInput = validateInput(factory, tile, patternLine);
 
                     // If the input is valid, we then need to check if it's a valid move (If the chosen factory contains the chosen tile colour)
                     if(validInput) {
                         validInput = table->checkFactory(factory, tile);
+                    }
+
+                    // If the previous validation check passes, check if it's a valid move for the player board
+                    if(validInput) {
+                        validInput = current->checkBoard(patternLine, tile);
                     }
                 }
          
@@ -135,12 +140,13 @@ void Game::playerTurn()
 
         // If we've reach here we know we've been given a valid user input, so we can now execute the logic for taking the turn
         // Move tiles to their respective spots. 
-
         current->placeTiles(patternLine, tile, table->takeTiles(factory,tile));
+
+        std::cout << std::endl;
 
         current->prntBoard();
 
-        // playerTurn(factory, tile, patternLine);
+        LINE_DIVIDER;
 }
 
 bool Game::checkEnd()
@@ -163,7 +169,7 @@ void Game::saveGame()
     std::cout << "GAME SAVED" << std::endl;
 }
 
-bool Game::validateTurn(int factory, char tile, int patternLine) 
+bool Game::validateInput(int factory, char tile, int patternLine) 
 {
 
     // Need to do range checking.
