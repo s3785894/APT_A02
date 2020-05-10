@@ -25,6 +25,11 @@ public:
     // Converts all attributes to string (for use in saving to file)
     std::string toString();
 
+    //Player places tiles on pattern line 
+    void placeTiles(int patternLine, char tileType, int tileCount);
+
+    void endRound();
+
 private:
     // Pointer to player's board
     Board *board;

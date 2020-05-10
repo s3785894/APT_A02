@@ -1,4 +1,7 @@
 #include "Board.h"
+#include <memory>
+
+#define floorSize 7
 
 Board::Board()
 {
@@ -20,6 +23,9 @@ Board::Board()
         }
     }
 
+    //intialise floor
+    floorTile = new LinkedList();
+
 }
 
 Board::Board(Mosaic mosaic)
@@ -39,7 +45,7 @@ Board::~Board()
 void Board::placeInPatternLine(int patternLine, char tileType, int tileCount)
 {
     // If the pattern line doesn't already has tiles in it
-    //     If the pattern line isn't already complete complete
+    //     If the pattern line isn't already complete
     //         Place tiles in line
     //         If overflow occurs
     //             Place overflowed tiles in floor
@@ -50,7 +56,37 @@ void Board::placeInPatternLine(int patternLine, char tileType, int tileCount)
     // Else
     //     Throw error?
     // Endif
-}
+
+//if pattern line have no more space, and the pattern line is empty to start, move excess tiles to floor
+//and fill the pattern line
+int emptySlot = 0;
+int overflow = 0;
+
+//find how many tile slots are empty
+    for(int i=0; i<2*patternLine; i++){
+        if(patternLines[patternLine-1][MOSAIC_DIM-i]=='.'){
+            emptySlot++;
+        }
+    }
+//place the overflow tiles to floor
+    if(tileCount>emptySlot){
+        overflow=tileCount-emptySlot;
+        placeInFloor(tileType, overflow);
+    }
+
+//place the tiles to pattern line
+    int count=tileCount;
+    for(int i=0; i<2*patternLine; ++i){
+        if(patternLines[patternLine-1][MOSAIC_DIM-i]=='.' && count>0){
+                patternLines[patternLine-1][MOSAIC_DIM-i]=tileType;
+                --count;
+        }
+    }
+
+    
+    }
+
+
 
 void Board::patternLineToMosaic()
 {
@@ -72,6 +108,9 @@ void Board::patternLineToMosaic()
 void Board::placeInFloor(char tileType, int tileCount)
 {
     // Iterate over tile line, adding identical char 'tileType' tileCount times
+    for(int i=0; i<tileCount; ++i){
+        floorTile->addBack(tileType);
+    }
 }
 
 void Board::prntMosaic()
@@ -82,6 +121,15 @@ void Board::prntMosaic()
         }
         std::cout << std::endl;
     }
+}
+
+void Board::printFloor(){
+        std::cout<<"broken: ";
+
+        for(int i=0; i<floorTile->size(); ++i){
+            std::cout<<floorTile->get(i)<<" ";
+        }
+
 }
 
 void Board::prntBoard()
@@ -109,10 +157,13 @@ void Board::prntBoard()
     std::cout << std::endl;
 
     // Print out the floor tiles (Negative Score)
-
-    std::cout << "-1  -1  -2  -2  -2  -3  -3";
-
+    printFloor();
     //TO DO Add floor
 
     std::cout << std::endl;
+}
+
+
+void Board::clearFloor(){
+    floorTile->clear();
 }

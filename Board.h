@@ -5,6 +5,8 @@
 
 #include <iostream>
 
+#include "LinkedList.h"
+
 class Board
 {
 public:
@@ -29,10 +31,18 @@ public:
     // Prints the whole player board
     void prntBoard();
 
+    //Prints the floor tile
+    void printFloor();
+
+    //Clear floor
+    void clearFloor();
+
 private:
     Mosaic mosaic;
 
     Mosaic patternLines;
+
+    LinkedList* floorTile;
 };
 
 #endif //BOARD_H

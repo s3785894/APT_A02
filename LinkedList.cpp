@@ -3,19 +3,10 @@
 #include <iostream>
 #include <fstream>
 
-    Node::Node(TileCode tile, Node* next) {
-    if (tile == R) {
-      this->tileValue = 'R';
-   } else if (tile == Y) {
-      this->tileValue = 'Y';
-   } else if (tile == B) {
-      this->tileValue = 'B';
-   } else if (tile == L) {
-      this->tileValue = 'L';
-   } else if (tile == U) {
-      this->tileValue = 'U';
-   }            
-   this->next=next;
+    Node::Node(char tile, Node* next) {
+
+    this->tileValue = tile;         
+    this->next=next;
 }
    LinkedList::LinkedList(){
        head=nullptr;
@@ -104,7 +95,7 @@
        return current->tileValue;
    }
 
-   void LinkedList::addFront(TileCode tile){
+   void LinkedList::addFront(char tile){
        Node* node = new Node(tile,nullptr);
        if (head==nullptr){
            head=node;
@@ -119,7 +110,7 @@
 
    }
 
-   void LinkedList::addBack(TileCode tile){
+   void LinkedList::addBack(char tile){
         Node* node = new Node(tile,nullptr);
         //if no nodes are in the list, head and pointer points to new node
        if (head==nullptr){

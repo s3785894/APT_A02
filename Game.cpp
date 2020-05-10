@@ -114,9 +114,19 @@ void Game::playerTurn()
                     patternLine = turnInput[2] - 48;
                     // Assign tile colour choice to individual char
                     tile = turnInput[1];
-                            
+                        
                     // Pass the variables into our validation function so that range checking can be completed.
                     validInput = validateTurn(factory, tile, patternLine);
+                    
+                    if(validInput){
+                        //Add tiles to pattern line
+                        current->placeTiles(patternLine, tile, table->takeTiles(factory,tile));
+                    }
+
+                    //when no tiles are left in any factories, end the round
+                    if (table->tilesLeft()==false){
+                        current->endRound();
+                    }
                 }
          
             }

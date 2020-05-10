@@ -41,6 +41,18 @@ void Player::prntBoard()
     std::cout << std::endl;
 }
 
+void Player::placeTiles(int patternLine, char tileType, int tileCount)
+{
+    board->placeInPatternLine(patternLine, tileType, tileCount);
+}
+
+void Player::endRound(){
+    board->patternLineToMosaic();
+    board->clearFloor();
+}
+
+
+
 std::string Player::toString()
 {
     // gets player info (name, score) and board information for use in saving

@@ -13,7 +13,7 @@
 class Node {
 public:
    //Node(Tile* tile, Node* next);
-   Node(TileCode tile, Node* next);
+   Node(char tile, Node* next);
 
    char getTile();
    char tileValue;
@@ -34,10 +34,10 @@ public:
    char get(unsigned int i);
 
    //add tile to front of the list
-   void addFront(TileCode tile);
+   void addFront(char tile);
 
    //add tile to back of the list
-   void addBack(TileCode tile);
+   void addBack(char tile);
 
    //remove tile from back of the list
    void removeBack();
