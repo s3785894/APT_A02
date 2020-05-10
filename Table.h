@@ -35,6 +35,9 @@ public:
     // Checks if any tiles are left in factories (to determine end of round)
     bool tilesLeft();
 
+    // Checks if the factory contains any tiles, and if it contains any tiles of the selected color (player turn validation)
+    bool checkFactory(int factory, char tileColour);
+
     // Prints contents of factory
     void printFactoryContents();
 

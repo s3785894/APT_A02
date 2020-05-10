@@ -121,3 +121,40 @@ void Table::printFactoryContents()
 
     std::cout << std::endl;
 }
+
+bool Table::checkFactory(int factory, char tileColour)
+{
+    bool validMove = false;
+
+    // If taking from factory 0, iterate through our tableCentre vector
+    if (factory == 0)
+    {
+        for (std::vector<char>::iterator i = tableCentre.begin() ; i != tableCentre.end(); ++i){
+            // Check if tableCentre contains the chosen colour, if not, validMove will remain false
+            if(*i == tileColour){
+                validMove = true;
+            }
+        }
+    }
+
+    // Otherwise, if factory is not 0 we are checking our 2D array 
+    else
+    {
+        // Iterate through the array
+        for(int i = 0; i < FACTORY_SIZE; i++){
+
+            // For the given factory (which is our row), check if the element at the current position i matches the chosen tile colour
+            // If it does, the move is valid. 
+            if(factories[factory - 1][i] == tileColour){
+                validMove = true;
+            }
+        }
+    }
+
+    // If no tiles of the chosen colour were found, print out a simple message to let the user know what was wrong (in addition to the 'Invalid Input' message)
+    if(!validMove){
+        std::cout << "Sorry, there is no tile of that colour to be taken!" << std::endl;
+    }
+
+    return validMove;
+}

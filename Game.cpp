@@ -46,7 +46,7 @@ void Game::playRound()
     std::cout << "====== Start Round ======" << std::endl;
     std::cout << std::endl;
     
-    // Checks if there is no "current player" (i.e. this is a new game or round) and automatically assigns the player's turn
+    // Checks if there is no "current player" (i.e. this is the first round of a new game) and automatically assigns the player's turn
     // This condition is not met for a turn of a loaded round - therefore, it allows for rounds to continue from their last position
     // By default, player 1 is assigned to be the first player for the game
     if (current == nullptr)
@@ -82,12 +82,13 @@ void Game::playerTurn()
     std::string turnInput;
     bool validInput = false;
 
-    std::cout << "TURN FOR PLAYER: " << current->getName() << std::endl;
-    std::cout << std::endl;
+    std::cout << "TURN FOR PLAYER: " << current->getName() << std::endl << std::endl; 
 
         // Print player board and table so the player can see what they're doing
         table->printFactoryContents();
         current->prntBoard();
+
+        std::cout << "Enter turn input: " << std::endl;
 
         while (!validInput)
         {
@@ -112,20 +113,15 @@ void Game::playerTurn()
                     // Convert factory/pattern line to int. Need to -48 because of how the numbers are represented by ASCII numbers (0 is 48, 1 is 49, etc.)
                     factory = turnInput[0] - 48;
                     patternLine = turnInput[2] - 48;
-                    // Assign tile colour choice to individual char
-                    tile = turnInput[1];
-                        
+                    // Assign tile colour choice to individual char and convert to upper case since tiles are always represented as uppercase chars
+                    tile = toupper(turnInput[1]);
+
                     // Pass the variables into our validation function so that range checking can be completed.
                     validInput = validateTurn(factory, tile, patternLine);
-                    
-                    if(validInput){
-                        //Add tiles to pattern line
-                        current->placeTiles(patternLine, tile, table->takeTiles(factory,tile));
-                    }
 
-                    //when no tiles are left in any factories, end the round
-                    if (table->tilesLeft()==false){
-                        current->endRound();
+                    // If the input is valid, we then need to check if it's a valid move (If the chosen factory contains the chosen tile colour)
+                    if(validInput) {
+                        validInput = table->checkFactory(factory, tile);
                     }
                 }
          
@@ -143,6 +139,8 @@ void Game::playerTurn()
 
         // If we've reach here we know we've been given a valid user input, so we can now execute the logic for taking the turn
         // Move tiles to their respective spots. 
+
+        current->placeTiles(patternLine, tile, table->takeTiles(factory,tile));
 
         // playerTurn(factory, tile, patternLine);
 }
@@ -183,7 +181,7 @@ bool Game::validateTurn(int factory, char tile, int patternLine)
             // Valid, check next
             // Check the tile colour input against our array of tile colours
             for(int i = 0; i < NUM_COLOURS; i++){
-                if(toupper(tile) == tileColours[i]){
+                if(tile == tileColours[i]){
                     // If tile matches a possible tile colour then we know the previously checked inputs were also valid, meaning the entire input is valid.
                         validInput = true;
                     }
