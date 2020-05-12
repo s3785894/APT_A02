@@ -74,21 +74,40 @@ void Board::placeInPatternLine(int patternLine, char tileType, int tileCount)
     
 }
 
-void Board::patternLineToMosaic()
+int Board::patternLineToMosaic(int patternLine)
 {
-    // For all pattern lines (top to bottom, or small to large)
-    //     If pattern line is complete
-    //         If a free space on that line is open on the mosaic
-    //             Fill that mosaic space
-    //             Place the amount of tiles on that line MINUS ONE in the lid
-    //         Else
-    //             Probably don't throw error?
-    //         Endif
-    //      Else
-    //         Probably don't throw error?
-    // Endfor
-    //
-    // Possibly calculate and update Player score here?
+    // Given the pattern line we're in (row);
+    // Check the tile colour on the pattern line patterLine[patterLine][MOSAIC_DIM - 1]
+    // Iterate through that row on our Mosaic Colours array to find where the tile goes [i][j]
+    // On our Mosaic, at positon [i][j] place a tile of that colour
+
+    // Get the color of the tile we're placing
+    char tile = patternLines[patternLine][MOSAIC_DIM - 1];
+
+    int position;
+    int score = 0;
+
+    // Find the position of the colour on the mosaic in the given row
+    for(int i = 0; i < MOSAIC_DIM; i++){
+        if(mosaicColours[patternLine][i] == tile){
+            position = i;
+        }
+    }
+
+    // Place our tile in the give positon on the mosaic
+    mosaic[patternLine][position] = tile;
+
+    // Clear the pattern line
+    for(int i = 0; i < patternLine; i ++){
+        patternLines[patternLine][(MOSAIC_DIM - 1) - i] = '.';
+    }
+
+    // Execute logic for scoring
+    if(mosaic[patternLine]) {
+
+    }
+
+    return score;
 }
 
 void Board::placeInFloor(char tileType, int tileCount)
@@ -193,4 +212,37 @@ bool Board::checkBoard(int patternLine, char tileType)
     }
 
     return validMove;
+}
+
+int Board::resolveBoard(){
+    // Initialise our column int to the back of our pattern line
+    int column = MOSAIC_DIM - 1;
+
+    int score = 0;
+
+    // Starting from line one iterate through the pattern lines checking they are full
+    for(int i = 0; i < MOSAIC_DIM; i++){
+        // Initialise a boolean full to default value true, indicating the line is full
+        bool full = true;
+
+        // Check if the starting element on the pattern line is empty, if it is we don't need to bother checking the whole line
+        if(patternLines[i][column] != '.'){
+            for(int j = 0; j < i + i; j++){
+                // For each index of the pattern line, check if there is an empty space character. If so, the pattern line is not full, otherwise full will remain true
+                if(patternLines[i][j] == '.'){
+                    full = false;
+                }
+            }
+
+            // After the whole line has been checked, if full is still true it means our pattern line is full and a tile should be moved to the mosaic
+            std::cout << "LINE " << i << " IS " << full << std::endl;
+
+            if(full){
+               score = score + patternLineToMosaic(i);
+            }
+        }
+
+    }
+
+    return score;
 }

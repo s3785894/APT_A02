@@ -33,6 +33,8 @@ public:
 
     void placeInFloor(char tileType, int tileCount);
 
+    void resolveBoard();
+
     void endRound();
 
 private:

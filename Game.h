@@ -33,6 +33,9 @@ public:
     // Saves game at any time
     void saveGame();
 
+    // At round end, resolve the player boards and score the round
+    void scoreRound();
+
     // Validate the input for a player turn, takes out a bulk of code from the round
     bool validateInput(int factory, char tile, int patternLine);
 

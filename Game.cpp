@@ -69,6 +69,8 @@ void Game::playRound()
         }
     }
 
+    scoreRound();
+
     std::cout << "====== End Round ======" << std::endl;
     std::cout << std::endl;
 }
@@ -177,6 +179,13 @@ void Game::saveGame()
 
     std::cout << "GAME SAVED" << std::endl;
 }
+
+void Game::scoreRound(){
+    std::cout << "SCORE ROUND" << std::endl;
+    player1->resolveBoard();
+    player2->resolveBoard();
+}
+
 
 bool Game::validateInput(int factory, char tile, int patternLine) 
 {

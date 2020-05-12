@@ -47,7 +47,7 @@ void Player::placeTiles(int patternLine, char tileType, int tileCount)
 }
 
 void Player::endRound(){
-    board->patternLineToMosaic();
+    //board->patternLineToMosaic();
     board->clearFloor();
 }
 
@@ -57,6 +57,10 @@ bool Player::checkBoard(int patternLine, char tileType){
 
 void Player::placeInFloor(char tileType, int tileCount){
     board->placeInFloor(tileType, tileCount);
+}
+
+void Player::resolveBoard(){
+    board->resolveBoard();
 }
 
 
