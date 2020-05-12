@@ -47,7 +47,7 @@ private:
     Player* current;
 
     // Used to handle who has the first player token
-    Player* first;
+    //Player* first;
 
     // Table ADT
     std::shared_ptr<Table> table;
