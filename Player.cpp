@@ -55,6 +55,10 @@ bool Player::checkBoard(int patternLine, char tileType){
     return board->checkBoard(patternLine, tileType);
 }
 
+void Player::placeInFloor(char tileType, int tileCount){
+    board->placeInFloor(tileType, tileCount);
+}
+
 
 
 std::string Player::toString()

@@ -18,12 +18,19 @@ int Table::takeTiles(int factory, char tileColour)
     // If taking from factory 0, iterate through our tableCentre vector
     if (factory == 0)
     {
-        for (std::vector<char>::iterator i = tableCentre.begin() ; i != tableCentre.end(); ++i){
-            // For each tile found matching the chosen colour, increase tile frequency and then erase that tile from the vector
-            if(*i == tileColour){
-                tileFrequency++;
-                tableCentre.erase(i);
-            }
+        std::vector<char>::iterator it = tableCentre.begin();
+        
+        // Iterate through our vector
+        for(it = tableCentre.begin(); it != tableCentre.end(); ) {
+            // Check if the tile at the current position matches the chosen tile colour
+           if(tableCentre.at(it - tableCentre.begin()) == tileColour){
+               // If so, remove it and increase the tile count
+               it = tableCentre.erase(it);
+               tileFrequency++;
+           } else {
+               // If not, increase the iterator
+               it++;
+           }
         }
     }
 
@@ -37,6 +44,9 @@ int Table::takeTiles(int factory, char tileColour)
             // If it does, increase the tile frequency
             if(factories[factory - 1][i] == tileColour){
                 tileFrequency++;
+            } else {
+                // For any tiles that are not of the chosen colour, add these to the tableCentre
+                tableCentre.push_back(factories[factory - 1][i]);
             }
 
             // Since we always remove all tiles from the factory, all of the chosen factories elements will be set to null
@@ -157,4 +167,23 @@ bool Table::checkFactory(int factory, char tileColour)
     }
 
     return validMove;
+}
+
+bool Table::checkFirstPlayerToken(){
+    // The first player token, will always be the first index of the table centre, therefore, we just need to check index 0 instead of looping through the whole thing
+
+    bool tokenExists;
+
+    if(tableCentre.size() > 0){ 
+        tokenExists = tableCentre.at(0) == 'F';
+
+        if(tokenExists){
+            tableCentre.erase(tableCentre.begin());
+        }
+    } else {
+        tokenExists = false;
+    }
+
+
+    return tokenExists;
 }

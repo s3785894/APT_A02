@@ -8,7 +8,8 @@
     Y, 
     B, 
     L, 
-    U
+    U,
+    F
 };
 class Node {
 public:

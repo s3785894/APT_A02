@@ -9,6 +9,7 @@ Game::Game(std::string playerOneName, std::string playerTwoName)
     table = std::shared_ptr<Table>(new Table());
 
     current = nullptr;
+    first = nullptr;
     gameEnd = false;
 }
 
@@ -31,6 +32,9 @@ void Game::playGame()
     {
         table->initialiseRound();
         playRound();
+
+        // Whoever has the first player token now becomes the current player, to let them take the first turn for the next round
+        current = first;
     }
 
     // Game over
@@ -39,6 +43,7 @@ void Game::playGame()
 
 void Game::playRound()
 {
+
     std::cout << "====== Start Round ======" << std::endl;
     std::cout << std::endl;
     
@@ -142,10 +147,14 @@ void Game::playerTurn()
         // Move tiles to their respective spots. 
         current->placeTiles(patternLine, tile, table->takeTiles(factory,tile));
 
+        // If taking from the centre table, and the first player token has not been taken, give it to the player
+        if(factory == 0 && table->checkFirstPlayerToken()){
+            current->placeInFloor('F', 1);
+            first = current;
+        }
+
         std::cout << std::endl;
-
         current->prntBoard();
-
         LINE_DIVIDER;
 }
 

@@ -31,6 +31,8 @@ public:
     //Player places tiles on pattern line 
     void placeTiles(int patternLine, char tileType, int tileCount);
 
+    void placeInFloor(char tileType, int tileCount);
+
     void endRound();
 
 private:

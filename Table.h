@@ -38,6 +38,9 @@ public:
     // Checks if the factory contains any tiles, and if it contains any tiles of the selected color (player turn validation)
     bool checkFactory(int factory, char tileColour);
 
+    // Check if the table centre contains the first player token
+    bool checkFirstPlayerToken();
+
     // Prints contents of factory
     void printFactoryContents();
 

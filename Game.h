@@ -44,7 +44,10 @@ private:
     std::shared_ptr<Player> player2;
 
     // Pointer used to track current player
-    Player *current;
+    Player* current;
+
+    // Used to handle who has the first player token
+    Player* first;
 
     // Table ADT
     std::shared_ptr<Table> table;
