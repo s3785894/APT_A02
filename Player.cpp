@@ -60,7 +60,7 @@ void Player::placeInFloor(char tileType, int tileCount){
 }
 
 void Player::resolveBoard(){
-    board->resolveBoard();
+    score = score + board->resolveBoard();
 }
 
 

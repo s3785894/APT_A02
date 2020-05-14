@@ -27,8 +27,21 @@ void Bag::fillBag(){
             bag.insert(bag.end(), (MAX_TILES / NUM_COLOURS), tileColours[i]);
     }
 
+    // Print out bag before shuffling --- TESTING PURPOSES
+    // for(int i = 0; i < bag.size(); i++){
+    //     std::cout << bag[i];
+    // }
+
+    // std::cout << std::endl;
+
     //Once our bag is filled with our tiles, we need to shuffle it
     shuffleBag();
+
+    // Print out bag after shuffling --- TESTING PURPOSES
+    // for(int i = 0; i < bag.size(); i++){
+    //     std::cout << bag[i];
+    // }
+
 }
 
 void Bag::refillBag(){
@@ -49,7 +62,9 @@ void Bag::refillBag(){
 void Bag::shuffleBag(){
 	int size = bag.size();
     //Set the seed based on the current system time to ensure a different seed every tme
-    srand (time (0));
+    srand (1);
+
+    //srand (time (0));
 
     //Loops through each element of the vector
 	for (int i = 0; i < size - 1; i++)

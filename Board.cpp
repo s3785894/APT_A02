@@ -84,10 +84,8 @@ int Board::patternLineToMosaic(int patternLine)
     // Get the color of the tile we're placing
     char tile = patternLines[patternLine][MOSAIC_DIM - 1];
 
-    int position;
-    int score = 0;
-
     // Find the position of the colour on the mosaic in the given row
+    int position;
     for(int i = 0; i < MOSAIC_DIM; i++){
         if(mosaicColours[patternLine][i] == tile){
             position = i;
@@ -97,16 +95,78 @@ int Board::patternLineToMosaic(int patternLine)
     // Place our tile in the give positon on the mosaic
     mosaic[patternLine][position] = tile;
 
-    // Clear the pattern line
-    for(int i = 0; i < patternLine; i ++){
+    // Clear the pattern line THIS NEEDS TO BE MOVED BECAUSE THESE TILES NEED TO GO INTO THE BOX LID
+    for(int i = 0; i <= patternLine; i ++){
         patternLines[patternLine][(MOSAIC_DIM - 1) - i] = '.';
     }
 
-    // Execute logic for scoring
-    if(mosaic[patternLine]) {
+    // EXECUTE LOGIC FOR SCORING
 
+    int score = 0;
+
+    bool adjacentLeft = true;
+    bool adjacentRight = true;
+    bool adjacentUp = true;
+    bool adjacentDown = true;
+
+    // Check adjacent tiles to the left, if not, score for the amount in the row going left
+    if(position == 0 || mosaic[patternLine][position - 1] == '.'){
+        adjacentLeft = false;
+    } else {
+        // Iterate through our mosaic moving down. The loop will continue until an empty space or the edge of the mosaic is reached
+        while(mosaic[patternLine][position] != '.' || position >= 0){
+            score++;
+            position--;
+        }
     }
 
+    // Check adjacent tiles to the right, if not, score for the amount in the row going right
+    if(position == 4 || mosaic[patternLine][position + 1] == '.'){
+        adjacentRight = false;
+    } else {
+        // If there are adjacent tiles to the left it means we have already counted our current tile in the scoring, which means we need to remove a point so the tile is not counted twice for the same row
+        if(adjacentLeft){
+            score--;
+        }
+        // Iterate through our mosaic moving down. The loop will continue until an empty space or the edge of the mosaic is reached
+        while(mosaic[patternLine][position] != '.' || position <= MOSAIC_DIM){
+            score++;
+            position++;
+        }
+    }
+
+    // Check adjacent tiles above, if not, score for the amount in the column going up
+    if(patternLine == 0 || mosaic[patternLine - 1][position] == '.'){
+        adjacentUp = false;
+    } else {
+        // Iterate through our mosaic moving down. The loop will continue until an empty space or the edge of the mosaic is reached
+        while(mosaic[patternLine][position] != '.' || patternLine >= 0){
+            score++;
+            patternLine--;
+        }
+    }
+    
+    // Check adjacent tiles below, if not, score for the amount in the column going down
+    if(patternLine == 4 || mosaic[patternLine + 1][position] == '.'){
+        adjacentDown = false;
+    } else {
+        // If there are adjacent tiles above it means we have already counted our current tile in the scoring, which means we need to remove a point so the tile is not counted twice for the same column
+        if(adjacentUp){
+            score--;
+        }
+        // Iterate through our mosaic moving down. The loop will continue until an empty space or the edge of the mosaic is reached
+        while(mosaic[patternLine][position] != '.' || patternLine <= MOSAIC_DIM){
+            score++;
+            patternLine++;
+        }
+    }
+
+    // If our tile has no adjacent tiles, the score is just one
+    if(!adjacentDown && !adjacentLeft && !adjacentRight && !adjacentUp){
+        score = 1;
+    }
+
+    // Return the score
     return score;
 }
 
@@ -227,22 +287,45 @@ int Board::resolveBoard(){
 
         // Check if the starting element on the pattern line is empty, if it is we don't need to bother checking the whole line
         if(patternLines[i][column] != '.'){
-            for(int j = 0; j < i + i; j++){
+            for(int j = column; j >= (MOSAIC_DIM - 1) - i; j--){
                 // For each index of the pattern line, check if there is an empty space character. If so, the pattern line is not full, otherwise full will remain true
                 if(patternLines[i][j] == '.'){
                     full = false;
                 }
             }
 
-            // After the whole line has been checked, if full is still true it means our pattern line is full and a tile should be moved to the mosaic
+            // After the whole line has been checked, if full is still true it means our pattern line is full and a tile should be moved to the mosaic. 
+            // During this, the score for the tile on the mosaic will also be calculated
             std::cout << "LINE " << i << " IS " << full << std::endl;
 
             if(full){
                score = score + patternLineToMosaic(i);
             }
         }
-
+        
     }
+
+    // Remove points based on the tiles in the floor
+    int floorTiles;
+
+    // If there are more than 7 floor tiles, the excess are not counted so we set floorTiles to 7, else floorTiles is the amount of tiles there are
+    if(floorTile->size() > 7){
+        floorTiles = 7;
+    } else {
+        floorTiles = floorTile->size();
+    }
+
+    // Using our floorScore array, we iterate through and remove points as necessary
+    for(int i = 0; i < floorTiles; i ++){
+        score = score - floorScore[i];
+    }
+
+    // A player can never have less than 0 score, so if the score is negative, we reset it back to  0
+    if(score < 0){
+        score = 0;
+    }
+
+    std::cout << std::endl << "SCORE " << score << std::endl;
 
     return score;
 }

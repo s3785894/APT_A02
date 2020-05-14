@@ -58,6 +58,8 @@ private:
         {'R', 'U', 'L', 'B', 'Y'},
         {'Y', 'R', 'U', 'L', 'B'}
     };
+
+    int floorScore[7] = {1, 1, 2, 2, 2, 3, 3};
 };
 
 #endif //BOARD_H

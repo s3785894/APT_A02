@@ -189,7 +189,11 @@ void Game::saveGame()
 
 void Game::scoreRound(){
     std::cout << "SCORE ROUND" << std::endl;
+
+    std::cout << "PLAYER 1: " << player1->getName() << std::endl;
     player1->resolveBoard();
+
+    std::cout << "PLAYER 2: " << player2->getName() << std::endl;
     player2->resolveBoard();
 }
 
