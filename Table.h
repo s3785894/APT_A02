@@ -10,8 +10,10 @@
 class Table
 {
 public:
-    // Constructor for new gamees
+    // Constructor for new games
     Table();
+    // Constructor for new games (seeded)
+    Table(std::string seed);
     // Constructor for loaded games
     Table(std::vector<char> tableCentre, Factories factories, Bag *bag);
     // Deconstructor

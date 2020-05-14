@@ -1,12 +1,19 @@
 #include "Game.h"
 #include <sstream>
 
-Game::Game(std::string playerOneName, std::string playerTwoName)
+Game::Game(std::string playerOneName, std::string playerTwoName, std::string seed, bool hasSeeded)
 {
     player1 = std::shared_ptr<Player>(new Player(playerOneName));
     player2 = std::shared_ptr<Player>(new Player(playerTwoName));
 
-    table = std::shared_ptr<Table>(new Table());
+    if (!hasSeeded)
+    {
+        table = std::shared_ptr<Table>(new Table());
+    }
+    else
+    {
+        table = std::shared_ptr<Table>(new Table(seed));
+    }
 
     this->current = nullptr;
     this->gameEnd = false;
@@ -40,7 +47,8 @@ void Game::playGame()
     // Finish last scoring and then determine winner
 }
 
-void Game::initialiseRound(){
+void Game::initialiseRound()
+{
     table->initialiseRound();
 }
 
@@ -48,7 +56,7 @@ void Game::playRound()
 {
     std::cout << "====== Start Round ======" << std::endl;
     std::cout << std::endl;
-    
+
     // Checks if there is no "current player" (i.e. this is a new game or round) and automatically assigns the player's turn
     // This condition is not met for a turn of a loaded round - therefore, it allows for rounds to continue from their last position
     // By default, player 1 is assigned to be the first player for the game
@@ -65,68 +73,66 @@ void Game::playRound()
     // Loops turns within rounds (and turns) until round end condition is met
     // while (table->tilesLeft())
     // {
-        std::cout << "TURN FOR PLAYER: " << this->current->getName() << std::endl;
-        std::cout << std::endl;
+    std::cout << "TURN FOR PLAYER: " << this->current->getName() << std::endl;
+    std::cout << std::endl;
 
-        table->printFactoryContents();
-        current->prntBoard();
+    table->printFactoryContents();
+    current->prntBoard();
 
+    std::string turnInput;
+    bool validInput = false;
+    while (!validInput)
+    {
+        std::cout << "> ";
 
-        std::string turnInput;
-        bool validInput = false;
-        while (!validInput)
+        if (std::cin.good())
         {
-            std::cout << "> ";
+            std::cin >> turnInput;
 
-            if (std::cin.good())
+            // Save the game, then continue the turn
+            if (turnInput == "save")
             {
-                std::cin >> turnInput;
-
-                // Save the game, then continue the turn
-                if (turnInput == "save")
-                {
-                    this->saveGame();
-                }
-
-                if (turnInput == "exit")
-                {
-                    // exit gane (without saving)
-                }
-
-                if(turnInput.length() == 3){
-                    // These conversions need to happen here as the value of these variables needs to be used to take the turn.
-                    // Convert factory/pattern line to int. Need to -48 because of how the numbers are represented by ASCII numbers (0 is 48, 1 is 49, etc.)
-                    factory = turnInput[0] - 48;
-                    patternLine = turnInput[2] - 48;
-                    // Assign tile colour choice to individual char
-                    tile = turnInput[1];
-                            
-                    // Pass the variables into our validation function so that range checking can be completed.
-                    validInput = validateTurn(factory, tile, patternLine);
-                }
-         
-            }
-            else
-            {
-                std::cout << "Invalid input." << std::endl;
+                this->saveGame();
             }
 
-            // Check if input is still invalid to print out a message to the user before re-entering the loop
-            if(!validInput){
-                std::cout << "Invalid input." << std::endl;
+            if (turnInput == "exit")
+            {
+                // exit gane (without saving)
+            }
+
+            if (turnInput.length() == 3)
+            {
+                // These conversions need to happen here as the value of these variables needs to be used to take the turn.
+                // Convert factory/pattern line to int. Need to -48 because of how the numbers are represented by ASCII numbers (0 is 48, 1 is 49, etc.)
+                factory = turnInput[0] - 48;
+                patternLine = turnInput[2] - 48;
+                // Assign tile colour choice to individual char
+                tile = turnInput[1];
+
+                // Pass the variables into our validation function so that range checking can be completed.
+                validInput = validateTurn(factory, tile, patternLine);
             }
         }
+        else
+        {
+            std::cout << "Invalid input." << std::endl;
+        }
 
+        // Check if input is still invalid to print out a message to the user before re-entering the loop
+        if (!validInput)
+        {
+            std::cout << "Invalid input." << std::endl;
+        }
+    }
 
-        // We've been given a valid user input, so we can now execute the logic for taking the turn
-        // Move tiles to their respective spots. 
+    // We've been given a valid user input, so we can now execute the logic for taking the turn
+    // Move tiles to their respective spots.
 
-        playerTurn(factory, tile, patternLine);
+    playerTurn(factory, tile, patternLine);
 
+    // The player who takes the first run in the round is decided by who has the first player token, it's not alternating
 
-        // The player who takes the first run in the round is decided by who has the first player token, it's not alternating
-
-        // Need to check for frst player token
+    // Need to check for frst player token
     //}
 
     std::cout << "====== End Round ======" << std::endl;
@@ -150,7 +156,11 @@ void Game::saveGame()
     std::cout << "GAME SAVED" << std::endl;
 }
 
-bool Game::validateTurn(int factory, char tile, int patternLine) 
+void loadGame(std::ifstream &fileInput)
+{
+}
+
+bool Game::validateTurn(int factory, char tile, int patternLine)
 {
 
     // Need to do range checking.
@@ -160,18 +170,21 @@ bool Game::validateTurn(int factory, char tile, int patternLine)
 
     bool validInput = false;
 
-    if(0 <= factory && factory <= 5) {
+    if (0 <= factory && factory <= 5)
+    {
         // Valid, check next
-        if(1 <= patternLine && patternLine <= 5) {
+        if (1 <= patternLine && patternLine <= 5)
+        {
             // Valid, check next
             // Check the tile colour input against our array of tile colours
-            for(int i = 0; i < NUM_COLOURS; i++){
-                if(toupper(tile) == tileColours[i]){
+            for (int i = 0; i < NUM_COLOURS; i++)
+            {
+                if (toupper(tile) == tileColours[i])
+                {
                     // If tile matches a possible tile colour then we know the previously checked inputs were also valid, meaning the entire input is valid.
-                        validInput = true;
-                    }
+                    validInput = true;
+                }
             }
-                
         }
     }
 
@@ -180,5 +193,4 @@ bool Game::validateTurn(int factory, char tile, int patternLine)
 
 void playerTurn(int factory, char tile, int patternLine)
 {
-
 }

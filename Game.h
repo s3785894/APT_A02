@@ -9,7 +9,7 @@ class Game
 {
 public:
     // Constructor for new game
-    Game(std::string player1, std::string player2);
+    Game(std::string playerOneName, std::string playerTwoName, std::string seed, bool hasSeeded);
     // Constructor for loaded game (takes file input as parameter)
     Game(std::ifstream &fileInput);
     // Deconstructor
@@ -29,6 +29,9 @@ public:
 
     // Saves game at any time
     void saveGame();
+
+    // Loads game from file
+    void loadGame(std::ifstream &fileInput);
 
     // Validate the input for a player turn, takes out a bulk of code from the round
     bool validateTurn(int factory, char tile, int patternLine);

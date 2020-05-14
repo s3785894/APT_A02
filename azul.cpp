@@ -8,12 +8,16 @@
 
 int displayMenu();
 void printCredits();
-void newGame();
+void newGame(std::string seed, bool hasSeeded);
 void loadGame();
 void howTo();
+void processArgs(int argc, char **argv, std::string *seed, bool *hasSeeded);
 
-int main(void)
+int main(int argc, char **argv)
 {
+    std::string *seed;
+    bool *hasSeeded = new bool(false);
+    processArgs(argc, argv, seed, hasSeeded);
 
     bool exit = false;
 
@@ -23,7 +27,7 @@ int main(void)
 
         if (mode == 1)
         {
-            newGame();
+            newGame(*seed, *hasSeeded);
         }
         else if (mode == 2)
         {
@@ -105,7 +109,7 @@ void printCredits()
     std::cout << std::endl;
 }
 
-void newGame()
+void newGame(std::string seed, bool hasSeeded)
 {
     std::string playerOneName;
     std::string playerTwoName;
@@ -116,7 +120,7 @@ void newGame()
     std::cout << "Enter name for Player 2: " << std::endl;
     std::cin >> playerTwoName;
 
-    std::unique_ptr<Game> game(new Game(playerOneName, playerTwoName));
+    std::unique_ptr<Game> game(new Game(playerOneName, playerTwoName, seed, hasSeeded));
     game->playGame();
 }
 
@@ -165,5 +169,15 @@ void howTo()
         ";
 
     std::cout << string << std::endl;
+}
 
+void processArgs(int argc, char **argv, std::string *seed, bool *hasSeeded)
+{
+    // If the command line has three arguments, this means that the third argument must be the seed
+    if (argc == 3)
+    {
+        // Take the seed
+        *seed = argv[2];
+        *hasSeeded = true;
+    }
 }
