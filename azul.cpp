@@ -15,7 +15,7 @@ void processArgs(int argc, char **argv, std::string *seed, bool *hasSeeded);
 
 int main(int argc, char **argv)
 {
-    std::string *seed;
+    std::string *seed = new std::string;
     bool *hasSeeded = new bool(false);
     processArgs(argc, argv, seed, hasSeeded);
 

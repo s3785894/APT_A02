@@ -8,7 +8,7 @@ Table::Table()
 
 Table::Table(std::string seed)
 {
-    // place code here after pushing and stuff
+    bag = new Bag(seed);
 }
 
 Table::~Table()

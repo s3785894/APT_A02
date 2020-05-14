@@ -9,17 +9,21 @@
 class Bag
 {
 public:
+    // Constructor for new games
     Bag();
+    // Constructor for new games w/ seeded order
+    Bag(std::string seed);
+    // Deconstructor
     ~Bag();
 
     // Fill the bag with out initial amount of tiles (game start)
-    void fillBag();
-    
+    void fillBag(std::string seed, bool isSeeded);
+
     // Refill the bag from our discarded tiles. Generally this will be the same as fill bag but if more factories are ever used this is needed
     void refillBag();
 
-    // Shuffle the bag randomly 
-    void shuffleBag();
+    // Shuffle the bag randomly
+    void shuffleBag(std::string seed, bool isSeeded);
 
     // Grab a tile from our bag
     char grabTile();
@@ -29,7 +33,6 @@ public:
 
     // Check if the bag is empty
     bool isEmpty();
-
 
 private:
     // Dynamically sized vector for tiles in play
