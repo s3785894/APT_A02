@@ -1,12 +1,19 @@
 #include "Game.h"
 #include <sstream>
 
-Game::Game(std::string playerOneName, std::string playerTwoName)
+Game::Game(std::string playerOneName, std::string playerTwoName, std::string seed, bool hasSeeded)
 {
     player1 = std::shared_ptr<Player>(new Player(playerOneName));
     player2 = std::shared_ptr<Player>(new Player(playerTwoName));
 
-    table = std::shared_ptr<Table>(new Table());
+    if (!hasSeeded)
+    {
+        table = std::shared_ptr<Table>(new Table());
+    }
+    else
+    {
+        table = std::shared_ptr<Table>(new Table(seed));
+    }
 
     current = nullptr;
     //first = nullptr;
@@ -41,12 +48,17 @@ void Game::playGame()
     // Finish last scoring and then determine winner
 }
 
+void Game::initialiseRound()
+{
+    table->initialiseRound();
+}
+
 void Game::playRound()
 {
 
     std::cout << "====== Start Round ======" << std::endl;
     std::cout << std::endl;
-    
+
     // Checks if there is no "current player" (i.e. this is the first round of a new game) and automatically assigns the player's turn
     // This condition is not met for a turn of a loaded round - therefore, it allows for rounds to continue from their last position
     // By default, player 1 is assigned to be the first player for the game
@@ -62,9 +74,12 @@ void Game::playRound()
         playerTurn();
 
         // After each turn, switch the current player
-        if (current == player1.get()){
+        if (current == player1.get())
+        {
             current = player2.get();
-        } else {
+        }
+        else
+        {
             current = player1.get();
         }
     }
@@ -81,90 +96,102 @@ void Game::playerTurn()
     int factory;
     int patternLine;
     char tile;
-    
+
     std::string turnInput;
     bool validInput = false;
 
-    std::cout << "TURN FOR PLAYER: " << current->getName() << std::endl << std::endl; 
+    std::cout << "TURN FOR PLAYER: " << current->getName() << std::endl
+              << std::endl;
 
-        // Print player board and table so the player can see what they're doing
-        table->printFactoryContents();
-        current->prntBoard();
+    // Print player board and table so the player can see what they're doing
+    table->printFactoryContents();
+    current->prntBoard();
 
-        std::cout << "Enter turn input: " << std::endl;
+    std::cout << "Enter turn input: " << std::endl;
 
-        while (!validInput)
+    while (!validInput)
+    {
+        std::cout << "> ";
+        if (std::cin.good())
         {
-            std::cout << "> ";
-            if (std::cin.good())
+            std::cin >> turnInput;
+
+            // Save the game, then continue the turn
+            if (turnInput == "save")
             {
-                std::cin >> turnInput;
-
-                // Save the game, then continue the turn
-                if (turnInput == "save")
-                {
-                    saveGame();
-                }
-
-                if (turnInput == "exit")
-                {
-                    // exit gane (without saving)
-                }
-
-                if(turnInput.length() == 3){
-                    // These conversions need to happen here as the value of these variables needs to be used to take the turn.
-                    // Convert factory/pattern line to int. Need to -48 because of how the numbers are represented by ASCII numbers (0 is 48, 1 is 49, etc.)
-                    factory = turnInput[0] - 48;
-                    patternLine = turnInput[2] - 48;
-                    // Assign tile colour choice to individual char and convert to upper case since tiles are always represented as uppercase chars
-                    tile = toupper(turnInput[1]);
-
-                    // Pass the variables into our validation function so that range checking can be completed.
-                    validInput = validateInput(factory, tile, patternLine);
-
-                    // If the input is valid, we then need to check if it's a valid move (If the chosen factory contains the chosen tile colour)
-                    if(validInput) {
-                        validInput = table->checkFactory(factory, tile);
-                    }
-
-                    // If the previous validation check passes, check if it's a valid move for the player board
-                    if(validInput && patternLine != 6) {
-                        validInput = current->checkBoard(patternLine, tile);
-                    }
-                }
-         
+                saveGame();
             }
-            else
+
+            if (turnInput == "exit")
             {
-                std::cout << "Invalid input." << std::endl;
+                // exit gane (without saving)
             }
 
-            // Check if input is still invalid to print out a message to the user before re-entering the loop so they can try again
-            if(!validInput){
-                std::cout << "Invalid input." << std::endl;
+            if (turnInput.length() == 3)
+            {
+                // These conversions need to happen here as the value of these variables needs to be used to take the turn.
+                // Convert factory/pattern line to int. Need to -48 because of how the numbers are represented by ASCII numbers (0 is 48, 1 is 49, etc.)
+                factory = turnInput[0] - 48;
+                patternLine = turnInput[2] - 48;
+                // Assign tile colour choice to individual char and convert to upper case since tiles are always represented as uppercase chars
+                tile = toupper(turnInput[1]);
+
+                // Pass the variables into our validation function so that range checking can be completed.
+                validInput = validateInput(factory, tile, patternLine);
+
+                // If the input is valid, we then need to check if it's a valid move (If the chosen factory contains the chosen tile colour)
+                if (validInput)
+                {
+                    validInput = table->checkFactory(factory, tile);
+                }
+
+                // If the previous validation check passes, check if it's a valid move for the player board
+                if (validInput && patternLine != 6)
+                {
+                    validInput = current->checkBoard(patternLine, tile);
+                }
             }
         }
 
-        // If we've reach here we know we've been given a valid user input, so we can now execute the logic for taking the turn
-        // Move tiles to their respective spots. 
-        if(patternLine != 6){
-            current->placeTiles(patternLine, tile, table->takeTiles(factory,tile));
-        }
-        
-        // If the pattern line is 6 (floor), we call on the place in floor function instead
-        if(patternLine == 6){
-            current->placeInFloor(tile, table->takeTiles(factory,tile));
+        if (turnInput == "exit")
+        {
+            // exit gane (without saving)
         }
 
-        // If taking from the centre table, and the first player token has not been taken, give it to the player
-        if(factory == 0 && table->checkFirstPlayerToken()){
-            current->placeInFloor('F', 1);
-            //first = current;
+        // Check if input is still invalid to print out a message to the user before re-entering the loop so they can try again
+        if (!validInput)
+        {
+            std::cout << "Invalid input." << std::endl;
         }
+    }
+    else
+    {
+        std::cout << "Invalid input." << std::endl;
+    }
 
-        std::cout << std::endl;
-        current->prntBoard();
-        LINE_DIVIDER;
+    // If we've reach here we know we've been given a valid user input, so we can now execute the logic for taking the turn
+    // Move tiles to their respective spots.
+    if (patternLine != 6)
+    {
+        current->placeTiles(patternLine, tile, table->takeTiles(factory, tile));
+    }
+
+    // If the pattern line is 6 (floor), we call on the place in floor function instead
+    if (patternLine == 6)
+    {
+        current->placeInFloor(tile, table->takeTiles(factory, tile));
+    }
+
+    // If taking from the centre table, and the first player token has not been taken, give it to the player
+    if (factory == 0 && table->checkFirstPlayerToken())
+    {
+        current->placeInFloor('F', 1);
+        //first = current;
+    }
+
+    std::cout << std::endl;
+    current->prntBoard();
+    LINE_DIVIDER;
 }
 
 bool Game::checkEnd()
@@ -187,7 +214,8 @@ void Game::saveGame()
     std::cout << "GAME SAVED" << std::endl;
 }
 
-void Game::scoreRound(){
+void Game::scoreRound()
+{
     std::cout << "SCORE ROUND" << std::endl;
 
     std::cout << "PLAYER 1: " << player1->getName() << std::endl;
@@ -197,8 +225,7 @@ void Game::scoreRound(){
     player2->resolveBoard();
 }
 
-
-bool Game::validateInput(int factory, char tile, int patternLine) 
+bool Game::validateInput(int factory, char tile, int patternLine)
 {
 
     // Need to do range checking.
@@ -208,21 +235,23 @@ bool Game::validateInput(int factory, char tile, int patternLine)
 
     bool validInput = false;
 
-    if(0 <= factory && factory <= 5) {
+    if (0 <= factory && factory <= 5)
+    {
         // Valid, check next
-        if(1 <= patternLine && patternLine <= 6) {
+        if (1 <= patternLine && patternLine <= 6)
+        {
             // Valid, check next
             // Check the tile colour input against our array of tile colours
-            for(int i = 0; i < NUM_COLOURS; i++){
-                if(tile == tileColours[i]){
+            for (int i = 0; i < NUM_COLOURS; i++)
+            {
+                if (tile == tileColours[i])
+                {
                     // If tile matches a possible tile colour then we know the previously checked inputs were also valid, meaning the entire input is valid.
-                        validInput = true;
-                    }
+                    validInput = true;
+                }
             }
-                
         }
     }
 
     return validInput;
 }
-

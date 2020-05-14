@@ -9,7 +9,7 @@ class Game
 {
 public:
     // Constructor for new game
-    Game(std::string player1, std::string player2);
+    Game(std::string playerOneName, std::string playerTwoName, std::string seed, bool hasSeeded);
     // Constructor for loaded game (takes file input as parameter)
     Game(std::ifstream &fileInput);
     // Deconstructor
@@ -35,11 +35,11 @@ public:
 
     // At round end, resolve the player boards and score the round
     void scoreRound();
+    // Loads game from file
+    void loadGame(std::ifstream &fileInput);
 
     // Validate the input for a player turn, takes out a bulk of code from the round
     bool validateInput(int factory, char tile, int patternLine);
-
-
 
 private:
     // Generic player pointers
@@ -47,7 +47,7 @@ private:
     std::shared_ptr<Player> player2;
 
     // Pointer used to track current player
-    Player* current;
+    Player *current;
 
     // Used to handle who has the first player token
     //Player* first;

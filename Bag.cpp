@@ -2,29 +2,37 @@
 #include <iostream>
 #include <vector>
 
-Bag::Bag(){
-    fillBag();
+Bag::Bag()
+{
+    fillBag("", false);
 }
 
-Bag::~Bag(){
-
+Bag::Bag(std::string seed)
+{
+    fillBag(seed, true);
 }
 
-void Bag::viewContents(){
-
+Bag::~Bag()
+{
 }
 
-void Bag::fillBag(){
+void Bag::viewContents()
+{
+}
+
+void Bag::fillBag(std::string seed, bool isSeeded)
+{
     //Fill the bag with our tiles, number of tiles per colour is determined by the max amount of tiles / the number of colours (even split)
-    for(int i = 0; i < NUM_COLOURS; i++){
+    for (int i = 0; i < NUM_COLOURS; i++)
+    {
 
-            /*
+        /*
             *   The for loop will loop as many times as there are different tiles
             *   
             *   The syntax for insert() is (position, amount, value)
             *   So what we have is (at end of our vector, insert an amount of tiles based on the calculation (20), insert the char at the index of the array that holds our possible tile colours)
             */
-            bag.insert(bag.end(), (MAX_TILES / NUM_COLOURS), tileColours[i]);
+        bag.insert(bag.end(), (MAX_TILES / NUM_COLOURS), tileColours[i]);
     }
 
     // Print out bag before shuffling --- TESTING PURPOSES
@@ -35,20 +43,21 @@ void Bag::fillBag(){
     // std::cout << std::endl;
 
     //Once our bag is filled with our tiles, we need to shuffle it
-    shuffleBag();
+    shuffleBag(seed, isSeeded);
 
     // Print out bag after shuffling --- TESTING PURPOSES
     // for(int i = 0; i < bag.size(); i++){
     //     std::cout << bag[i];
     // }
-
 }
 
-void Bag::refillBag(){
+void Bag::refillBag()
+{
     int size = discardedTiles.size();
 
-    // Iterate through for the length of the Box-Lid, inserting our tiles from the Box-Lid into the i-th index of the bag, starting from the beginning. 
-    for (int i = 0; i < size; i++){
+    // Iterate through for the length of the Box-Lid, inserting our tiles from the Box-Lid into the i-th index of the bag, starting from the beginning.
+    for (int i = 0; i < size; i++)
+    {
         bag.insert(bag.begin() + i, discardedTiles[i]);
     }
 
@@ -56,28 +65,35 @@ void Bag::refillBag(){
     discardedTiles.clear();
 
     // Shuffle the bag
-    shuffleBag();
+    shuffleBag("", false);
 }
 
-void Bag::shuffleBag(){
-	int size = bag.size();
+void Bag::shuffleBag(std::string seed, bool isSeeded)
+{
+    int size = bag.size();
     //Set the seed based on the current system time to ensure a different seed every tme
-    srand (1);
-
-    //srand (time (0));
+    if (isSeeded)
+    {
+        srand(std::stoi(seed));
+    }
+    else
+    {
+        srand(time(0));
+    }
 
     //Loops through each element of the vector
-	for (int i = 0; i < size - 1; i++)
-	{
+    for (int i = 0; i < size - 1; i++)
+    {
         //Generate a random number, j, in the range of our vector size
-		int j = i + rand() % (size - i);
+        int j = i + rand() % (size - i);
 
         //Swap the tile at index j with the tile at the current index i
-		std::swap(bag[i], bag[j]);
-	}
+        std::swap(bag[i], bag[j]);
+    }
 }
 
-char Bag::grabTile(){
+char Bag::grabTile()
+{
     //Since our bag is always randomly shuffled at the start, to grab random tiles we can grab tiles from the front of the bag
     char tile = bag.front();
 
@@ -88,12 +104,16 @@ char Bag::grabTile(){
     return tile;
 }
 
-bool Bag::isEmpty(){
+bool Bag::isEmpty()
+{
     bool isEmpty;
 
-    if (bag.size() > 0){
+    if (bag.size() > 0)
+    {
         isEmpty = false;
-    } else {
+    }
+    else
+    {
         isEmpty = true;
     }
 

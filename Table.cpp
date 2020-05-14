@@ -6,6 +6,11 @@ Table::Table()
     bag = new Bag();
 }
 
+Table::Table(std::string seed)
+{
+    bag = new Bag(seed);
+}
+
 Table::~Table()
 {
     delete bag;
