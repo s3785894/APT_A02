@@ -128,7 +128,7 @@ void Game::playerTurn()
                     }
 
                     // If the previous validation check passes, check if it's a valid move for the player board
-                    if(validInput) {
+                    if(validInput && patternLine != 6) {
                         validInput = current->checkBoard(patternLine, tile);
                     }
                 }
@@ -147,7 +147,14 @@ void Game::playerTurn()
 
         // If we've reach here we know we've been given a valid user input, so we can now execute the logic for taking the turn
         // Move tiles to their respective spots. 
-        current->placeTiles(patternLine, tile, table->takeTiles(factory,tile));
+        if(patternLine != 6){
+            current->placeTiles(patternLine, tile, table->takeTiles(factory,tile));
+        }
+        
+        // If the pattern line is 6 (floor), we call on the place in floor function instead
+        if(patternLine == 6){
+            current->placeInFloor(tile, table->takeTiles(factory,tile));
+        }
 
         // If taking from the centre table, and the first player token has not been taken, give it to the player
         if(factory == 0 && table->checkFirstPlayerToken()){
@@ -193,13 +200,13 @@ bool Game::validateInput(int factory, char tile, int patternLine)
     // Need to do range checking.
     // turnInput[0] should be 0-5 inclusive (factory)
     // turnInput[1] should match a possible tile color (tile)
-    // turnInput[2] should be 1-5 inclusive (patternLine)
+    // turnInput[2] should be 1-6 inclusive (patternLine) - patterLine 6 represents the floor
 
     bool validInput = false;
 
     if(0 <= factory && factory <= 5) {
         // Valid, check next
-        if(1 <= patternLine && patternLine <= 5) {
+        if(1 <= patternLine && patternLine <= 6) {
             // Valid, check next
             // Check the tile colour input against our array of tile colours
             for(int i = 0; i < NUM_COLOURS; i++){
