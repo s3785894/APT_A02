@@ -95,11 +95,6 @@ int Board::patternLineToMosaic(int patternLine)
     // Place our tile in the give positon on the mosaic
     mosaic[patternLine][position] = tile;
 
-    // Clear the pattern line THIS NEEDS TO BE MOVED BECAUSE THESE TILES NEED TO GO INTO THE BOX LID
-    for(int i = 0; i <= patternLine; i ++){
-        patternLines[patternLine][(MOSAIC_DIM - 1) - i] = '.';
-    }
-
     // EXECUTE LOGIC FOR SCORING
 
     int score = 0;
@@ -320,12 +315,47 @@ int Board::resolveBoard(){
         score = score - floorScore[i];
     }
 
-    // A player can never have less than 0 score, so if the score is negative, we reset it back to  0
-    if(score < 0){
-        score = 0;
-    }
-
     std::cout << std::endl << "SCORE " << score << std::endl;
 
     return score;
+}
+
+std::string Board::clearBoard(){
+    int column = MOSAIC_DIM - 1;
+    std::string tilesCleared;
+
+    // Starting from line one iterate through the pattern lines checking they are full
+    for(int i = 0; i < MOSAIC_DIM; i++){
+        // Initialise a boolean full to default value true, indicating the line is full
+        bool full = true;
+
+        // Check if the starting element on the pattern line is empty, if it is we don't need to bother checking the whole line
+        if(patternLines[i][column] != '.'){
+            for(int j = column; j >= (MOSAIC_DIM - 1) - i; j--){
+                // For each index of the pattern line, check if there is an empty space character. If so, the pattern line is not full, otherwise full will remain true
+                if(patternLines[i][j] == '.'){
+                    full = false;
+                }
+            }
+
+            if(full){
+                // Add the tiles to our string and then clear the pattern line
+                for(int j = column; j >= (MOSAIC_DIM - 1) - i; j--){
+                    tilesCleared.push_back(patternLines[i][j]);
+                    patternLines[i][j] = '.';
+                }
+            }
+        }
+    }
+
+    // Add the tiles to our string from the floor
+    for(int i = 0; i < floorTile->size(); i++){
+        char tile = floorTile->get(i);
+        tilesCleared.push_back(tile);
+    }
+
+    // After this is done, clear the floor
+    floorTile->clear();
+
+    return tilesCleared;
 }

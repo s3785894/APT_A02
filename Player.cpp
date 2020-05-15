@@ -63,6 +63,11 @@ void Player::resolveBoard(){
     score = score + board->resolveBoard();
 }
 
+std::string Player::clearBoard(){
+    std::string tilesCleared = board->clearBoard();
+    return tilesCleared;
+}
+
 
 
 std::string Player::toString()

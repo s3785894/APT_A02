@@ -3,6 +3,7 @@
 
 #include "Player.h"
 #include "Table.h"
+#include "Bag.h"
 #include <iostream>
 
 class Game
@@ -35,6 +36,10 @@ public:
 
     // At round end, resolve the player boards and score the round
     void scoreRound();
+
+    // At round end, clear the player boards of any pattern lines that are full, and all tiles on the floor, placing them in to the box lid
+    void clearBoards();
+
     // Loads game from file
     void loadGame(std::ifstream &fileInput);
 
@@ -58,7 +63,6 @@ private:
     // Tracks current state of game - true if game has ended
     bool gameEnd;
 
-    // Also need to add bag / lid
 
     const char tileColours[NUM_COLOURS] = {'R', 'Y', 'B', 'L', 'U'};
 };

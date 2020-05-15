@@ -40,6 +40,8 @@ void Bag::fillBag(std::string seed, bool isSeeded)
     //     std::cout << bag[i];
     // }
 
+    std::cout << "BAG CREATED" << std::endl;
+
     // std::cout << std::endl;
 
     //Once our bag is filled with our tiles, we need to shuffle it
@@ -118,4 +120,14 @@ bool Bag::isEmpty()
     }
 
     return isEmpty;
+}
+
+void Bag::placeInLid(const std::string& tiles){
+
+    // Iterate through our string of discarded tiles, adding each tile to the back of our box lid one-by-one
+    for(int i = 0; i < tiles.size(); i++){
+        char tile = tiles[i];
+        discardedTiles.push_back(tile);
+    }
+    
 }

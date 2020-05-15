@@ -35,6 +35,8 @@ public:
 
     void resolveBoard();
 
+    std::string clearBoard();
+
     void endRound();
 
 private:

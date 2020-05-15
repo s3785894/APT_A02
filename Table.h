@@ -46,6 +46,9 @@ public:
     // Prints contents of factory
     void printFactoryContents();
 
+    // Pass the tiles used in a round to the bag to be placed in to the box lid
+    void placeInLid(const std::string& tiles);
+
 private:
     // Stores tiles in the 'table' centre. Dynamically sized as tiles will be continually added throughout the game
     std::vector<char> tableCentre;

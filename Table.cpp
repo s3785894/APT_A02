@@ -192,3 +192,7 @@ bool Table::checkFirstPlayerToken(){
 
     return tokenExists;
 }
+
+void Table::placeInLid(const std::string& tiles){
+    bag->placeInLid(tiles);
+}

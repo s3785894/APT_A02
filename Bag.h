@@ -31,6 +31,9 @@ public:
     // For testing, not sure if would ever be needed in the actual game
     void viewContents();
 
+    // Place the discarded tiles from a bag in to the box lid
+    void placeInLid(const std::string& tiles);
+
     // Check if the bag is empty
     bool isEmpty();
 

@@ -85,6 +85,7 @@ void Game::playRound()
     }
 
     scoreRound();
+    clearBoards();
 
     std::cout << "====== End Round ======" << std::endl;
     std::cout << std::endl;
@@ -124,7 +125,7 @@ void Game::playerTurn()
 
             if (turnInput == "exit")
             {
-                // exit gane (without saving)
+                exit(EXIT_SUCCESS);
             }
 
             if (turnInput.length() == 3)
@@ -163,10 +164,6 @@ void Game::playerTurn()
         {
             std::cout << "Invalid input." << std::endl;
         }
-    }
-    else
-    {
-        std::cout << "Invalid input." << std::endl;
     }
 
     // If we've reach here we know we've been given a valid user input, so we can now execute the logic for taking the turn
@@ -224,6 +221,17 @@ void Game::scoreRound()
     std::cout << "PLAYER 2: " << player2->getName() << std::endl;
     player2->resolveBoard();
 }
+
+void Game::clearBoards()
+{
+    std::string player1String = player1->clearBoard();
+    std::string player2String = player2->clearBoard();
+    
+    std::string tiles = player1String + player2String;
+
+    table->placeInLid(tiles);
+}
+
 
 bool Game::validateInput(int factory, char tile, int patternLine)
 {

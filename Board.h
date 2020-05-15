@@ -37,6 +37,9 @@ public:
     //Clear floor
     void clearFloor();
 
+    // Clear board of the floor tiles and any pattern lines that are full. Return a string of the tiles cleared so that these can be placed in the box lid
+    std::string clearBoard();
+
     // After making the necessary moves, an int will be returned which represents the players earned score for that round
     int resolveBoard();
 
