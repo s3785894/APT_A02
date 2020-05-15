@@ -37,6 +37,9 @@ public:
     //Clear floor
     void clearFloor();
 
+    // Check for end game condition
+    bool isRowFilled();
+
     // Clear board of the floor tiles and any pattern lines that are full. Return a string of the tiles cleared so that these can be placed in the box lid
     std::string clearBoard();
 
@@ -45,6 +48,8 @@ public:
 
     // Check if the chosen tile is able to be placed in the chosen pattern line (Meaning the pattern line doesn't already contain another colour or the chosen colour isn't already placed in that row on the mosaic)
     bool checkBoard(int patternLine, char tileType);
+
+    int scoreBonus();
 
 private:
     Mosaic mosaic;
@@ -63,6 +68,9 @@ private:
     };
 
     int floorScore[7] = {1, 1, 2, 2, 2, 3, 3};
+
+    // Holds our endgame condition. Storing in a bool allows us to simply check the value of the boolean in the game loop, instead of constantly needing to iterate through our array each time
+    bool rowFilled;
 };
 
 #endif //BOARD_H

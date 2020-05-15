@@ -39,13 +39,10 @@ void Game::playGame()
     {
         table->initialiseRound();
         playRound();
-
-        // Whoever has the first player token now becomes the current player, to let them take the first turn for the next round
-        //current = first;
     }
 
-    // Game over
-    // Finish last scoring and then determine winner
+    // If we're exiting the above loop, it means that the end game condition has been met. Therefore, we need to do the final scoring and determine a winner
+    scoreGame();
 }
 
 void Game::initialiseRound()
@@ -188,17 +185,17 @@ void Game::playerTurn()
 
     std::cout << std::endl;
     current->prntBoard();
-    
+
 }
 
 bool Game::checkEnd()
 {
     bool gameEnd = false;
-    // Check the players board for a full horizontal row (maybe call on a function in player that does this)
 
-    // if(horizontal row complete){
-    //     this->gameEnd = true;
-    // }
+    // If either player has a full row on their board, the end game condition has been met
+    if(player1->isRowFilled() == true || player2->isRowFilled() == true){
+        gameEnd = true;
+    }
 
     return gameEnd;
 }
@@ -232,7 +229,6 @@ void Game::clearBoards()
     table->placeInLid(tiles);
 }
 
-
 bool Game::validateInput(int factory, char tile, int patternLine)
 {
 
@@ -263,3 +259,39 @@ bool Game::validateInput(int factory, char tile, int patternLine)
 
     return validInput;
 }
+
+void Game::scoreGame(){
+    // Final scoring rules:
+	// 	Additional 2 points per every complete row of 5 tiles 
+	// 	Additional 7 points for every complete column of 5 tiles
+    //  Additional 10 points for every color of tile of which there are 5 on the wall
+
+    // After these extra points have been added, the player with the highest score wins. 
+    // If the game is a tie, whoever has the most completed rows wins - Need to therefore check for this
+
+    // Calculate the end game bonuses for each player
+    player1->scoreBonus();
+    player1->scoreBonus();
+
+    // Get the final scores for each player
+    int player1Score = player1->getScore();
+    int player2Score = player2->getScore();
+
+    std::cout << player1->getName() << "'s final score: " << player1Score << std::endl;
+    std::cout << player2->getName() << "'s final score: " << player2Score << std::endl;
+
+    if(player1Score > player2Score){
+        std::cout << player1->getName() << " is the Winner!" << std::endl;
+    } else if(player2Score > player1Score){
+        std::cout << player2->getName() << " is the Winner!" << std::endl;
+    } else {
+        // Scores are tied -- TO DO
+    }
+}
+
+
+
+
+
+
+

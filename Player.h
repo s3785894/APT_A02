@@ -20,8 +20,13 @@ public:
     int getScore();
     // Add a score from a round to the players total
     void addScore(int roundScore);
+
+    // Check if end game condition is met
+    bool isRowFilled();
+
     // Returns player's board
     void prntBoard();
+    
     // Converts all attributes to string (for use in saving to file)
     std::string toString();
 
@@ -38,6 +43,8 @@ public:
     std::string clearBoard();
 
     void endRound();
+
+    void scoreBonus();
 
 private:
     // Pointer to player's board

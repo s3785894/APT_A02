@@ -29,6 +29,12 @@ int Player::getScore()
     return score;
 }
 
+bool Player::isRowFilled()
+{
+    return board->isRowFilled();
+}
+
+
 void Player::addScore(int roundScore)
 {
     if(score + roundScore < 0){
@@ -83,4 +89,10 @@ std::string Player::toString()
 
     // Placeholder return statement
     return name;
+}
+
+void Player::scoreBonus(){
+    int scoreBonus = board->scoreBonus();
+
+    addScore(scoreBonus);
 }

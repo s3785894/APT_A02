@@ -27,6 +27,8 @@ Board::Board()
     //intialise floor
     floorTile = new LinkedList();
 
+
+    rowFilled = false;
 }
 
 Board::Board(Mosaic mosaic)
@@ -228,7 +230,6 @@ void Board::prntBoard()
     std::cout << std::endl;
 }
 
-
 void Board::clearFloor(){
     floorTile->clear();
 }
@@ -317,6 +318,21 @@ int Board::resolveBoard(){
         score = score - floorScore[i];
     }
 
+    // After moving all necessary tiles to the pattern line, do a final check of the board to see if any rows are filled (end game condition)
+    for(int i = 0; i < MOSAIC_DIM; i++){
+        int tileCount;
+        for(int j = 0; j < MOSAIC_DIM; j++){
+            // If the current index is not empty, increase tile count
+            if(mosaic[i][j] != '.'){
+                tileCount++;
+            }
+        }
+        // After going through the whole row, if the tile count is 5 that means the row is full, so set rowFilled to true
+        if(tileCount == 5){
+            rowFilled = true;
+        }
+    }
+
     return score;
 }
 
@@ -358,4 +374,95 @@ std::string Board::clearBoard(){
     floorTile->clear();
 
     return tilesCleared;
+}
+
+bool Board::isRowFilled(){
+    return rowFilled;
+}
+
+int Board::scoreBonus(){
+    // Final scoring rules:
+	// 	Additional 2 points per every complete row of 5 tiles 
+	// 	Additional 7 points for every complete column of 5 tiles
+    //  Additional 10 points for every color of tile of which there are 5 on the wall
+
+    int score;
+
+    // Check amount of rows completed:
+    int rowsComplete = 0;
+
+    for(int i = 0; i < MOSAIC_DIM; i++){
+        int tileCount;
+        for(int j = 0; j < MOSAIC_DIM; j++){
+            // If the current index is not empty, increase tile count
+            if(mosaic[i][j] != '.'){
+                tileCount++;
+            }
+        }
+        // After going through the whole row, if the tile count is 5 that means the row is full, so we increment rowsComplete by 1
+        if(tileCount == 5){
+            rowsComplete++;
+        }
+    }
+
+    // Check amount fo columns completed:
+    int colComplete = 0;
+
+    for(int i = 0; i < MOSAIC_DIM; i++){
+        int tileCount;
+        for(int j = 0; j < MOSAIC_DIM; j++){
+            // If the current index is not empty, increase tile count
+            if(mosaic[j][i] != '.'){
+                tileCount++;
+            }
+        }
+        // After going through the whole column, if the tile count is 5 that means the column is full, so we increment colComplete by 1
+        if(tileCount == 5){
+            colComplete++;
+        }
+    }
+
+    // Check how many of each colour tile there is:
+    int red = 0;
+    int blue = 0;
+    int lBlue = 0;
+    int yellow = 0;
+    int black = 0;
+
+    for(int i = 0; i < MOSAIC_DIM; i++){
+        for(int j = 0; j < MOSAIC_DIM; j++){
+            if(mosaic[j][i] == 'R'){
+                red++;
+            } else if (mosaic[j][i] == 'U'){
+                black++;
+            } else if (mosaic[j][i] == 'Y'){
+                yellow++;
+            } else if (mosaic[j][i] == 'B'){
+                blue++;
+            } else if (mosaic[j][i] == 'L'){
+                lBlue++;
+            }
+        }
+    }
+
+    // Add 10 points for every colour that there are 5 of on the mosaic
+    if(red == 5){
+        score = score + 10;
+    } else if (black == 5){
+        score = score + 10;
+    } else if (yellow == 5){
+        score = score + 10;
+    } else if (blue == 5){
+        score = score + 10;
+    } else if (lBlue == 5){
+        score = score + 10;
+    }
+
+    // For every completed row, add 2 points.
+    // For every completed column, add 7 points
+    score = score + (rowsComplete * 2) + (colComplete * 7);
+
+
+    // Return the bonus points 
+    return score;
 }

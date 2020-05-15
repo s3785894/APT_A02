@@ -43,6 +43,9 @@ public:
     // Loads game from file
     void loadGame(std::ifstream &fileInput);
 
+    // Complete the end game scoring and determine the winner
+    void scoreGame();
+
     // Validate the input for a player turn, takes out a bulk of code from the round
     bool validateInput(int factory, char tile, int patternLine);
 
