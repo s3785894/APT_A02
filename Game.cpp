@@ -188,7 +188,7 @@ void Game::playerTurn()
 
     std::cout << std::endl;
     current->prntBoard();
-    LINE_DIVIDER;
+    
 }
 
 bool Game::checkEnd()
@@ -213,20 +213,20 @@ void Game::saveGame()
 
 void Game::scoreRound()
 {
-    std::cout << "SCORE ROUND" << std::endl;
-
-    std::cout << "PLAYER 1: " << player1->getName() << std::endl;
+    std::cout << "Round Scoring" << std::endl; 
     player1->resolveBoard();
 
-    std::cout << "PLAYER 2: " << player2->getName() << std::endl;
     player2->resolveBoard();
+
+    std::cout << player1->getName() << "'s total score: " << player1->getScore() << std::endl;
+    std::cout << player2->getName() << "'s total score: " << player2->getScore() << std::endl;
 }
 
 void Game::clearBoards()
 {
     std::string player1String = player1->clearBoard();
     std::string player2String = player2->clearBoard();
-    
+
     std::string tiles = player1String + player2String;
 
     table->placeInLid(tiles);

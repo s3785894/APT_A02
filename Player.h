@@ -18,8 +18,8 @@ public:
     std::string getName();
     // Returns current score
     int getScore();
-    // Sets new score
-    void setScore(int score);
+    // Add a score from a round to the players total
+    void addScore(int roundScore);
     // Returns player's board
     void prntBoard();
     // Converts all attributes to string (for use in saving to file)

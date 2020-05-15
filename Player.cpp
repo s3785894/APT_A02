@@ -29,9 +29,13 @@ int Player::getScore()
     return score;
 }
 
-void Player::setScore(int score)
+void Player::addScore(int roundScore)
 {
-    this->score = score;
+    if(score + roundScore < 0){
+        score = 0;
+    } else {
+        score = score + roundScore;
+    }
 }
 
 void Player::prntBoard()
@@ -60,7 +64,10 @@ void Player::placeInFloor(char tileType, int tileCount){
 }
 
 void Player::resolveBoard(){
-    score = score + board->resolveBoard();
+    int roundScore = board->resolveBoard();
+    addScore(roundScore);
+
+    std::cout << name <<"'s score for the round: " << roundScore << std::endl;
 }
 
 std::string Player::clearBoard(){

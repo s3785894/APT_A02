@@ -108,10 +108,11 @@ int Board::patternLineToMosaic(int patternLine)
     if(position == 0 || mosaic[patternLine][position - 1] == '.'){
         adjacentLeft = false;
     } else {
+        int curPos = position;
         // Iterate through our mosaic moving down. The loop will continue until an empty space or the edge of the mosaic is reached
-        while(mosaic[patternLine][position] != '.' || position >= 0){
+        while(mosaic[patternLine][curPos] != '.' && curPos >= 0){
             score++;
-            position--;
+            curPos--;
         }
     }
 
@@ -119,14 +120,15 @@ int Board::patternLineToMosaic(int patternLine)
     if(position == 4 || mosaic[patternLine][position + 1] == '.'){
         adjacentRight = false;
     } else {
+        int curPos = position;
         // If there are adjacent tiles to the left it means we have already counted our current tile in the scoring, which means we need to remove a point so the tile is not counted twice for the same row
         if(adjacentLeft){
             score--;
         }
         // Iterate through our mosaic moving down. The loop will continue until an empty space or the edge of the mosaic is reached
-        while(mosaic[patternLine][position] != '.' || position <= MOSAIC_DIM){
+        while(mosaic[patternLine][curPos] != '.' && curPos < MOSAIC_DIM){
             score++;
-            position++;
+            curPos++;
         }
     }
 
@@ -134,10 +136,11 @@ int Board::patternLineToMosaic(int patternLine)
     if(patternLine == 0 || mosaic[patternLine - 1][position] == '.'){
         adjacentUp = false;
     } else {
+        int curRow = patternLine;
         // Iterate through our mosaic moving down. The loop will continue until an empty space or the edge of the mosaic is reached
-        while(mosaic[patternLine][position] != '.' || patternLine >= 0){
+        while(mosaic[curRow][position] != '.' && curRow >= 0){
             score++;
-            patternLine--;
+            curRow--;
         }
     }
     
@@ -145,14 +148,15 @@ int Board::patternLineToMosaic(int patternLine)
     if(patternLine == 4 || mosaic[patternLine + 1][position] == '.'){
         adjacentDown = false;
     } else {
+        int curRow = patternLine;
         // If there are adjacent tiles above it means we have already counted our current tile in the scoring, which means we need to remove a point so the tile is not counted twice for the same column
         if(adjacentUp){
             score--;
         }
         // Iterate through our mosaic moving down. The loop will continue until an empty space or the edge of the mosaic is reached
-        while(mosaic[patternLine][position] != '.' || patternLine <= MOSAIC_DIM){
+        while(mosaic[curRow][position] != '.' && curRow < MOSAIC_DIM){
             score++;
-            patternLine++;
+            curRow++;
         }
     }
 
@@ -291,8 +295,6 @@ int Board::resolveBoard(){
 
             // After the whole line has been checked, if full is still true it means our pattern line is full and a tile should be moved to the mosaic. 
             // During this, the score for the tile on the mosaic will also be calculated
-            std::cout << "LINE " << i << " IS " << full << std::endl;
-
             if(full){
                score = score + patternLineToMosaic(i);
             }
@@ -314,8 +316,6 @@ int Board::resolveBoard(){
     for(int i = 0; i < floorTiles; i ++){
         score = score - floorScore[i];
     }
-
-    std::cout << std::endl << "SCORE " << score << std::endl;
 
     return score;
 }
