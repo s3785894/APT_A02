@@ -320,7 +320,7 @@ int Board::resolveBoard(){
 
     // After moving all necessary tiles to the pattern line, do a final check of the board to see if any rows are filled (end game condition)
     for(int i = 0; i < MOSAIC_DIM; i++){
-        int tileCount;
+        int tileCount = 0;
         for(int j = 0; j < MOSAIC_DIM; j++){
             // If the current index is not empty, increase tile count
             if(mosaic[i][j] != '.'){
@@ -386,13 +386,13 @@ int Board::scoreBonus(){
 	// 	Additional 7 points for every complete column of 5 tiles
     //  Additional 10 points for every color of tile of which there are 5 on the wall
 
-    int score;
+    int score = 0;
 
     // Check amount of rows completed:
     int rowsComplete = 0;
 
     for(int i = 0; i < MOSAIC_DIM; i++){
-        int tileCount;
+        int tileCount = 0;
         for(int j = 0; j < MOSAIC_DIM; j++){
             // If the current index is not empty, increase tile count
             if(mosaic[i][j] != '.'){
@@ -409,7 +409,7 @@ int Board::scoreBonus(){
     int colComplete = 0;
 
     for(int i = 0; i < MOSAIC_DIM; i++){
-        int tileCount;
+        int tileCount = 0;
         for(int j = 0; j < MOSAIC_DIM; j++){
             // If the current index is not empty, increase tile count
             if(mosaic[j][i] != '.'){
