@@ -96,6 +96,10 @@ void Bag::shuffleBag(std::string seed, bool isSeeded)
 
 char Bag::grabTile()
 {
+    // Each time a tile is grabbed, checked if the bag is empty, and if so, refill and shuffle the bag first
+    if(bag.size() == 0){
+        refillBag();
+    }
     //Since our bag is always randomly shuffled at the start, to grab random tiles we can grab tiles from the front of the bag
     char tile = bag.front();
 
