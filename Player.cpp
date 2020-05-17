@@ -7,30 +7,30 @@ Player::Player(std::string name)
     this->score = 0;
 }
 
-Player::Player(std::string name, Board *board, int score)
+Player::Player(std::vector<std::string> loadedPlayer1)
 {
-    this->name = name;
-    this->board = board;
-    this->score = score;
+    // Load player name and score, and check score validity (must be above zero)
+    std::string playerName = loadedPlayer1.at(0);
+    int score = std::stoi(loadedPlayer1.at(2));
+    if (score < 0)
+    {
+        // throw error
+    }
 
-    /*
-    std::string playerName = fileLines.at(8);
-    std::string currentPlayerAsString = fileLines.at(9);
-    if (currentPlayerAsString == "True" || currentPlayerAsString == "False")
+    // Get subvectors representing boad attributes and pass them into Board constructor
+    std::vector<std::string> patternLines;
+    for (int i = 3; i < 8; i++)
     {
-        if (currentPlayerAsString == "True")
-        {
-            isPlayerOneCurrent = true;
-        }
+        patternLines.at(i - 3) = loadedPlayer1.at(i);
     }
-    else
+    std::vector<std::string> mosaicLines;
+    for (int i = 8; i < 13; i++)
     {
-        throw;
+        mosaicLines.at(i - 8) = loadedPlayer1.at(i);
     }
-    int score = std::stoi(fileLines.at(9));
-    // BOARD PROCESSING
-    Board *board;
-    */
+    std::string tileLineString = loadedPlayer1.at(13);
+
+    board = new Board(patternLines, mosaicLines, tileLineString);
 }
 
 Player::~Player()

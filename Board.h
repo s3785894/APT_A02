@@ -13,7 +13,7 @@ public:
     // Constructor for new board
     Board();
     // Constructor for loaded board
-    Board(Mosaic mosaic);
+    Board(std::vector<std::string> patternLines, std::vector<std::string> mosaicLines, std::string tileLineString);
     // Deconstructor
     ~Board();
 

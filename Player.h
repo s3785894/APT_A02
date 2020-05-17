@@ -3,6 +3,7 @@
 
 #include "Board.h"
 #include <string>
+#include <vector>
 
 class Player
 {
@@ -10,7 +11,7 @@ public:
     // Constructor for new (not loaded) player
     Player(std::string name);
     // Constructor for loaded player
-    Player(std::string name, Board *board, int score);
+    Player(std::vector<std::string> loadedPlayer1);
     // Deconstructor
     ~Player();
 

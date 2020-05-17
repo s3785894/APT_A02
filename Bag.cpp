@@ -1,6 +1,7 @@
 #include "Bag.h"
 #include <iostream>
 #include <vector>
+#include <sstream>
 
 Bag::Bag()
 {
@@ -10,6 +11,24 @@ Bag::Bag()
 Bag::Bag(std::string seed)
 {
     fillBag(seed, true);
+}
+
+Bag::Bag(std::string tileBagString, std::string tileLidString)
+{
+    char tile;
+
+    // Processes string (line) from file into ordered tile bag
+    std::stringstream tileBagStream(tileBagString);
+    while (tileBagStream >> tile)
+    {
+        bag.push_back(tile);
+    }
+    // Processes string (line) from file into ordered tile bag
+    std::stringstream tileLidStream(tileLidString);
+    while (tileLidStream >> tile)
+    {
+        discardedTiles.push_back(tile);
+    }
 }
 
 Bag::~Bag()

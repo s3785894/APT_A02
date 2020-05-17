@@ -317,78 +317,62 @@ void Game::scoreGame()
 
 void Game::loadGame(std::ifstream &fileInput)
 {
-    /*
-    std::vector<std::string> fileLines;
-    std::string line;
-    while (std::getline(fileInput, line))
-    {
-        fileLines.push_back(line);
-    }
-
     try
     {
-        // Variables used to ensure that no errors are loaded into the game
+        // Take all lines of the input file and place them into a vector
+        // Throws an exception if not all lines of the file exist
+        std::vector<std::string> fileLines;
+        std::string line;
+
+        while (std::getline(fileInput, line))
+        {
+            fileLines.push_back(line);
+        }
+
+        if (!(fileLines.size() == 31))
+        {
+            throw std::exception();
+        }
+
+        // Checks the current player via Player 1's current player state
+        // Throws exception if the player is not listed as either True or False
         bool isPlayerOneCurrent = false;
-
-        // FACTORY ZERO
-        std::stringstream factoryZeroStream(fileLines.at(0));
-        std::vector<char> factoryZero;
-        char tile;
-        while (factoryZeroStream >> tile)
+        if (fileLines.at(9) == "True" || fileLines.at(9) == "False")
         {
-            factoryZero.push_back(tile);
-        }
-        // INDIVIDUAL FACTORIES
-        Factories factories;
-        for (int i = 0; i < 5; i++)
-        {
-            std::stringstream lineStream(fileLines.at(i + 1));
-            for (int j = 0; j < FACTORY_SIZE; j++)
-            {
-                factoryZeroStream >> factories[i][j];
-            }
-        }
-        // TILE BAG
-        std::stringstream tileBagStream(fileLines.at(5));
-        std::vector<char> tileBag;
-        std::string tile;
-        while (tileBagStream >> tile)
-        {
-            tileBag.push_back(tile);
-        }
-        // TILE LID
-        std::stringstream tileLidStream(fileLines.at(6));
-        std::vector<char> tileLid;
-        std::string tile;
-        while (tileLidStream >> tile)
-        {
-            tileLid.push_back(tile);
-        }
-        Bag *bag = new Bag(tileBag, tileLid);
-
-        table = std::shared_ptr<Table>(new Table(factoryZero, factories, bag));
-
-        // PLAYER ONE
-        std::string playerName = fileLines.at(8);
-        std::string currentPlayerAsString = fileLines.at(9);
-        if (currentPlayerAsString == "True" || currentPlayerAsString == "False")
-        {
-            if (currentPlayerAsString == "True")
+            if (fileLines.at(9) == "True")
             {
                 isPlayerOneCurrent = true;
             }
         }
         else
         {
-            throw;
+            throw std::exception();
         }
-        int score = std::stoi(fileLines.at(9));
-        // BOARD PROCESSING
-        Board *board;
 
-        player1 = std::shared_ptr<Player>(new Player(playerName, board, score));
-        // PLAYER TWO
+        // Takes file lines from vector that relate to the table and pass them into the table via a constructor
+        std::vector<std::string> loadedTable;
+        for (int i = 0; i < 8; i++)
+        {
+            loadedTable.at(i) = fileLines.at(i);
+        }
+        table = std::shared_ptr<Table>(new Table(loadedTable));
 
+        // Take file lines from vector that relate to each player (+ their board) and pass them into their individual player objects
+        std::vector<std::string> loadPlayer1;
+        for (int i = 8; i < 20; i++)
+        {
+            loadedTable.at(i - 8) = fileLines.at(i);
+        }
+        player1 = std::shared_ptr<Player>(new Player(loadPlayer1));
+
+        std::vector<std::string> loadPlayer2;
+        for (int i = 20; i < fileLines.size(); i++)
+        {
+            loadedTable.at(i - 20) = fileLines.at(i);
+        }
+        player2 = std::shared_ptr<Player>(new Player(loadPlayer2));
+
+        // Sets up current player
         if (isPlayerOneCurrent)
         {
             current = player1.get();
@@ -401,7 +385,6 @@ void Game::loadGame(std::ifstream &fileInput)
     catch (...)
     {
         std::cout << "An error has occured when loading the file. Incorrect file format detected. Terminating program." << std::endl;
-        // terminate program
+        exit(0);
     }
-    */
 }
