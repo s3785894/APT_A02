@@ -571,30 +571,43 @@ int Board::scoreBonus()
 
 std::string Board::toString()
 {
-    std::string details = "";
+    std::string details = "\n";
     // Pattern Lines
-    for (int row = 0; row < MOSAIC_DIM; row++)
-    {
-        for (int col = 0; col < (row + 1); col++)
-        {
-            details += patternLines[row][col];
-            details += " ";
-        }
-        details += "\n";
-    }
-    // Mosaic
-    for (int i = 0; i < MOSAIC_DIM; i++)
-    {
-        for (int j = 0; j < MOSAIC_DIM; j++)
-        {
-            details += mosaic[i][j];
-            if (!(i == MOSAIC_DIM - 1))
-            {
+    for (int row = 0; row < MOSAIC_DIM; row++){
+        for (int col =0; col < MOSAIC_DIM; col++){
+            if(col+1 >=MOSAIC_DIM - row){
+                details += patternLines[row][col];
                 details += " ";
+            }else{
+                details += "  ";
             }
         }
         details += "\n";
     }
+
+    // Mosaic
+        for (int i = 0; i < MOSAIC_DIM; i++)
+    {
+        for (int j = 0; j < MOSAIC_DIM; j++)
+        {
+            details += mosaic[i][j];
+            details += " ";
+
+        }
+        details += "\n";
+    }
+    // for (int i = 0; i < MOSAIC_DIM; i++)
+    // {
+    //     for (int j = 0; j < MOSAIC_DIM; j++)
+    //     {
+    //         details += mosaic[i][j];
+    //         if (!(i == MOSAIC_DIM - 1))
+    //         {
+    //             details += " ";
+    //         }
+    //     }
+    //     details += "\n";
+    // }
     // Floor line
     for (int i = 0; i < floorTile->size(); i++)
     {
