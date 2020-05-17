@@ -14,7 +14,7 @@ public:
     // Constructor for new games w/ seeded order
     Bag(std::string seed);
     // Constructor for loaded games
-    Bag(std::vector<char> tileBag, std::vector<char> tileLid);
+    Bag(std::string tileBagString, std::string tileLidString);
     // Deconstructor
     ~Bag();
 

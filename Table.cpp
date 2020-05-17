@@ -1,5 +1,6 @@
 #include "Table.h"
 #include <iostream>
+#include <sstream>
 
 Table::Table()
 {
@@ -9,6 +10,30 @@ Table::Table()
 Table::Table(std::string seed)
 {
     bag = new Bag(seed);
+}
+
+Table::Table(std::vector<std::string> tableLines)
+{
+    char tile;
+
+    // Table center
+    std::stringstream tableCentreStream(tableLines.at(0));
+    while (tableCentreStream >> tile)
+    {
+        tableCentre.push_back(tile);
+    }
+    // regular factories
+    for (int i = 0; i < NUM_FACTORIES; i++)
+    {
+        std::stringstream tableCentreStream(tableLines.at(i + 1));
+        int colNum = 0;
+        while (tableCentreStream >> tile)
+        {
+            tableCentre.push_back(tile);
+            colNum++;
+        }
+    }
+    bag = new Bag(tableLines.at(6), tableLines.at(7));
 }
 
 Table::~Table()

@@ -15,7 +15,7 @@ public:
     // Constructor for new games (seeded)
     Table(std::string seed);
     // Constructor for loaded games
-    Table(std::vector<char> tableCentre, Factories factories, Bag *bag);
+    Table(std::vector<std::string> tableLines);
     // Deconstructor
     ~Table();
 
