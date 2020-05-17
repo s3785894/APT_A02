@@ -126,10 +126,10 @@ void newGame(std::string seed, bool hasSeeded)
 
 void loadGame()
 {
-    // TODO: improve filename input validation, fix errors with throwing file stream exception, fix game constructor
     std::cout << "Enter the filename from which to load the game" << std::endl;
     try
     {
+        std::cout << "> ";
         std::string filename;
         std::cin >> filename;
 
@@ -138,13 +138,13 @@ void loadGame()
 
         if (!fileInput.good())
         {
-            //throw std::ios_base::failure;
+            throw std::exception();
         }
 
         std::unique_ptr<Game> game(new Game(fileInput));
         game->playGame();
     }
-    catch (std::ios_base::failure e)
+    catch (std::exception e)
     {
         std::cout << "Error when accessing file - please ensure file exists before attempting to load it.";
     }

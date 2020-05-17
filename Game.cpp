@@ -24,6 +24,7 @@ Game::Game(std::string playerOneName, std::string playerTwoName, std::string see
 Game::Game(std::ifstream &fileInput)
 {
     // take input based on whatever file format we need to use
+    loadGame(fileInput);
 }
 
 Game::~Game()
@@ -329,17 +330,20 @@ void Game::loadGame(std::ifstream &fileInput)
             fileLines.push_back(line);
         }
 
-        if (!(fileLines.size() == 31))
+        if (!(fileLines.size() == 34))
         {
             throw std::exception();
         }
+        std::cout << "SIZE GOOD." << std::endl;
 
         // Checks the current player via Player 1's current player state
         // Throws exception if the player is not listed as either True or False
+        /*
         bool isPlayerOneCurrent = false;
-        if (fileLines.at(9) == "True" || fileLines.at(9) == "False")
+        std::cout << "CHECKING PLAYER STATE." << std::endl;
+        if (fileLines.at(10) == "True" || fileLines.at(10) == "False")
         {
-            if (fileLines.at(9) == "True")
+            if (fileLines.at(10) == "True")
             {
                 isPlayerOneCurrent = true;
             }
@@ -348,30 +352,42 @@ void Game::loadGame(std::ifstream &fileInput)
         {
             throw std::exception();
         }
-
+        std::cout << "DETERMINED CURRENT PLAYER." << std::endl;
+        */
+        std::cout << "STARTING TO LOAD TABLE." << std::endl;
         // Takes file lines from vector that relate to the table and pass them into the table via a constructor
         std::vector<std::string> loadedTable;
         for (int i = 0; i < 8; i++)
         {
-            loadedTable.at(i) = fileLines.at(i);
+            // why is an error occuring here? lol
+            loadedTable.push_back(fileLines.at(i));
         }
+        std::cout << "COPIED VECTOR." << std::endl;
         table = std::shared_ptr<Table>(new Table(loadedTable));
+        std::cout << "TABLE AND BAG LOADED." << std::endl;
 
+        std::cout << "STARTING TO LOAD PLAYER 1." << std::endl;
         // Take file lines from vector that relate to each player (+ their board) and pass them into their individual player objects
         std::vector<std::string> loadPlayer1;
         for (int i = 8; i < 20; i++)
         {
-            loadedTable.at(i - 8) = fileLines.at(i);
+            loadedTable.push_back(fileLines.at(i));
         }
+        std::cout << "COPIED VECTOR." << std::endl;
         player1 = std::shared_ptr<Player>(new Player(loadPlayer1));
+        std::cout << "PLAYER 1 LOADED." << std::endl;
 
+        std::cout << "STARTING TO LOAD PLAYER 2." << std::endl;
         std::vector<std::string> loadPlayer2;
         for (int i = 20; i < fileLines.size(); i++)
         {
-            loadedTable.at(i - 20) = fileLines.at(i);
+            loadedTable.push_back(fileLines.at(i));
         }
+        std::cout << "COPIED VECTOR." << std::endl;
         player2 = std::shared_ptr<Player>(new Player(loadPlayer2));
+        std::cout << "PLAYER 2 LOADED." << std::endl;
 
+        /*
         // Sets up current player
         if (isPlayerOneCurrent)
         {
@@ -381,6 +397,7 @@ void Game::loadGame(std::ifstream &fileInput)
         {
             current = player2.get();
         }
+        */
     }
     catch (...)
     {

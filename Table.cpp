@@ -270,8 +270,6 @@ std::string Table::toString()
         }
         details += "\n";
     }
-    details += "\n";
     details += bag->toString();
-    details += "\n";
     return details;
 }

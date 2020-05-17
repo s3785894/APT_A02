@@ -166,17 +166,19 @@ std::string Bag::toString()
         details += bag.at(i);
         if (!(i == bag.size() - 1))
         {
-            details += "";
+            details += " ";
         }
     }
+    details += "\n";
     // Box Lid
     for (int i = 0; i < discardedTiles.size(); i++)
     {
         details += discardedTiles.at(i);
         if (!(i == discardedTiles.size() - 1))
         {
-            details += "";
+            details += " ";
         }
     }
+    details += "\n";
     return details;
 }

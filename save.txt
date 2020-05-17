@@ -1,0 +1,34 @@
+F
+U B B L
+L B R B
+L U Y B
+Y Y L U
+R L Y L
+Y L B R L L B R B R U R R B B U U B B U Y L Y L L U L R B R B Y U Y U R B R U R L Y B Y Y Y L Y L U U R U R R Y U R B U U B U L Y L B Y U L R R Y U L Y B Y R R
+
+1
+True
+0
+. 
+. . 
+. . . 
+. . . . 
+. . . . . 
+. . . . . 
+. . . . . 
+. . . . . 
+. . . . . 
+. . . . . 
+2
+False
+0
+. 
+. . 
+. . . 
+. . . . 
+. . . . . 
+. . . . . 
+. . . . . 
+. . . . . 
+. . . . . 
+. . . . . 

@@ -1,4 +1,5 @@
 #include "Player.h"
+#include <exception>
 
 Player::Player(std::string name)
 {
@@ -9,24 +10,29 @@ Player::Player(std::string name)
 
 Player::Player(std::vector<std::string> loadedPlayer1)
 {
+    std::cout << "LOADING NAME." << std::endl;
     // Load player name and score, and check score validity (must be above zero)
     std::string playerName = loadedPlayer1.at(0);
+    std::cout << "NAME." << std::endl;
+    std::cout << "SCORE LOADING." << std::endl;
     int score = std::stoi(loadedPlayer1.at(2));
+    std::cout << "SCORE LOADED BUT NOT CHECKED." << std::endl;
     if (score < 0)
     {
-        // throw error
+        throw std::exception();
     }
+    std::cout << "NAME AND SCORE LOADED." << std::endl;
 
     // Get subvectors representing boad attributes and pass them into Board constructor
     std::vector<std::string> patternLines;
     for (int i = 3; i < 8; i++)
     {
-        patternLines.at(i - 3) = loadedPlayer1.at(i);
+        patternLines.push_back(loadedPlayer1.at(i));
     }
     std::vector<std::string> mosaicLines;
     for (int i = 8; i < 13; i++)
     {
-        mosaicLines.at(i - 8) = loadedPlayer1.at(i);
+        mosaicLines.push_back(loadedPlayer1.at(i));
     }
     std::string tileLineString = loadedPlayer1.at(13);
 

@@ -41,22 +41,32 @@ Board::Board()
 
 Board::Board(std::vector<std::string> patternLines, std::vector<std::string> mosaicLines, std::string tileLineString)
 {
-    // Pattern Lines
-
-    // NEED TO IMPLEMENT
-
-    // Mosaic
-    Mosaic newMosaic;
-
+    // Pattern lines
     for (int i = 0; i < MOSAIC_DIM; i++)
     {
-        std::stringstream mosaicLineStream(mosaicLines.at(i));
-        int colNum = 0;
         char tile;
+
+        std::stringstream patternLineStream(mosaicLines.at(i));
+        int colNum = 0;
+
+        while (patternLineStream >> tile)
+        {
+            patternLines[colNum][i] = tile;
+            colNum++;
+        }
+    }
+
+    // Mosaic
+    for (int i = 0; i < MOSAIC_DIM; i++)
+    {
+        char tile;
+
+        std::stringstream mosaicLineStream(mosaicLines.at(i + 5));
+        int colNum = 0;
 
         while (mosaicLineStream >> tile)
         {
-            newMosaic[colNum][i];
+            mosaic[colNum][i] = tile;
             colNum++;
         }
 
@@ -601,42 +611,32 @@ int Board::scoreBonus()
 std::string Board::toString()
 {
     std::string details = "\n";
+
     // Pattern Lines
-    for (int row = 0; row < MOSAIC_DIM; row++){
-        for (int col =0; col < MOSAIC_DIM; col++){
-            if(col+1 >=MOSAIC_DIM - row){
+    for (int row = 0; row < MOSAIC_DIM; row++)
+    {
+        for (int col = 0; col < MOSAIC_DIM; col++)
+        {
+            if (col + 1 >= MOSAIC_DIM - row)
+            {
                 details += patternLines[row][col];
                 details += " ";
-            }else{
-                details += "  ";
             }
         }
         details += "\n";
     }
 
     // Mosaic
-        for (int i = 0; i < MOSAIC_DIM; i++)
+    for (int i = 0; i < MOSAIC_DIM; i++)
     {
         for (int j = 0; j < MOSAIC_DIM; j++)
         {
             details += mosaic[i][j];
             details += " ";
-
         }
         details += "\n";
     }
-    // for (int i = 0; i < MOSAIC_DIM; i++)
-    // {
-    //     for (int j = 0; j < MOSAIC_DIM; j++)
-    //     {
-    //         details += mosaic[i][j];
-    //         if (!(i == MOSAIC_DIM - 1))
-    //         {
-    //             details += " ";
-    //         }
-    //     }
-    //     details += "\n";
-    // }
+
     // Floor line
     for (int i = 0; i < floorTile->size(); i++)
     {
