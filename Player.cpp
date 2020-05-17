@@ -12,6 +12,25 @@ Player::Player(std::string name, Board *board, int score)
     this->name = name;
     this->board = board;
     this->score = score;
+
+    /*
+    std::string playerName = fileLines.at(8);
+    std::string currentPlayerAsString = fileLines.at(9);
+    if (currentPlayerAsString == "True" || currentPlayerAsString == "False")
+    {
+        if (currentPlayerAsString == "True")
+        {
+            isPlayerOneCurrent = true;
+        }
+    }
+    else
+    {
+        throw;
+    }
+    int score = std::stoi(fileLines.at(9));
+    // BOARD PROCESSING
+    Board *board;
+    */
 }
 
 Player::~Player()
@@ -34,12 +53,14 @@ bool Player::isRowFilled()
     return board->isRowFilled();
 }
 
-
 void Player::addScore(int roundScore)
 {
-    if(score + roundScore < 0){
+    if (score + roundScore < 0)
+    {
         score = 0;
-    } else {
+    }
+    else
+    {
         score = score + roundScore;
     }
 }
@@ -56,42 +77,43 @@ void Player::placeTiles(int patternLine, char tileType, int tileCount)
     board->placeInPatternLine(patternLine, tileType, tileCount);
 }
 
-void Player::endRound(){
+void Player::endRound()
+{
     //board->patternLineToMosaic();
     board->clearFloor();
 }
 
-bool Player::checkBoard(int patternLine, char tileType){
+bool Player::checkBoard(int patternLine, char tileType)
+{
     return board->checkBoard(patternLine, tileType);
 }
 
-void Player::placeInFloor(char tileType, int tileCount){
+void Player::placeInFloor(char tileType, int tileCount)
+{
     board->placeInFloor(tileType, tileCount);
 }
 
-void Player::resolveBoard(){
+void Player::resolveBoard()
+{
     int roundScore = board->resolveBoard();
     addScore(roundScore);
 
-    std::cout << name <<"'s score for the round: " << roundScore << std::endl;
+    std::cout << name << "'s score for the round: " << roundScore << std::endl;
 }
 
-std::string Player::clearBoard(){
+std::string Player::clearBoard()
+{
     std::string tilesCleared = board->clearBoard();
     return tilesCleared;
 }
 
-
-
-std::string Player::toString()
+std::string Player::toString(bool isCurrent)
 {
-    // gets player info (name, score) and board information for use in saving
-
-    // Placeholder return statement
-    return name;
+    return name + "\n" + (isCurrent ? "True" : "False") + "\n" + std::to_string(score) + board->toString();
 }
 
-void Player::scoreBonus(){
+void Player::scoreBonus()
+{
     int scoreBonus = board->scoreBonus();
 
     addScore(scoreBonus);

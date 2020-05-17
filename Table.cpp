@@ -24,32 +24,40 @@ int Table::takeTiles(int factory, char tileColour)
     if (factory == 0)
     {
         std::vector<char>::iterator it = tableCentre.begin();
-        
+
         // Iterate through our vector
-        for(it = tableCentre.begin(); it != tableCentre.end(); ) {
+        for (it = tableCentre.begin(); it != tableCentre.end();)
+        {
             // Check if the tile at the current position matches the chosen tile colour
-           if(tableCentre.at(it - tableCentre.begin()) == tileColour){
-               // If so, remove it and increase the tile count
-               it = tableCentre.erase(it);
-               tileFrequency++;
-           } else {
-               // If not, increase the iterator
-               it++;
-           }
+            if (tableCentre.at(it - tableCentre.begin()) == tileColour)
+            {
+                // If so, remove it and increase the tile count
+                it = tableCentre.erase(it);
+                tileFrequency++;
+            }
+            else
+            {
+                // If not, increase the iterator
+                it++;
+            }
         }
     }
 
-    // Otherwise, if factory is not 0 we are taking from our 2D array 
+    // Otherwise, if factory is not 0 we are taking from our 2D array
     else
     {
         // Iterate through the array
-        for(int i = 0; i < FACTORY_SIZE; i++){
+        for (int i = 0; i < FACTORY_SIZE; i++)
+        {
 
             // For the given factory (which is our row), check if the element at the current position i matches the chosen tile colour
             // If it does, increase the tile frequency
-            if(factories[factory - 1][i] == tileColour){
+            if (factories[factory - 1][i] == tileColour)
+            {
                 tileFrequency++;
-            } else {
+            }
+            else
+            {
                 // For any tiles that are not of the chosen colour, add these to the tableCentre
                 tableCentre.push_back(factories[factory - 1][i]);
             }
@@ -85,13 +93,16 @@ bool Table::tilesLeft()
     // Starts true by default because of the logic of our checking
     bool factoryEmpty = true;
 
-    // ----- There's probably a more efficient way of doing this, worth having a looking at 
+    // ----- There's probably a more efficient way of doing this, worth having a looking at
     // We first need to iterate through and check if our 2D array is empty since there is no simple function of doing this like with our vector
     // Loop through our factories array
-    for(int i = 0; i < NUM_FACTORIES; i++){
-        for(int j = 0; j < FACTORY_SIZE; j++){
+    for (int i = 0; i < NUM_FACTORIES; i++)
+    {
+        for (int j = 0; j < FACTORY_SIZE; j++)
+        {
             // For each element, check if the element is null
-            if(factories[i][j] != '\0'){
+            if (factories[i][j] != '\0')
+            {
                 // If at any point, there is an element that is not null, this means at least one factory is not empty and so factoryEmpty is set to false
                 factoryEmpty = false;
             }
@@ -99,7 +110,8 @@ bool Table::tilesLeft()
     }
 
     // If our table centre is empty, and our 2D factories array has all elements as null, then we can say there are no tiles left on the table
-    if(tableCentre.empty() && factoryEmpty){
+    if (tableCentre.empty() && factoryEmpty)
+    {
         tilesLeft = false;
     }
 
@@ -144,55 +156,97 @@ bool Table::checkFactory(int factory, char tileColour)
     // If taking from factory 0, iterate through our tableCentre vector
     if (factory == 0)
     {
-        for (std::vector<char>::iterator i = tableCentre.begin() ; i != tableCentre.end(); ++i){
+        for (std::vector<char>::iterator i = tableCentre.begin(); i != tableCentre.end(); ++i)
+        {
             // Check if tableCentre contains the chosen colour, if not, validMove will remain false
-            if(*i == tileColour){
+            if (*i == tileColour)
+            {
                 validMove = true;
             }
         }
     }
 
-    // Otherwise, if factory is not 0 we are checking our 2D array 
+    // Otherwise, if factory is not 0 we are checking our 2D array
     else
     {
         // Iterate through the array
-        for(int i = 0; i < FACTORY_SIZE; i++){
+        for (int i = 0; i < FACTORY_SIZE; i++)
+        {
 
             // For the given factory (which is our row), check if the element at the current position i matches the chosen tile colour
-            // If it does, the move is valid. 
-            if(factories[factory - 1][i] == tileColour){
+            // If it does, the move is valid.
+            if (factories[factory - 1][i] == tileColour)
+            {
                 validMove = true;
             }
         }
     }
 
     // If no tiles of the chosen colour were found, print out a simple message to let the user know what was wrong (in addition to the 'Invalid Input' message)
-    if(!validMove){
+    if (!validMove)
+    {
         std::cout << "Sorry, there is no tile of that colour to be taken!" << std::endl;
     }
 
     return validMove;
 }
 
-bool Table::checkFirstPlayerToken(){
+bool Table::checkFirstPlayerToken()
+{
     // The first player token, will always be the first index of the table centre, therefore, we just need to check index 0 instead of looping through the whole thing
 
     bool tokenExists;
 
-    if(tableCentre.size() > 0){ 
+    if (tableCentre.size() > 0)
+    {
         tokenExists = tableCentre.at(0) == 'F';
 
-        if(tokenExists){
+        if (tokenExists)
+        {
             tableCentre.erase(tableCentre.begin());
         }
-    } else {
+    }
+    else
+    {
         tokenExists = false;
     }
-
 
     return tokenExists;
 }
 
-void Table::placeInLid(const std::string& tiles){
+void Table::placeInLid(const std::string &tiles)
+{
     bag->placeInLid(tiles);
+}
+
+std::string Table::toString()
+{
+    std::string details = "";
+    // Factory 0 (Table Center)
+    for (int i = 0; i < tableCentre.size(); i++)
+    {
+        details += tableCentre.at(i);
+        if (!(i == tableCentre.size() - 1))
+        {
+            details += " ";
+        }
+    }
+    details += "\n";
+    // Factories
+    for (int i = 0; i < NUM_FACTORIES; i++)
+    {
+        for (int j = 0; j < FACTORY_SIZE; j++)
+        {
+            details += factories[i][j];
+            if (!(j == FACTORY_SIZE - 1))
+            {
+                details += " ";
+            }
+        }
+        details += "\n";
+    }
+    details += "\n";
+    details += bag->toString();
+    details += "\n";
+    return details;
 }

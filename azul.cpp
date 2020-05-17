@@ -132,7 +132,10 @@ void loadGame()
     {
         std::string filename;
         std::cin >> filename;
-        std::ifstream fileInput(filename);
+
+        std::ifstream fileInput;
+        fileInput.open(filename);
+
         if (!fileInput.good())
         {
             //throw std::ios_base::failure;

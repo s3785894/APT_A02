@@ -13,6 +13,8 @@ public:
     Bag();
     // Constructor for new games w/ seeded order
     Bag(std::string seed);
+    // Constructor for loaded games
+    Bag(std::vector<char> tileBag, std::vector<char> tileLid);
     // Deconstructor
     ~Bag();
 
@@ -32,10 +34,13 @@ public:
     void viewContents();
 
     // Place the discarded tiles from a bag in to the box lid
-    void placeInLid(const std::string& tiles);
+    void placeInLid(const std::string &tiles);
 
     // Check if the bag is empty
     bool isEmpty();
+
+    //
+    std::string toString();
 
 private:
     // Dynamically sized vector for tiles in play

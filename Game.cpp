@@ -1,5 +1,6 @@
 #include "Game.h"
 #include <sstream>
+#include <exception>
 
 Game::Game(std::string playerOneName, std::string playerTwoName, std::string seed, bool hasSeeded)
 {
@@ -117,7 +118,8 @@ void Game::playerTurn()
             // Save the game, then continue the turn
             if (turnInput == "save")
             {
-                saveGame();
+                // need to change code to process a file name after "save"
+                saveGame("save");
             }
 
             if (turnInput == "exit")
@@ -185,7 +187,6 @@ void Game::playerTurn()
 
     std::cout << std::endl;
     current->prntBoard();
-
 }
 
 bool Game::checkEnd()
@@ -193,24 +194,43 @@ bool Game::checkEnd()
     bool gameEnd = false;
 
     // If either player has a full row on their board, the end game condition has been met
-    if(player1->isRowFilled() == true || player2->isRowFilled() == true){
+    if (player1->isRowFilled() == true || player2->isRowFilled() == true)
+    {
         gameEnd = true;
     }
 
     return gameEnd;
 }
 
-void Game::saveGame()
+void Game::saveGame(std::string fileName)
 {
     // Needs to get Players, their Boards, Bag, Lid(?), and Table via getters and setters
     // Alternatively, make use of custom toString methods to convert everything to string
+
+    std::ofstream saveFile;
+    std::string fullFileName = fileName + ".txt";
+    saveFile.open(fullFileName);
+
+    if (saveFile.is_open())
+    {
+        bool isPlayer1Current = false;
+        if (current == player1.get())
+        {
+            isPlayer1Current = true;
+        }
+        saveFile << table->toString();
+        saveFile << player1->toString(isPlayer1Current);
+        saveFile << player2->toString(!isPlayer1Current);
+    }
+
+    saveFile.close();
 
     std::cout << "GAME SAVED" << std::endl;
 }
 
 void Game::scoreRound()
 {
-    std::cout << "Round Scoring" << std::endl; 
+    std::cout << "Round Scoring" << std::endl;
     player1->resolveBoard();
 
     player2->resolveBoard();
@@ -260,13 +280,14 @@ bool Game::validateInput(int factory, char tile, int patternLine)
     return validInput;
 }
 
-void Game::scoreGame(){
+void Game::scoreGame()
+{
     // Final scoring rules:
-	// 	Additional 2 points per every complete row of 5 tiles 
-	// 	Additional 7 points for every complete column of 5 tiles
+    // 	Additional 2 points per every complete row of 5 tiles
+    // 	Additional 7 points for every complete column of 5 tiles
     //  Additional 10 points for every color of tile of which there are 5 on the wall
 
-    // After these extra points have been added, the player with the highest score wins. 
+    // After these extra points have been added, the player with the highest score wins.
     // If the game is a tie, whoever has the most completed rows wins - Need to therefore check for this
 
     // Calculate the end game bonuses for each player
@@ -280,18 +301,107 @@ void Game::scoreGame(){
     std::cout << player1->getName() << "'s final score: " << player1Score << std::endl;
     std::cout << player2->getName() << "'s final score: " << player2Score << std::endl;
 
-    if(player1Score > player2Score){
+    if (player1Score > player2Score)
+    {
         std::cout << player1->getName() << " is the Winner!" << std::endl;
-    } else if(player2Score > player1Score){
+    }
+    else if (player2Score > player1Score)
+    {
         std::cout << player2->getName() << " is the Winner!" << std::endl;
-    } else {
+    }
+    else
+    {
         // Scores are tied -- TO DO
     }
 }
 
+void Game::loadGame(std::ifstream &fileInput)
+{
+    /*
+    std::vector<std::string> fileLines;
+    std::string line;
+    while (std::getline(fileInput, line))
+    {
+        fileLines.push_back(line);
+    }
 
+    try
+    {
+        // Variables used to ensure that no errors are loaded into the game
+        bool isPlayerOneCurrent = false;
 
+        // FACTORY ZERO
+        std::stringstream factoryZeroStream(fileLines.at(0));
+        std::vector<char> factoryZero;
+        char tile;
+        while (factoryZeroStream >> tile)
+        {
+            factoryZero.push_back(tile);
+        }
+        // INDIVIDUAL FACTORIES
+        Factories factories;
+        for (int i = 0; i < 5; i++)
+        {
+            std::stringstream lineStream(fileLines.at(i + 1));
+            for (int j = 0; j < FACTORY_SIZE; j++)
+            {
+                factoryZeroStream >> factories[i][j];
+            }
+        }
+        // TILE BAG
+        std::stringstream tileBagStream(fileLines.at(5));
+        std::vector<char> tileBag;
+        std::string tile;
+        while (tileBagStream >> tile)
+        {
+            tileBag.push_back(tile);
+        }
+        // TILE LID
+        std::stringstream tileLidStream(fileLines.at(6));
+        std::vector<char> tileLid;
+        std::string tile;
+        while (tileLidStream >> tile)
+        {
+            tileLid.push_back(tile);
+        }
+        Bag *bag = new Bag(tileBag, tileLid);
 
+        table = std::shared_ptr<Table>(new Table(factoryZero, factories, bag));
 
+        // PLAYER ONE
+        std::string playerName = fileLines.at(8);
+        std::string currentPlayerAsString = fileLines.at(9);
+        if (currentPlayerAsString == "True" || currentPlayerAsString == "False")
+        {
+            if (currentPlayerAsString == "True")
+            {
+                isPlayerOneCurrent = true;
+            }
+        }
+        else
+        {
+            throw;
+        }
+        int score = std::stoi(fileLines.at(9));
+        // BOARD PROCESSING
+        Board *board;
 
+        player1 = std::shared_ptr<Player>(new Player(playerName, board, score));
+        // PLAYER TWO
 
+        if (isPlayerOneCurrent)
+        {
+            current = player1.get();
+        }
+        else
+        {
+            current = player2.get();
+        }
+    }
+    catch (...)
+    {
+        std::cout << "An error has occured when loading the file. Incorrect file format detected. Terminating program." << std::endl;
+        // terminate program
+    }
+    */
+}

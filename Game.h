@@ -5,6 +5,7 @@
 #include "Table.h"
 #include "Bag.h"
 #include <iostream>
+#include <fstream>
 
 class Game
 {
@@ -32,7 +33,7 @@ public:
     bool checkEnd();
 
     // Saves game at any time
-    void saveGame();
+    void saveGame(std::string fileName);
 
     // At round end, resolve the player boards and score the round
     void scoreRound();
@@ -65,7 +66,6 @@ private:
 
     // Tracks current state of game - true if game has ended
     bool gameEnd;
-
 
     const char tileColours[NUM_COLOURS] = {'R', 'Y', 'B', 'L', 'U'};
 };

@@ -51,21 +51,22 @@ public:
 
     int scoreBonus();
 
+    std::string toString();
+
 private:
     Mosaic mosaic;
 
     Mosaic patternLines;
 
-    LinkedList* floorTile;
+    LinkedList *floorTile;
 
-    Mosaic mosaicColours = 
-    {
-        {'B', 'Y', 'R', 'U', 'L'},
-        {'L', 'B', 'Y', 'R', 'U'},
-        {'U', 'L', 'B', 'Y', 'R'},
-        {'R', 'U', 'L', 'B', 'Y'},
-        {'Y', 'R', 'U', 'L', 'B'}
-    };
+    Mosaic mosaicColours =
+        {
+            {'B', 'Y', 'R', 'U', 'L'},
+            {'L', 'B', 'Y', 'R', 'U'},
+            {'U', 'L', 'B', 'Y', 'R'},
+            {'R', 'U', 'L', 'B', 'Y'},
+            {'Y', 'R', 'U', 'L', 'B'}};
 
     int floorScore[7] = {1, 1, 2, 2, 2, 3, 3};
 

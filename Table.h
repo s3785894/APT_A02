@@ -28,7 +28,7 @@ public:
     * The idea is that we never actually pass around char values or tile objects, we instead just tell different components of our program how many tiles to place/remove from certain containers.
     * 
     * The remaining tiles from a factory will be transferred to the table centre (unless the player took from the table centre), and all the elements of the factory will be set to \0 (null char) to indicate that it is empty
-    */ 
+    */
     int takeTiles(int factory, char tileColour);
 
     // Initialises factories at start of each round
@@ -47,7 +47,9 @@ public:
     void printFactoryContents();
 
     // Pass the tiles used in a round to the bag to be placed in to the box lid
-    void placeInLid(const std::string& tiles);
+    void placeInLid(const std::string &tiles);
+
+    std::string toString();
 
 private:
     // Stores tiles in the 'table' centre. Dynamically sized as tiles will be continually added throughout the game

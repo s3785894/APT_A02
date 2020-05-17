@@ -97,7 +97,8 @@ void Bag::shuffleBag(std::string seed, bool isSeeded)
 char Bag::grabTile()
 {
     // Each time a tile is grabbed, checked if the bag is empty, and if so, refill and shuffle the bag first
-    if(bag.size() == 0){
+    if (bag.size() == 0)
+    {
         refillBag();
     }
     //Since our bag is always randomly shuffled at the start, to grab random tiles we can grab tiles from the front of the bag
@@ -126,12 +127,37 @@ bool Bag::isEmpty()
     return isEmpty;
 }
 
-void Bag::placeInLid(const std::string& tiles){
+void Bag::placeInLid(const std::string &tiles)
+{
 
     // Iterate through our string of discarded tiles, adding each tile to the back of our box lid one-by-one
-    for(int i = 0; i < tiles.size(); i++){
+    for (int i = 0; i < tiles.size(); i++)
+    {
         char tile = tiles[i];
         discardedTiles.push_back(tile);
     }
-    
+}
+
+std::string Bag::toString()
+{
+    std::string details = "";
+    // Tile Bag
+    for (int i = 0; i < bag.size(); i++)
+    {
+        details += bag.at(i);
+        if (!(i == bag.size() - 1))
+        {
+            details += "";
+        }
+    }
+    // Box Lid
+    for (int i = 0; i < discardedTiles.size(); i++)
+    {
+        details += discardedTiles.at(i);
+        if (!(i == discardedTiles.size() - 1))
+        {
+            details += "";
+        }
+    }
+    return details;
 }

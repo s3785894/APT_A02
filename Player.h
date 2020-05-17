@@ -26,14 +26,14 @@ public:
 
     // Returns player's board
     void prntBoard();
-    
+
     // Converts all attributes to string (for use in saving to file)
-    std::string toString();
+    std::string toString(bool isCurrent);
 
     // Call on the checkBoard function in board to check if player move is valid
     bool checkBoard(int patternLine, char tileType);
 
-    //Player places tiles on pattern line 
+    //Player places tiles on pattern line
     void placeTiles(int patternLine, char tileType, int tileCount);
 
     void placeInFloor(char tileType, int tileCount);
