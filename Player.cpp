@@ -10,30 +10,27 @@ Player::Player(std::string name)
 
 Player::Player(std::vector<std::string> loadedPlayer1)
 {
-    std::cout << "LOADING NAME." << std::endl;
-    // Load player name and score, and check score validity (must be above zero)
     std::string playerName = loadedPlayer1.at(0);
-    std::cout << "NAME." << std::endl;
-    std::cout << "SCORE LOADING." << std::endl;
     int score = std::stoi(loadedPlayer1.at(2));
-    std::cout << "SCORE LOADED BUT NOT CHECKED." << std::endl;
+    // Throws an exception if the score is below zero (impossible state)
     if (score < 0)
     {
         throw std::exception();
     }
-    std::cout << "NAME AND SCORE LOADED." << std::endl;
 
-    // Get subvectors representing boad attributes and pass them into Board constructor
+    // Passes subvectors (and string) representing board data to the board
     std::vector<std::string> patternLines;
     for (int i = 3; i < 8; i++)
     {
         patternLines.push_back(loadedPlayer1.at(i));
     }
+
     std::vector<std::string> mosaicLines;
     for (int i = 8; i < 13; i++)
     {
         mosaicLines.push_back(loadedPlayer1.at(i));
     }
+
     std::string tileLineString = loadedPlayer1.at(13);
 
     board = new Board(patternLines, mosaicLines, tileLineString);

@@ -41,7 +41,7 @@ Board::Board()
 
 Board::Board(std::vector<std::string> patternLines, std::vector<std::string> mosaicLines, std::string tileLineString)
 {
-    // Pattern lines
+    // Processes Pattern Lines
     for (int i = 0; i < MOSAIC_DIM; i++)
     {
         char tile;
@@ -56,12 +56,12 @@ Board::Board(std::vector<std::string> patternLines, std::vector<std::string> mos
         }
     }
 
-    // Mosaic
+    // Processes Mosaic lines
     for (int i = 0; i < MOSAIC_DIM; i++)
     {
         char tile;
 
-        std::stringstream mosaicLineStream(mosaicLines.at(i + 5));
+        std::stringstream mosaicLineStream(mosaicLines.at(i));
         int colNum = 0;
 
         while (mosaicLineStream >> tile)
@@ -70,16 +70,18 @@ Board::Board(std::vector<std::string> patternLines, std::vector<std::string> mos
             colNum++;
         }
 
+        // Throws an exception is more than five columns are present (i.e. error detected)
         if (!(colNum == 5))
         {
             throw std::exception();
         }
     }
 
-    // Tile Line
+    // Processes Tile Line
+    char tile;
+
     floorTile = new LinkedList();
     std::stringstream tileLineStream(tileLineString);
-    char tile;
 
     while (tileLineStream >> tile)
     {
@@ -646,6 +648,7 @@ std::string Board::toString()
             details += " ";
         }
     }
+    details += "\n";
 
     return details;
 }

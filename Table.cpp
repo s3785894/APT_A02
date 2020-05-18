@@ -22,14 +22,15 @@ Table::Table(std::vector<std::string> tableLines)
     {
         tableCentre.push_back(tile);
     }
-    // regular factories
+
+    // Regular Factories
     for (int i = 0; i < NUM_FACTORIES; i++)
     {
-        std::stringstream tableCentreStream(tableLines.at(i + 1));
+        std::stringstream factoryStream(tableLines.at(i + 1));
         int colNum = 0;
-        while (tableCentreStream >> tile)
+        while (factoryStream >> tile)
         {
-            tableCentre.push_back(tile);
+            factories[colNum][i] = tile;
             colNum++;
         }
     }
