@@ -63,6 +63,8 @@ public:
     // Returns the current state of the board as a string for use in a save game file
     std::string toString();
 
+    int getHLineCount();
+
 private:
     // 5x5 array for the player board mosaic
     Mosaic mosaic;

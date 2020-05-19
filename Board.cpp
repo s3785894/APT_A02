@@ -227,8 +227,7 @@ int Board::patternLineToMosaic(int patternLine)
     // EXECUTE LOGIC FOR SCORING
     int score = 0;
 
-
-    // We first need to check if the placed tile has any adjacent tiles because this affects the way we score. 
+    // We first need to check if the placed tile has any adjacent tiles because this affects the way we score.
     bool adjacentLeft = true;
     bool adjacentRight = true;
     bool adjacentUp = true;
@@ -417,7 +416,6 @@ std::string Board::clearBoard()
     return tilesCleared;
 }
 
-
 // NEED TO RE-VISIT THIS METHOD WHEN THE TURN INPUT IS FIXED BECAUSE I DONT THINK THE LOGIC FOR A PATTERN LINE BEING FULL IS CORRECT
 bool Board::checkBoard(int patternLine, char tileType)
 {
@@ -586,7 +584,8 @@ int Board::scoreBonus()
     return score;
 }
 
-int Board::countRows(){
+int Board::countRows()
+{
     // Same method used in scoring the bonus but this functon is only called on in the event of a tie-breaker
     int rowsFilled = 0;
 
@@ -611,12 +610,14 @@ int Board::countRows(){
     return rowsFilled;
 }
 
-int Board::floorSlot(){
+int Board::floorSlot()
+{
     return FLOOR_SIZE - floorTile->size();
 }
 
-char Board::removeLastFloorTile(){
-    char tile = floorTile->get(floorTile->size()-1);
+char Board::removeLastFloorTile()
+{
+    char tile = floorTile->get(floorTile->size() - 1);
     floorTile->removeBack();
     return tile;
 }

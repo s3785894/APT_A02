@@ -29,7 +29,6 @@ Game::Game(std::ifstream &fileInput)
 
 Game::~Game()
 {
-
 }
 
 void Game::playGame(bool isMidRound)
@@ -118,49 +117,48 @@ void Game::playerTurn()
     while (!validInput)
     {
         std::cout << "> ";
-        if (std::cin.good())
+
+        // Takes input and process it into vector for analysis (allows command line arguments)
+        std::string turnInput;
+        while (std::getline(std::cin, turnInput) && turnInput.empty())
         {
-            // Takes input and process it into vector for analysis (allows command line arguments)
-            std::string turnInput;
-            bool inputMade = false;
-            while (std::getline(std::cin, turnInput) && !inputMade)
+            // N/A - a loop is needed for getline to function here without a segfault occuring
+        }
+
+        std::stringstream turnInputStream(turnInput);
+        std::string arg;
+        std::vector<std::string> turnArgs;
+
+        while (turnInputStream >> arg)
+        {
+            turnArgs.push_back(arg);
+        }
+
+        lastCommandSave = false;
+
+        // Save the game, then continue the turn
+        if (turnArgs.front() == "save" && turnArgs.size() == 2)
+        {
+            saveGame(turnArgs.at(1));
+            lastCommandSave = true;
+        }
+
+        // Exit the game without auto saving
+        if (turnArgs.front() == "exit")
+        {
+            exit(EXIT_SUCCESS);
+        }
+
+        // Execute regular turn
+        if (turnArgs.front() == "turn")
+        {
+            if (turnArgs.size() == 4)
             {
-                inputMade = true;
-            }
-
-            std::stringstream turnInputStream(turnInput);
-            std::string arg;
-            std::vector<std::string> turnArgs;
-
-            while (turnInputStream >> arg)
-            {
-                turnArgs.push_back(arg);
-            }
-
-            lastCommandSave = false;
-
-            // Save the game, then continue the turn
-            if (turnArgs.front() == "save" || turnArgs.size() == 2)
-            {
-                saveGame(turnArgs.at(1));
-                lastCommandSave = true;
-            }
-
-            // Exit the game without auto saving
-            if (turnArgs.front() == "exit")
-            {
-                exit(EXIT_SUCCESS);
-            }
-
-            // Execute regular turn
-            if (turnArgs.front() == "turn")
-            {
-                if (turnArgs.size() == 4)
+                try
                 {
                     factory = std::stoi(turnArgs.at(1));
                     tile = toupper(turnArgs.at(2)[0]);
                     patternLine = std::stoi(turnArgs.at(3));
-
                     validInput = validateInput(factory, tile, patternLine);
 
                     if (validInput)
@@ -172,6 +170,10 @@ void Game::playerTurn()
                     {
                         validInput = current->checkBoard(patternLine, tile);
                     }
+                }
+                catch (std::exception e)
+                {
+                    std::cout << "Error occured when making turn. Please try again, in the correct format." << std::endl;
                 }
             }
         }
@@ -194,23 +196,30 @@ void Game::playerTurn()
     if (patternLine == 6)
     {
         std::string tileOverflow;
-        int tileFrequency=table->takeTiles(factory, tile);
+        int tileFrequency = table->takeTiles(factory, tile);
         //if floor is full, place tiles in box lid
-        if(current->hasFloorSlot()==0){
-            for(int i = 0; i<tileFrequency; i++){
+        if (current->hasFloorSlot() == 0)
+        {
+            for (int i = 0; i < tileFrequency; i++)
+            {
                 tileOverflow.push_back(tile);
             }
             table->placeInLid(tileOverflow);
-        //if floor does not have enough slots, fill the floor and put excess to box lid
-        }else if(current->hasFloorSlot()<tileFrequency){
-            int addToLid =tileFrequency-current->hasFloorSlot();
+            //if floor does not have enough slots, fill the floor and put excess to box lid
+        }
+        else if (current->hasFloorSlot() < tileFrequency)
+        {
+            int addToLid = tileFrequency - current->hasFloorSlot();
             current->placeInFloor(tile, current->hasFloorSlot());
-            for(int i = 0; i<addToLid; i++){
+            for (int i = 0; i < addToLid; i++)
+            {
                 tileOverflow.push_back(tile);
             }
             table->placeInLid(tileOverflow);
-        //else, add tiles to floor
-        }else{
+            //else, add tiles to floor
+        }
+        else
+        {
             current->placeInFloor(tile, tileFrequency);
         }
     }
@@ -219,7 +228,8 @@ void Game::playerTurn()
     if (factory == 0 && table->checkFirstPlayerToken())
     {
         //if floor is full, move the last tile of the floor to box lid and add the first player token to floor
-        if(current->hasFloorSlot()==0){
+        if (current->hasFloorSlot() == 0)
+        {
             std::string tileOverflow;
             tileOverflow.push_back(current->removeFromFloor());
             table->placeInLid(tileOverflow);
@@ -362,15 +372,15 @@ void Game::scoreGame()
     {
         // Check who has the most rows completed
         // If the number of rows is even, the game ends in a tie
-        if(player1->countRows() > player2->countRows())
+        if (player1->countRows() > player2->countRows())
         {
             winner = player1->getName();
-        } 
+        }
         else if (player2->countRows() > player1->countRows())
         {
             winner = player2->getName();
-        } 
-        else 
+        }
+        else
         {
             winner = "No-One! The game ends in a tie";
         }

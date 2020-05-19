@@ -105,7 +105,6 @@ char Player::removeFromFloor()
     return board->removeLastFloorTile();
 }
 
-
 void Player::resolveBoard()
 {
     int roundScore = board->resolveBoard();
@@ -120,7 +119,8 @@ std::string Player::clearBoard()
     return tilesCleared;
 }
 
-int Player::hasFloorSlot(){
+int Player::hasFloorSlot()
+{
     return board->floorSlot();
 }
 
@@ -134,4 +134,9 @@ void Player::scoreBonus()
     int scoreBonus = board->scoreBonus();
 
     addScore(scoreBonus);
+}
+
+int Player::getHLineCount()
+{
+    return board->getHLineCount();
 }
