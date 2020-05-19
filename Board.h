@@ -51,6 +51,10 @@ public:
 
     int scoreBonus();
 
+    int floorSlot();
+
+    char removeLastFloorTile();
+
     std::string toString();
 
 private:

@@ -176,12 +176,37 @@ void Game::playerTurn()
     // If the pattern line is 6 (floor), we call on the place in floor function instead
     if (patternLine == 6)
     {
-        current->placeInFloor(tile, table->takeTiles(factory, tile));
+        std::string tileOverflow;
+        int tileFrequency=table->takeTiles(factory, tile);
+        //if floor is full, place tiles in box lid
+        if(current->hasFloorSlot()==0){
+            for(int i = 0; i<tileFrequency; i++){
+                tileOverflow.push_back(tile);
+            }
+            table->placeInLid(tileOverflow);
+        //if floor does not have enough slots, fill the floor and put excess to box lid
+        }else if(current->hasFloorSlot()<tileFrequency){
+            int addToLid =tileFrequency-current->hasFloorSlot();
+            current->placeInFloor(tile, current->hasFloorSlot());
+            for(int i = 0; i<addToLid; i++){
+                tileOverflow.push_back(tile);
+            }
+            table->placeInLid(tileOverflow);
+        //else, add tiles to floor
+        }else{
+            current->placeInFloor(tile, tileFrequency);
+        }
     }
 
     // If taking from the centre table, and the first player token has not been taken, give it to the player
     if (factory == 0 && table->checkFirstPlayerToken())
     {
+        //if floor is full, move the last tile of the floor to box lid and add the first player token to floor
+        if(current->hasFloorSlot()==0){
+            std::string tileOverflow;
+            tileOverflow.push_back(current->removeFromFloor());
+            table->placeInLid(tileOverflow);
+        }
         current->placeInFloor('F', 1);
         //first = current;
     }

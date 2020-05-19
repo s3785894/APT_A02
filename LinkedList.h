@@ -1,16 +1,6 @@
 #ifndef LINKED_LIST_H
 #define LINKED_LIST_H
 
-//#include "Tile.h"
-
- enum TileCode{
-    R,
-    Y, 
-    B, 
-    L, 
-    U,
-    F
-};
 class Node {
 public:
    //Node(Tile* tile, Node* next);

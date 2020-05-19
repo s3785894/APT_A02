@@ -96,6 +96,11 @@ void Player::placeInFloor(char tileType, int tileCount)
     board->placeInFloor(tileType, tileCount);
 }
 
+char Player::removeFromFloor(){
+    return board->removeLastFloorTile();
+}
+
+
 void Player::resolveBoard()
 {
     int roundScore = board->resolveBoard();
@@ -108,6 +113,10 @@ std::string Player::clearBoard()
 {
     std::string tilesCleared = board->clearBoard();
     return tilesCleared;
+}
+
+int Player::hasFloorSlot(){
+    return board->floorSlot();
 }
 
 std::string Player::toString(bool isCurrent)

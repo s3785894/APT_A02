@@ -39,6 +39,8 @@ public:
 
     void placeInFloor(char tileType, int tileCount);
 
+    char removeFromFloor();
+
     void resolveBoard();
 
     std::string clearBoard();
@@ -46,6 +48,8 @@ public:
     void endRound();
 
     void scoreBonus();
+
+    int hasFloorSlot();
 
 private:
     // Pointer to player's board

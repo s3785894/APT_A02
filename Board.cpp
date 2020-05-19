@@ -129,6 +129,12 @@ void Board::placeInPatternLine(int patternLine, char tileType, int tileCount)
     }
 }
 
+char Board::removeLastFloorTile(){
+    char tile = floorTile->get(floorTile->size()-1);
+    floorTile->removeBack();
+    return tile;
+}
+
 int Board::patternLineToMosaic(int patternLine)
 {
     // Given the pattern line we're in (row);
@@ -608,6 +614,10 @@ int Board::scoreBonus()
 
     // Return the bonus points
     return score;
+}
+
+int Board::floorSlot(){
+    return floorSize-(floorTile->size());
 }
 
 std::string Board::toString()
