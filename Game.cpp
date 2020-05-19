@@ -34,19 +34,19 @@ Game::~Game()
 void Game::playGame(bool isMidRound)
 {
     // If we start the game mid round (the game is started from a loaded save file), we need to skip the round intialisation so the round progress is not reset
-    bool skipInitilisation = isMidRound;
+    bool *skipInitilisation = new bool(isMidRound);
 
     // Loop round by round, each time a round is played, we check if the game end condition has been met before starting a new round
     while (!checkEnd())
     {
-        if (!skipInitilisation)
+        if (!(*skipInitilisation))
         {
             table->initialiseRound();
         }
 
         playRound();
 
-        skipInitilisation = true;
+        *skipInitilisation = false;
     }
 
     // If we're exiting the game loop, it means that the end game condition has been met. Therefore, we need to do the final scoring and determine a winner
