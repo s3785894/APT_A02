@@ -59,6 +59,8 @@ public:
 
     std::string toString();
 
+    int getHLineCount();
+
 private:
     Mosaic mosaic;
 

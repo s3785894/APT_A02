@@ -45,6 +45,9 @@ public:
     void scoreBonus();
 
     int hasFloorSlot();
+    // Retr
+
+    int getHLineCount();
 
 private:
     // Pointer to player's board

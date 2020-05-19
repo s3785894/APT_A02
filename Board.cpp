@@ -126,8 +126,9 @@ void Board::placeInPatternLine(int patternLine, char tileType, int tileCount)
     }
 }
 
-char Board::removeLastFloorTile(){
-    char tile = floorTile->get(floorTile->size()-1);
+char Board::removeLastFloorTile()
+{
+    char tile = floorTile->get(floorTile->size() - 1);
     floorTile->removeBack();
     return tile;
 }
@@ -613,8 +614,9 @@ int Board::scoreBonus()
     return score;
 }
 
-int Board::floorSlot(){
-    return floorSize-(floorTile->size());
+int Board::floorSlot()
+{
+    return floorSize - (floorTile->size());
 }
 
 std::string Board::toString()
@@ -658,4 +660,26 @@ std::string Board::toString()
     details += "\n";
 
     return details;
+}
+
+int Board::getHLineCount()
+{
+    int rowCount = 0;
+    for (int i = 0; i < MOSAIC_DIM; i++)
+    {
+        int tileCount = 0;
+        for (int j = 0; j < MOSAIC_DIM; j++)
+        {
+            if (mosaic[i][j] != '.')
+            {
+                tileCount++;
+            }
+        }
+        if (tileCount == 5)
+        {
+            rowCount++;
+        }
+    }
+
+    return rowCount;
 }

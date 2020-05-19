@@ -34,6 +34,7 @@ Table::Table(std::vector<std::string> tableLines)
             colNum++;
         }
     }
+
     bag = new Bag(tableLines.at(6), tableLines.at(7));
 }
 

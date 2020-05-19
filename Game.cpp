@@ -361,7 +361,22 @@ void Game::scoreGame()
     }
     else
     {
-        // Scores are tied -- TO DO
+        std::cout << "Scores are tied! A tiebreaker is decided by who has the most horizontal lines." << std::endl;
+        int player1HLineCount = player1->getHLineCount();
+        int player2HLineCount = player2->getHLineCount();
+
+        if (player1HLineCount > player2HLineCount)
+        {
+            std::cout << player1->getName() << " is the Winner!" << std::endl;
+        }
+        else if (player2HLineCount > player1HLineCount)
+        {
+            std::cout << player2->getName() << " is the Winner!" << std::endl;
+        }
+        else
+        {
+            std::cout << "The tiebreaker ended in a draw! The victory is shared." << std::endl;
+        }
     }
 }
 
