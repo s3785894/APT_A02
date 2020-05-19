@@ -261,8 +261,7 @@ void Game::saveGame(std::string fileName)
     // Alternatively, make use of custom toString methods to convert everything to string
 
     std::ofstream saveFile;
-    std::string fullFileName = fileName + ".txt";
-    saveFile.open(fullFileName);
+    saveFile.open(fileName);
 
     if (saveFile.is_open())
     {

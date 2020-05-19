@@ -63,8 +63,6 @@ public:
     int hasFloorSlot();
     // Retr
 
-    int getHLineCount();
-
     // Counts the number of rows filled at the end of the game. Only used if the game end scoring results in a tie
     int countRows();
 
@@ -74,7 +72,7 @@ private:
 
     // Player score
     int score;
-    
+
     // Player name
     std::string name;
 };

@@ -135,8 +135,3 @@ void Player::scoreBonus()
 
     addScore(scoreBonus);
 }
-
-int Player::getHLineCount()
-{
-    return board->getHLineCount();
-}
