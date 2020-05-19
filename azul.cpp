@@ -6,16 +6,21 @@
 #include "Bag.h"
 #include "Game.h"
 
-// Displays menu and processing input
+// Displays menu and processes initial input
 int displayMenu();
+
 // Prints credits (called from menu)
 void printCredits();
+
 // Creates and initiates new game (called from menu)
 void newGame(std::string seed, bool hasSeeded);
+
 // Loads saved game from file (called from menu)
 void loadGame();
+
 // Provides game explanation (called from menu)
 void howTo();
+
 // Processes command line argument for potential seeded game
 void processArgs(int argc, char **argv, std::string *seed, bool *hasSeeded);
 
@@ -33,18 +38,22 @@ int main(int argc, char **argv)
 
         if (mode == 1)
         {
+            // Start a new game either with a default (random) seed or with a seed provided by the user
             newGame(*seed, *hasSeeded);
         }
         else if (mode == 2)
         {
+            // Load a game from a save file
             loadGame();
         }
         else if (mode == 3)
         {
+            // Show student credits
             printCredits();
         }
         else if (mode == 4)
         {
+            // Basic information on how to use the program
             howTo();
         }
         else if (mode == 5)
@@ -168,13 +177,12 @@ void howTo()
         Follow the basic input instructions on screen to begin the game. If at any point you enter an input that is not valid, \n \
         you will simply be asked to try again until you enter a valid input. \n \
         \n \
-        When playing the game, the input for a turn is in the format of [FACTORY][TILE][PATTERN LINE]. No spaces should be used. \n \
+        When playing the game, the input for a turn is in the format of 'turn [FACTORY][TILE][PATTERN LINE]'. No spaces should be used. \n \
         \n \
-        For example, if you want to take all the blue tiles from factory 2, and place them in your 3rd pattern line,\n \
-        the input would be: \n \
-        2B3 \n \
+        For example, if you want to take all the blue tiles from factory 2, and place them in your 3rd pattern line, the input would be: \n \
+        turn 2B3 \n \
         \n \
-        If at any point you would like to save your game, type 'save'. This will save the game in it's current state and then\n \
+        If at any point you would like to save your game, type 'save [FILENAME]'. This will save the game in it's current state and then\n \
         continue the current turn\n \
         \n \
         To exit the game, type 'exit'. This will exit WITHOUT saving.\n \

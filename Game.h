@@ -12,12 +12,14 @@ class Game
 public:
     // Constructor for new game
     Game(std::string playerOneName, std::string playerTwoName, std::string seed, bool hasSeeded);
+
     // Constructor for loaded game (takes file input as parameter)
     Game(std::ifstream &fileInput);
+
     // Deconstructor
     ~Game();
 
-    // Initialises new game
+    // Initialises new game and controls the over all game loop
     void playGame(bool isMidRound);
 
     // Holds the logic for playing a round of the game
@@ -47,7 +49,7 @@ public:
     // Complete the end game scoring and determine the winner
     void scoreGame();
 
-    // Validate the input for a player turn, takes out a bulk of code from the round
+    // Validate the input for a player turn, takes out a bulk of code from the round function
     bool validateInput(int factory, char tile, int patternLine);
 
 private:
@@ -57,9 +59,6 @@ private:
 
     // Pointer used to track current player
     Player *current;
-
-    // Used to handle who has the first player token
-    //Player* first;
 
     // Table ADT
     std::shared_ptr<Table> table;

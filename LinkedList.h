@@ -12,27 +12,31 @@ public:
 };	
 class LinkedList {
 public:
+   // Constructor
    LinkedList();
+
+   // Deconstructor
    ~LinkedList();
    
-   //return list size
+   // Returns the list size
    unsigned int size();
 
-   //remove all nodes from list
+   // Remove all nodes from list
    void clear();
 
-   //get string representation of tile at given index
+   // Get char representation of tile at given index
    char get(unsigned int i);
 
-   //add tile to front of the list
+   // Add tile to front of the list
    void addFront(char tile);
 
-   //add tile to back of the list
+   // Add tile to back of the list
    void addBack(char tile);
 
-   //remove tile from back of the list
+   // Remove tile from back of the list
    void removeBack();
-   //remove tile from front of the list
+   
+   // Remove tile from front of the list
    void removeFront();
 
    //print all nodes in the list

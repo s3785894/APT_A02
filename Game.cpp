@@ -4,9 +4,11 @@
 
 Game::Game(std::string playerOneName, std::string playerTwoName, std::string seed, bool hasSeeded)
 {
+    // Create our player objects using the provided names from the user input
     player1 = std::shared_ptr<Player>(new Player(playerOneName));
     player2 = std::shared_ptr<Player>(new Player(playerTwoName));
 
+    // Create our table object. If a seed is provided, we need to pass the seed through to the bag
     if (!hasSeeded)
     {
         table = std::shared_ptr<Table>(new Table());
@@ -17,7 +19,6 @@ Game::Game(std::string playerOneName, std::string playerTwoName, std::string see
     }
 
     current = nullptr;
-    //first = nullptr;
     gameEnd = false;
 }
 
@@ -28,12 +29,15 @@ Game::Game(std::ifstream &fileInput)
 
 Game::~Game()
 {
-    //delete this->current; -- Throws an error because ptr value is null
+
 }
 
 void Game::playGame(bool isMidRound)
 {
+    // If we start the game mid round (the game is started from a loaded save file), we need to skip the round intialisation so the round progress is not reset
     bool skipInitilisation = isMidRound;
+
+    // Loop round by round, each time a round is played, we check if the game end condition has been met before starting a new round
     while (!checkEnd())
     {
         if (!skipInitilisation)
@@ -46,7 +50,7 @@ void Game::playGame(bool isMidRound)
         skipInitilisation = true;
     }
 
-    // If we're exiting the above loop, it means that the end game condition has been met. Therefore, we need to do the final scoring and determine a winner
+    // If we're exiting the game loop, it means that the end game condition has been met. Therefore, we need to do the final scoring and determine a winner
     scoreGame();
 }
 
@@ -57,11 +61,10 @@ void Game::initialiseRound()
 
 void Game::playRound()
 {
-
     std::cout << "====== Start Round ======" << std::endl;
     std::cout << std::endl;
 
-    // Checks if there is no "current player" (i.e. this is the first round of a new game) and automatically assigns the player's turn
+    // Checks if there is no "current player" (i.e. this is the first round of a new game)
     // This condition is not met for a turn of a loaded round - therefore, it allows for rounds to continue from their last position
     // By default, player 1 is assigned to be the first player for the game
     if (current == nullptr)
@@ -72,7 +75,7 @@ void Game::playRound()
     // Loops turns within rounds until round end condition (no tiles left) is met
     while (table->tilesLeft())
     {
-        // Take the player's turn
+        // Handle the player's turn
         playerTurn();
 
         // After each turn, switch the current player
@@ -86,6 +89,7 @@ void Game::playRound()
         }
     }
 
+    // If we're exiting the loop, it means the end round condition has been met and we need to score the round and then clear the player's boards for the next round
     scoreRound();
     clearBoards();
 
@@ -274,6 +278,8 @@ void Game::scoreRound()
 
     player2->resolveBoard();
 
+    // Scores the round for each player and then prints out their total score
+
     std::cout << player1->getName() << "'s total score: " << player1->getScore() << std::endl;
     std::cout << player2->getName() << "'s total score: " << player2->getScore() << std::endl;
 }
@@ -283,8 +289,10 @@ void Game::clearBoards()
     std::string player1String = player1->clearBoard();
     std::string player2String = player2->clearBoard();
 
+    // Take the cleared tiles from both player's board and put combine them in a single string
     std::string tiles = player1String + player2String;
 
+    // Give this string to the table so it can be passed to bag and the discarded tiles can be placed in the box lid
     table->placeInLid(tiles);
 }
 
@@ -352,10 +360,8 @@ void Game::scoreGame()
     }
     else
     {
-        // Scores are tied -- TO DO
-        // Check who has the most horizontal rows completed
-        // If the number of horizontal rows is even, the game ends in a tie
-
+        // Check who has the most rows completed
+        // If the number of rows is even, the game ends in a tie
         if(player1->countRows() > player2->countRows())
         {
             winner = player1->getName();

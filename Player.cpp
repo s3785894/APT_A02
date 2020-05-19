@@ -3,8 +3,8 @@
 Player::Player(std::string name)
 {
     this->name = name;
-    this->board = new Board();
-    this->score = 0;
+    board = new Board();
+    score = 0;
 }
 
 Player::Player(std::vector<std::string> loadedPlayer1)
@@ -62,6 +62,7 @@ bool Player::isRowFilled()
 
 void Player::addScore(int roundScore)
 {
+    // Roundscore can possibly be a negative int so we need to check if the total score becomes less than 0. If so, set score to 0 as a player cannot have a negative total score
     if (score + roundScore < 0)
     {
         score = 0;
@@ -86,7 +87,6 @@ void Player::placeTiles(int patternLine, char tileType, int tileCount)
 
 void Player::endRound()
 {
-    //board->patternLineToMosaic();
     board->clearFloor();
 }
 
@@ -100,7 +100,8 @@ void Player::placeInFloor(char tileType, int tileCount)
     board->placeInFloor(tileType, tileCount);
 }
 
-char Player::removeFromFloor(){
+char Player::removeFromFloor()
+{
     return board->removeLastFloorTile();
 }
 

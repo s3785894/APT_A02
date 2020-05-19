@@ -26,6 +26,7 @@
 #define MOSAIC_DIM 5
 #define MAX_TILES 100
 #define NUM_COLOURS 5
+#define FLOOR_SIZE 7
 
 #define EXIT_SUCESS 0
 

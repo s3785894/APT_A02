@@ -44,6 +44,17 @@ Table::~Table()
 
 int Table::takeTiles(int factory, char tileColour)
 {
+    /* 
+    * 'Grab' tiles from chosen factory
+    * 
+    * What this function actually does is take in the parameters of which factory and which tile, and then it will count the number of that tile type within the given factory.
+    * It will then return an int which represents the amount of tiles the player has taken, which is then used to place that amount of the chosen tile on to the player's board.
+    * 
+    * The idea is that we avoid passing around char values or tile objects, we instead just tell different components of our program how many tiles to place/remove from certain containers.
+    * 
+    * The remaining tiles from a factory will be transferred to the table centre (unless the player took from the table centre), and all the elements of the factory will be set to \0 (null char) to indicate that it is empty
+    */
+
     int tileFrequency = 0;
 
     // If taking from factory 0, iterate through our tableCentre vector
@@ -119,7 +130,6 @@ bool Table::tilesLeft()
     // Starts true by default because of the logic of our checking
     bool factoryEmpty = true;
 
-    // ----- There's probably a more efficient way of doing this, worth having a looking at
     // We first need to iterate through and check if our 2D array is empty since there is no simple function of doing this like with our vector
     // Loop through our factories array
     for (int i = 0; i < NUM_FACTORIES; i++)
