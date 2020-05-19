@@ -23,7 +23,6 @@ Game::Game(std::string playerOneName, std::string playerTwoName, std::string see
 
 Game::Game(std::ifstream &fileInput)
 {
-    // take input based on whatever file format we need to use
     loadGame(fileInput);
 }
 
@@ -32,15 +31,19 @@ Game::~Game()
     //delete this->current; -- Throws an error because ptr value is null
 }
 
-void Game::playGame()
+void Game::playGame(bool isMidRound)
 {
-    // Loop while end game condition is not met
-    // For each loop, playRound(), then checkEnd()
-
+    bool skipInitilisation = isMidRound;
     while (!checkEnd())
     {
-        table->initialiseRound();
+        if (!skipInitilisation)
+        {
+            table->initialiseRound();
+        }
+
         playRound();
+
+        skipInitilisation = true;
     }
 
     // If we're exiting the above loop, it means that the end game condition has been met. Therefore, we need to do the final scoring and determine a winner
@@ -96,9 +99,8 @@ void Game::playerTurn()
     int factory;
     int patternLine;
     char tile;
-
-    std::string turnInput;
     bool validInput = false;
+    bool lastCommandSave = false;
 
     std::cout << "TURN FOR PLAYER: " << current->getName() << std::endl
               << std::endl;
@@ -114,53 +116,64 @@ void Game::playerTurn()
         std::cout << "> ";
         if (std::cin.good())
         {
-            std::cin >> turnInput;
-
-            // Save the game, then continue the turn
-            if (turnInput == "save")
+            // Takes input and process it into vector for analysis (allows command line arguments)
+            std::string turnInput;
+            bool inputMade = false;
+            while (std::getline(std::cin, turnInput) && !inputMade)
             {
-                // need to change code to process a file name after "save"
-                saveGame("save");
+                inputMade = true;
             }
 
-            if (turnInput == "exit")
+            std::stringstream turnInputStream(turnInput);
+            std::string arg;
+            std::vector<std::string> turnArgs;
+
+            while (turnInputStream >> arg)
+            {
+                turnArgs.push_back(arg);
+            }
+
+            lastCommandSave = false;
+
+            // Save the game, then continue the turn
+            if (turnArgs.front() == "save" || turnArgs.size() == 2)
+            {
+                saveGame(turnArgs.at(1));
+                lastCommandSave = true;
+            }
+
+            // Exit the game without auto saving
+            if (turnArgs.front() == "exit")
             {
                 exit(EXIT_SUCCESS);
             }
 
-            if (turnInput.length() == 3)
+            // Execute regular turn
+            if (turnArgs.front() == "turn")
             {
-                // These conversions need to happen here as the value of these variables needs to be used to take the turn.
-                // Convert factory/pattern line to int. Need to -48 because of how the numbers are represented by ASCII numbers (0 is 48, 1 is 49, etc.)
-                factory = turnInput[0] - 48;
-                patternLine = turnInput[2] - 48;
-                // Assign tile colour choice to individual char and convert to upper case since tiles are always represented as uppercase chars
-                tile = toupper(turnInput[1]);
-
-                // Pass the variables into our validation function so that range checking can be completed.
-                validInput = validateInput(factory, tile, patternLine);
-
-                // If the input is valid, we then need to check if it's a valid move (If the chosen factory contains the chosen tile colour)
-                if (validInput)
+                if (turnArgs.size() == 4)
                 {
-                    validInput = table->checkFactory(factory, tile);
-                }
+                    factory = std::stoi(turnArgs.at(1));
+                    tile = toupper(turnArgs.at(2)[0]);
+                    patternLine = std::stoi(turnArgs.at(3));
 
-                // If the previous validation check passes, check if it's a valid move for the player board
-                if (validInput && patternLine != 6)
-                {
-                    validInput = current->checkBoard(patternLine, tile);
+                    validInput = validateInput(factory, tile, patternLine);
+
+                    if (validInput)
+                    {
+                        validInput = table->checkFactory(factory, tile);
+                    }
+
+                    if (validInput && patternLine != 6)
+                    {
+                        validInput = current->checkBoard(patternLine, tile);
+                    }
                 }
             }
         }
 
-        if (turnInput == "exit")
-        {
-            // exit gane (without saving)
-        }
-
         // Check if input is still invalid to print out a message to the user before re-entering the loop so they can try again
-        if (!validInput)
+        if (!validInput && !lastCommandSave)
         {
             std::cout << "Invalid input." << std::endl;
         }
@@ -386,6 +399,6 @@ void Game::loadGame(std::ifstream &fileInput)
     catch (...)
     {
         std::cout << "An error has occured when loading the file. Incorrect file format detected. Terminating program." << std::endl;
-        exit(0);
+        exit(EXIT_SUCCESS);
     }
 }

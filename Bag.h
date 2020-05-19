@@ -4,6 +4,8 @@
 #include <vector>
 #include <algorithm>
 #include <string>
+#include <sstream>
+#include <iostream>
 #include "Types.h"
 
 class Bag

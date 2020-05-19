@@ -16,21 +16,21 @@ Table::Table(std::vector<std::string> tableLines)
 {
     char tile;
 
-    // Table center
+    // Processes tables
     std::stringstream tableCentreStream(tableLines.at(0));
     while (tableCentreStream >> tile)
     {
         tableCentre.push_back(tile);
     }
 
-    // Regular Factories
+    // Processes factories
     for (int i = 0; i < NUM_FACTORIES; i++)
     {
         std::stringstream factoryStream(tableLines.at(i + 1));
         int colNum = 0;
         while (factoryStream >> tile)
         {
-            factories[colNum][i] = tile;
+            factories[i][colNum] = tile;
             colNum++;
         }
     }
