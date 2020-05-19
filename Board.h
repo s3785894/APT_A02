@@ -2,10 +2,12 @@
 #define BOARD_H
 
 #include "Types.h"
+#include "LinkedList.h"
 
 #include <iostream>
-
-#include "LinkedList.h"
+#include <memory>
+#include <sstream>
+#include <vector>
 
 class Board
 {

@@ -6,11 +6,17 @@
 #include "Bag.h"
 #include "Game.h"
 
+// Displays menu and processing input
 int displayMenu();
+// Prints credits (called from menu)
 void printCredits();
+// Creates and initiates new game (called from menu)
 void newGame(std::string seed, bool hasSeeded);
+// Loads saved game from file (called from menu)
 void loadGame();
+// Provides game explanation (called from menu)
 void howTo();
+// Processes command line argument for potential seeded game
 void processArgs(int argc, char **argv, std::string *seed, bool *hasSeeded);
 
 int main(int argc, char **argv)
@@ -121,7 +127,8 @@ void newGame(std::string seed, bool hasSeeded)
     std::cin >> playerTwoName;
 
     std::unique_ptr<Game> game(new Game(playerOneName, playerTwoName, seed, hasSeeded));
-    game->playGame();
+    // Loads game (with parameter isMidRound as boolean value false, as this is a new game)
+    game->playGame(false);
 }
 
 void loadGame()
@@ -136,13 +143,15 @@ void loadGame()
         std::ifstream fileInput;
         fileInput.open(filename);
 
+        // Throws an exception if the file cannot be located (i.e. bad file input)
         if (!fileInput.good())
         {
             throw std::exception();
         }
 
+        // Passes refrence to file input object into game object for processing the input file
         std::unique_ptr<Game> game(new Game(fileInput));
-        game->playGame();
+        game->playGame(true);
     }
     catch (std::exception e)
     {

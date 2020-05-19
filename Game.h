@@ -18,7 +18,7 @@ public:
     ~Game();
 
     // Initialises new game
-    void playGame();
+    void playGame(bool isMidRound);
 
     // Holds the logic for playing a round of the game
     void playRound();

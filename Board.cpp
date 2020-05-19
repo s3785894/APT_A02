@@ -1,7 +1,4 @@
 #include "Board.h"
-#include <memory>
-#include <sstream>
-#include <vector>
 
 #define floorSize 7
 
@@ -39,19 +36,19 @@ Board::Board()
     rowFilled = false;
 }
 
-Board::Board(std::vector<std::string> patternLines, std::vector<std::string> mosaicLines, std::string tileLineString)
+Board::Board(std::vector<std::string> patternFileLines, std::vector<std::string> mosaicLines, std::string tileLineString)
 {
     // Processes Pattern Lines
     for (int i = 0; i < MOSAIC_DIM; i++)
     {
         char tile;
 
-        std::stringstream patternLineStream(mosaicLines.at(i));
+        std::stringstream patternLineStream(patternFileLines.at(i));
         int colNum = 0;
 
         while (patternLineStream >> tile)
         {
-            patternLines[colNum][i] = tile;
+            patternLines[i][4 - colNum] = tile;
             colNum++;
         }
     }

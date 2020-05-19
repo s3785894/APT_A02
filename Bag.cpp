@@ -1,7 +1,4 @@
 #include "Bag.h"
-#include <iostream>
-#include <vector>
-#include <sstream>
 
 Bag::Bag()
 {

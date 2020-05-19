@@ -1,5 +1,4 @@
 #include "Player.h"
-#include <exception>
 
 Player::Player(std::string name)
 {
@@ -10,8 +9,8 @@ Player::Player(std::string name)
 
 Player::Player(std::vector<std::string> loadedPlayer1)
 {
-    std::string playerName = loadedPlayer1.at(0);
-    int score = std::stoi(loadedPlayer1.at(2));
+    name = loadedPlayer1.at(0);
+    score = std::stoi(loadedPlayer1.at(2));
     // Throws an exception if the score is below zero (impossible state)
     if (score < 0)
     {
