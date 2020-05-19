@@ -340,18 +340,37 @@ void Game::scoreGame()
     std::cout << player1->getName() << "'s final score: " << player1Score << std::endl;
     std::cout << player2->getName() << "'s final score: " << player2Score << std::endl;
 
+    std::string winner;
+
     if (player1Score > player2Score)
     {
-        std::cout << player1->getName() << " is the Winner!" << std::endl;
+        winner = player1->getName();
     }
     else if (player2Score > player1Score)
     {
-        std::cout << player2->getName() << " is the Winner!" << std::endl;
+        winner = player2->getName();
     }
     else
     {
         // Scores are tied -- TO DO
+        // Check who has the most horizontal rows completed
+        // If the number of horizontal rows is even, the game ends in a tie
+
+        if(player1->countRows() > player2->countRows())
+        {
+            winner = player1->getName();
+        } 
+        else if (player2->countRows() > player1->countRows())
+        {
+            winner = player2->getName();
+        } 
+        else 
+        {
+            winner = "No-One! The game ends in a tie";
+        }
     }
+
+    std::cout << "The winner is: " << winner << "!" << std::endl;
 }
 
 void Game::loadGame(std::ifstream &fileInput)

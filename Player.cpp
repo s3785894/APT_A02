@@ -50,6 +50,11 @@ int Player::getScore()
     return score;
 }
 
+int Player::countRows()
+{
+    return board->countRows();
+}
+
 bool Player::isRowFilled()
 {
     return board->isRowFilled();

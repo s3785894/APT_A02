@@ -617,6 +617,30 @@ int Board::floorSlot(){
     return floorSize-(floorTile->size());
 }
 
+int Board::countRows(){
+    int rowsFilled = 0;
+
+    for (int i = 0; i < MOSAIC_DIM; i++)
+    {
+        int tileCount = 0;
+        for (int j = 0; j < MOSAIC_DIM; j++)
+        {
+            // If the current index is not empty, increase tile count
+            if (mosaic[i][j] != '.')
+            {
+                tileCount++;
+            }
+        }
+        // After going through the whole row, if the tile count is 5 that means the row is full, so we increment the amount of rowsFilled by 1
+        if (tileCount == 5)
+        {
+            rowsFilled++;
+        }
+    }
+
+    return rowsFilled;
+}
+
 std::string Board::toString()
 {
     std::string details = "\n";
