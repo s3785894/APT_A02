@@ -177,10 +177,10 @@ int Board::resolveBoard()
     // Using our floorScore array, we iterate through and remove points as necessary. Score lost is added to a seperate int first for the purpose of printing to the user
     for (int i = 0; i < floorTiles; i++)
     {
-        scoreLost = scoreLost - floorScore[i];
+        scoreLost = scoreLost + floorScore[i];
     }
 
-    std::cout << "Scored " << scoreLost << " point(s) for having " << floorTiles << " tile(s) in the floor line" << std::endl;
+    std::cout << "Lost " << scoreLost << " point(s) for having " << floorTiles << " tile(s) in the floor line" << std::endl;
 
     score = score - scoreLost;
 
