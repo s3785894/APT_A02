@@ -164,7 +164,22 @@ void Game::playerTurn()
                 {
                     factory = std::stoi(turnArgs.at(1));
                     tile = toupper(turnArgs.at(2)[0]);
-                    patternLine = std::stoi(turnArgs.at(3));
+
+                    // Convert the pattern line input to lowercase so we can do a comparison
+                    std::string patternLineInput = turnArgs.at(3);
+                    std::transform(patternLineInput.begin(), patternLineInput.end(), patternLineInput.begin(), ::tolower);
+
+                    // Check if the input (to lowercase) was 'floor', if so, convert it to pattern line 6.
+                    if(patternLineInput == "floor")
+                    {
+                        patternLine = 6;
+                    } 
+                    // Else, process as usual
+                    else 
+                    {
+                        patternLine = std::stoi(turnArgs.at(3));
+                    }
+                    
                     validInput = validateInput(factory, tile, patternLine);
 
                     if (validInput)

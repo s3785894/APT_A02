@@ -361,11 +361,15 @@ void Board::prntBoard()
     std::cout << std::endl;
 
     // Print out the floor tiles (Negative Score)
-    std::cout << "broken: ";
+    for (int i = 0; i < FLOOR_SIZE; i++){
+        std::cout << "-" << floorScore[i] << " ";
+    }
+
+    std::cout << std::endl;
 
     for (int i = 0; i < floorTile->size(); ++i)
     {
-        std::cout << floorTile->get(i) << " ";
+        std::cout << " " << floorTile->get(i) << " ";
     }
 
     std::cout << std::endl;
