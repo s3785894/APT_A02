@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <exception>
+#include <limits>
 
 #include "Types.h"
 #include "Bag.h"
@@ -78,14 +79,15 @@ int displayMenu()
     std::cout << "4. How To" << std::endl;
     std::cout << "5. Quit" << std::endl;
 
-    int input = -1;
+    int input;
     bool validInput = false;
     while (!validInput)
     {
         std::cout << "> ";
+        std::cin >> input;
+
         if (std::cin.good())
         {
-            std::cin >> input;
             if (input > 0 && input <= 5)
             {
                 validInput = true;
@@ -95,9 +97,11 @@ int displayMenu()
                 std::cout << "Invalid menu selection. Please enter the number preceeding any of the menu options above." << std::endl;
             }
         }
-        else
+        else if(std::cin.fail())
         {
-            std::cout << "Invalid input." << std::endl;
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); 
+            std::cout << "Please only enter a single integer between 1 and 5." << std::endl;
         }
     }
 
@@ -182,7 +186,7 @@ void howTo()
         For example, if you want to take all the blue tiles from factory 2, and place them in your 3rd pattern line, the input would be: \n \
         turn 2 B 3 \n \
         \n \
-        Type 'mosaic' at any time during a players turn if you wish to view the structure oof the mosaic (where each tile goes on the mosaic) \n \
+        Type 'mosaic' at any time during a players turn if you wish to view the structure of the mosaic (where each tile goes on the mosaic) \n \
         \n \
         If at any point you would like to save your game, type 'save [FILENAME]'. This will save the game in it's current state and then\n \
         continue the current turn\n \
