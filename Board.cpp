@@ -172,12 +172,17 @@ int Board::resolveBoard()
 
     // Remove points based on the tiles in the floor
     int floorTiles = floorTile->size();
+    int scoreLost = 0;
 
-    // Using our floorScore array, we iterate through and remove points as necessary
+    // Using our floorScore array, we iterate through and remove points as necessary. Score lost is added to a seperate int first for the purpose of printing to the user
     for (int i = 0; i < floorTiles; i++)
     {
-        score = score - floorScore[i];
+        scoreLost = scoreLost - floorScore[i];
     }
+
+    std::cout << "Scored " << scoreLost << " point(s) for having " << floorTiles - 1 << " tile(s) in the floor line" << std::endl;
+
+    score = score - scoreLost;
 
     // After moving all necessary tiles to the pattern line, do a final check of the board to see if any rows are filled (end game condition)
     for (int i = 0; i < MOSAIC_DIM; i++)
@@ -313,6 +318,8 @@ int Board::patternLineToMosaic(int patternLine)
         score = 1;
     }
 
+    std::cout << "Scored " << score << " point(s) for moving tile " << tile << " to mosaic in Row " << patternLine + 1 << std::endl;
+
     // Return the score
     return score;
 }
@@ -416,7 +423,6 @@ std::string Board::clearBoard()
     return tilesCleared;
 }
 
-// NEED TO RE-VISIT THIS METHOD WHEN THE TURN INPUT IS FIXED BECAUSE I DONT THINK THE LOGIC FOR A PATTERN LINE BEING FULL IS CORRECT
 bool Board::checkBoard(int patternLine, char tileType)
 {
     bool validMove = true;
@@ -558,27 +564,35 @@ int Board::scoreBonus()
     if (red == 5)
     {
         score = score + 10;
-    }
+        std::cout << "Bonus 10 points for having 5 red tiles!" << std::endl;
+    } 
     if (black == 5)
     {
         score = score + 10;
+        std::cout << "Bonus 10 points for having 5 black tiles!" << std::endl;
     }
     if (yellow == 5)
     {
         score = score + 10;
+        std::cout << "Bonus 10 points for having 5 yellow tiles!" << std::endl;
     }
     if (blue == 5)
     {
         score = score + 10;
+        std::cout << "Bonus 10 points for having 5 blue tiles!" << std::endl;
     }
     if (lBlue == 5)
     {
         score = score + 10;
+        std::cout << "Bonus 10 points for having 5 light blue tiles!" << std::endl;
     }
 
     // For every completed row, add 2 points.
     // For every completed column, add 7 points
     score = score + (rowsComplete * 2) + (colComplete * 7);
+
+    std::cout << (rowsComplete * 2) << " bonus points for having " << rowsComplete << " completed row(s)" << std::endl;
+    std::cout << (rowsComplete * 7) << " bonus points for having " << colComplete << " completed column(s)" << std::endl;
 
     // Return the bonus points
     return score;

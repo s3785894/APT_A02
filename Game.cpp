@@ -305,14 +305,17 @@ void Game::saveGame(std::string fileName)
 void Game::scoreRound()
 {
     std::cout << "Round Scoring" << std::endl;
+    LINE_DIVIDER
+    // Resolve the board and score the round for each player
     player1->resolveBoard();
-
+    std::cout << std::endl;
     player2->resolveBoard();
 
-    // Scores the round for each player and then prints out their total score
-
+    // Print out the players total score after adding the round score
+    std::cout << std::endl;
     std::cout << player1->getName() << "'s total score: " << player1->getScore() << std::endl;
     std::cout << player2->getName() << "'s total score: " << player2->getScore() << std::endl;
+    std::cout << std::endl;
 }
 
 void Game::clearBoards()
@@ -369,8 +372,11 @@ void Game::scoreGame()
     // If the game is a tie, whoever has the most completed rows wins - Need to therefore check for this
 
     // Calculate the end game bonuses for each player
+    std::cout << "Score Bonuses for: " << player1->getName() << std::endl;
     player1->scoreBonus();
-    player1->scoreBonus();
+
+    std::cout << "Score Bonuses for: " << player2->getName() << std::endl;
+    player2->scoreBonus();
 
     // Get the final scores for each player
     int player1Score = player1->getScore();
@@ -378,6 +384,7 @@ void Game::scoreGame()
 
     std::cout << player1->getName() << "'s final score: " << player1Score << std::endl;
     std::cout << player2->getName() << "'s final score: " << player2Score << std::endl;
+    std::cout << std::endl;
 
     std::string winner;
 
@@ -408,6 +415,7 @@ void Game::scoreGame()
     }
 
     std::cout << "The winner is: " << winner << "!" << std::endl;
+    std::cout << std::endl;
 }
 
 void Game::loadGame(std::ifstream &fileInput)

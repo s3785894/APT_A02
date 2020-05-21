@@ -107,10 +107,12 @@ char Player::removeFromFloor()
 
 void Player::resolveBoard()
 {
+    std::cout << "Scoring for " << name << ":" << std::endl;
     int roundScore = board->resolveBoard();
     addScore(roundScore);
 
-    std::cout << name << "'s score for the round: " << roundScore << std::endl;
+    std::cout << "Score for the round: " << roundScore << std::endl;
+
 }
 
 std::string Player::clearBoard()
