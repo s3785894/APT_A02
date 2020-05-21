@@ -44,11 +44,20 @@ Board::Board(std::vector<std::string> patternFileLines, std::vector<std::string>
         std::stringstream patternLineStream(patternFileLines.at(i));
         int colNum = 0;
 
-        while (patternLineStream >> tile)
+        // Incrementally adds spaces to the pattern lines to ensure that it is printed out correctly
+        for(int j = 0; j < MOSAIC_DIM - (i + 1); j++)
         {
-            patternLines[i][4 - colNum] = tile;
+            patternLines[i][j] = ' ';
             colNum++;
         }
+
+        while (patternLineStream >> tile)
+        {
+            patternLines[i][colNum] = tile;
+            colNum++;
+        }
+
+
     }
 
     // Processes Mosaic lines
@@ -57,16 +66,16 @@ Board::Board(std::vector<std::string> patternFileLines, std::vector<std::string>
         char tile;
 
         std::stringstream mosaicLineStream(mosaicLines.at(i));
-        int colNum = 0;
+        int rowNum = 0;
 
         while (mosaicLineStream >> tile)
         {
-            mosaic[colNum][i] = tile;
-            colNum++;
+            mosaic[i][rowNum] = tile;
+            rowNum++;
         }
 
         // Throws an exception is more than five columns are present (i.e. error detected)
-        if (!(colNum == 5))
+        if (!(rowNum == 5))
         {
             throw std::exception();
         }
@@ -352,11 +361,15 @@ void Board::prntBoard()
     std::cout << std::endl;
 
     // Print out the floor tiles (Negative Score)
-    std::cout << "broken: ";
+    for (int i = 0; i < FLOOR_SIZE; i++){
+        std::cout << "-" << floorScore[i] << " ";
+    }
+
+    std::cout << std::endl;
 
     for (int i = 0; i < floorTile->size(); ++i)
     {
-        std::cout << floorTile->get(i) << " ";
+        std::cout << " " << floorTile->get(i) << " ";
     }
 
     std::cout << std::endl;

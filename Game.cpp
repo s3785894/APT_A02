@@ -164,7 +164,22 @@ void Game::playerTurn()
                 {
                     factory = std::stoi(turnArgs.at(1));
                     tile = toupper(turnArgs.at(2)[0]);
-                    patternLine = std::stoi(turnArgs.at(3));
+
+                    // Convert the pattern line input to lowercase so we can do a comparison
+                    std::string patternLineInput = turnArgs.at(3);
+                    std::transform(patternLineInput.begin(), patternLineInput.end(), patternLineInput.begin(), ::tolower);
+
+                    // Check if the input (to lowercase) was 'floor', if so, convert it to pattern line 6.
+                    if(patternLineInput == "floor")
+                    {
+                        patternLine = 6;
+                    } 
+                    // Else, process as usual
+                    else 
+                    {
+                        patternLine = std::stoi(turnArgs.at(3));
+                    }
+                    
                     validInput = validateInput(factory, tile, patternLine);
 
                     if (validInput)
@@ -185,7 +200,8 @@ void Game::playerTurn()
         }
 
         // Print out the format of the mosaic to the player so they know which tiles go where
-        if (turnInputLower == "mosaic"){
+        if (turnInputLower == "mosaic")
+        {
             std::string mosaicColours =
                 "\n \
                 B Y R U L   \n \
@@ -194,10 +210,10 @@ void Game::playerTurn()
                 R U L B Y   \n \
                 Y R U L B   \n \
                 ";
-                
-                std::cout << mosaicColours << std::endl;
 
-                lastCommandMosaic = true;
+            std::cout << mosaicColours << std::endl;
+
+            lastCommandMosaic = true;
         }
 
         // Check if input is still invalid to print out a message to the user before re-entering the loop so they can try again
