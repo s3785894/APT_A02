@@ -99,7 +99,7 @@ void Bag::shuffleBag(std::string seed, bool isSeeded)
 char Bag::grabTile()
 {
     // Each time we attempt to grab a tile, first check if the bag is empty, and if so, refill the bag from the box-lid and shuffle
-    if (isEmpty())
+    if (bag.size() == 0)
     {
         refillBag();
     }
@@ -112,22 +112,6 @@ char Bag::grabTile()
 
     // Return the tile that has been grabbed
     return tile;
-}
-
-bool Bag::isEmpty()
-{
-    bool isEmpty;
-
-    if (bag.size() > 0)
-    {
-        isEmpty = false;
-    }
-    else
-    {
-        isEmpty = true;
-    }
-
-    return isEmpty;
 }
 
 void Bag::placeInLid(const std::string &tiles)
