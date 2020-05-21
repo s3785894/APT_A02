@@ -104,6 +104,7 @@ void Game::playerTurn()
     char tile;
     bool validInput = false;
     bool lastCommandSave = false;
+    bool lastCommandMosaic = false;
 
     std::cout << "TURN FOR PLAYER: " << current->getName() << std::endl
               << std::endl;
@@ -112,10 +113,9 @@ void Game::playerTurn()
     table->printFactoryContents();
     current->prntBoard();
 
-    std::cout << "Enter turn input: " << std::endl;
-
     while (!validInput)
     {
+        std::cout << "Enter turn input: " << std::endl;
         std::cout << "> ";
 
         // Takes input and process it into vector for analysis (allows command line arguments)
@@ -135,22 +135,28 @@ void Game::playerTurn()
         }
 
         lastCommandSave = false;
+        lastCommandMosaic = false;
+
+        // Convert the first string (which determines what action is taken) to lowercase so that it's case insensitive
+        std::string turnInputLower = turnArgs.front();
+        std::transform(turnInputLower.begin(), turnInputLower.end(), turnInputLower.begin(), ::tolower);
 
         // Save the game, then continue the turn
-        if (turnArgs.front() == "save" && turnArgs.size() == 2)
+        if (turnInputLower == "save" && turnArgs.size() == 2)
         {
             saveGame(turnArgs.at(1));
             lastCommandSave = true;
         }
 
         // Exit the game without auto saving
-        if (turnArgs.front() == "exit")
+        if (turnInputLower == "exit")
         {
+            std::cout << "Exiting Program!" << std::endl;
             exit(EXIT_SUCCESS);
         }
 
         // Execute regular turn
-        if (turnArgs.front() == "turn")
+        if (turnInputLower == "turn")
         {
             if (turnArgs.size() == 4)
             {
@@ -178,8 +184,24 @@ void Game::playerTurn()
             }
         }
 
+        // Print out the format of the mosaic to the player so they know which tiles go where
+        if (turnInputLower == "mosaic"){
+            std::string mosaicColours =
+                "\n \
+                B Y R U L   \n \
+                L B Y R U   \n \
+                U L B Y R   \n \
+                R U L B Y   \n \
+                Y R U L B   \n \
+                ";
+                
+                std::cout << mosaicColours << std::endl;
+
+                lastCommandMosaic = true;
+        }
+
         // Check if input is still invalid to print out a message to the user before re-entering the loop so they can try again
-        if (!validInput && !lastCommandSave)
+        if (!validInput && !lastCommandSave && !lastCommandMosaic)
         {
             std::cout << "Invalid input." << std::endl;
         }

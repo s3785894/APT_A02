@@ -177,15 +177,19 @@ void howTo()
         Follow the basic input instructions on screen to begin the game. If at any point you enter an input that is not valid, \n \
         you will simply be asked to try again until you enter a valid input. \n \
         \n \
-        When playing the game, the input for a turn is in the format of 'turn [FACTORY][TILE][PATTERN LINE]'. No spaces should be used. \n \
+        When playing the game, the input for a turn is in the format of 'turn [FACTORY] [TILE] [PATTERN LINE]'. There should be spaces inbetween each word/number. \n \
         \n \
         For example, if you want to take all the blue tiles from factory 2, and place them in your 3rd pattern line, the input would be: \n \
-        turn 2B3 \n \
+        turn 2 B 3 \n \
+        \n \
+        Type 'mosaic' at any time during a players turn if you wish to view the structure oof the mosaic (where each tile goes on the mosaic) \n \
         \n \
         If at any point you would like to save your game, type 'save [FILENAME]'. This will save the game in it's current state and then\n \
         continue the current turn\n \
         \n \
         To exit the game, type 'exit'. This will exit WITHOUT saving.\n \
+        \n \
+        All inputs are not case sensitive so they will work no matter how you type them.\n \
         ";
 
     std::cout << string << std::endl;
