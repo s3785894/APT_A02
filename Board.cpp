@@ -180,7 +180,7 @@ int Board::resolveBoard()
         scoreLost = scoreLost - floorScore[i];
     }
 
-    std::cout << "Scored " << scoreLost << " point(s) for having " << floorTiles - 1 << " tile(s) in the floor line" << std::endl;
+    std::cout << "Scored " << scoreLost << " point(s) for having " << floorTiles << " tile(s) in the floor line" << std::endl;
 
     score = score - scoreLost;
 
