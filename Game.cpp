@@ -185,7 +185,8 @@ void Game::playerTurn()
         }
 
         // Print out the format of the mosaic to the player so they know which tiles go where
-        if (turnInputLower == "mosaic"){
+        if (turnInputLower == "mosaic")
+        {
             std::string mosaicColours =
                 "\n \
                 B Y R U L   \n \
@@ -194,10 +195,10 @@ void Game::playerTurn()
                 R U L B Y   \n \
                 Y R U L B   \n \
                 ";
-                
-                std::cout << mosaicColours << std::endl;
 
-                lastCommandMosaic = true;
+            std::cout << mosaicColours << std::endl;
+
+            lastCommandMosaic = true;
         }
 
         // Check if input is still invalid to print out a message to the user before re-entering the loop so they can try again

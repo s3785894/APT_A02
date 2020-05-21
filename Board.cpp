@@ -49,6 +49,13 @@ Board::Board(std::vector<std::string> patternFileLines, std::vector<std::string>
             patternLines[i][4 - colNum] = tile;
             colNum++;
         }
+
+        // Incrementally adds spaces to the pattern lines to ensure that it is printed out correctly
+        while (colNum < 5)
+        {
+            patternLines[i][4 - colNum] = ' ';
+            colNum++;
+        }
     }
 
     // Processes Mosaic lines
