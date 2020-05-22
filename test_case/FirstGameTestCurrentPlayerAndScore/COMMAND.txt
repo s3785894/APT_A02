@@ -1,0 +1,18 @@
+/*
+Test that first players token goes to player Spring's floor line when taking from 0 factory in TakeFirstPlayerToken.txt. When the round ends, the expected result is in NewGameExpected.txt. Alice has score of 2 for placing 2 tiles in mosaic. Spring has score of 2 for playing 3 tiles in mosaic and minus 1 score for the first player token in floor line
+
+In the expected file at the end of the round, Spring's boolean of whether it is their turn should be true, since she has the first player token
+*/
+
+turn 1 B 2
+turn 3 Y 3
+turn 2 L 1
+turn 4 L 2
+turn 5 R 3
+turn 0 R 4
+turn 0 B 4
+save TakeFirstPlayerToken.txt
+turn 0 Y 5
+turn 0 U 5
+turn 0 L 1
+save NewGameActual.txt

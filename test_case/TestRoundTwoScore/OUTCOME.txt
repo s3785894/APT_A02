@@ -5,9 +5,9 @@ L B U L
 U L U B
 L L Y B
 L B Y U R R Y L U R R L Y Y L U B L Y U B Y Y R R B R U Y L R R R U Y B U B L U
-U U B B B B B Y Y Y Y R R
+L B B L L L Y Y Y U R R B B B R U B B Y Y Y Y L L
 Alice
-True
+False
 9
 . 
 . . 
@@ -21,7 +21,7 @@ True
 . . . . . 
 
 Spring
-False
+True
 5
 . 
 . . 
