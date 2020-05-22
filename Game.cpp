@@ -43,10 +43,10 @@ void Game::playGame(bool isMidRound)
         if (!(*skipInitilisation))
         {
             table->initialiseRound();
-        }
-
-        if(firstPlayer != nullptr){
-            current = firstPlayer;
+            
+            if(firstPlayer != nullptr){
+                current = firstPlayer;
+            }
         }
 
         playRound();
@@ -501,6 +501,25 @@ void Game::loadGame(std::ifstream &fileInput)
             loadPlayer2.push_back(fileLines.at(i));
         }
         player2 = std::shared_ptr<Player>(new Player(loadPlayer2));
+
+        // Check if either player has the First player token in their floor line, and if so, assign that player to firstPlayer for the next round
+        std::string playerOneFloor = fileLines.at(21);
+        std::string playerTwoFloor = fileLines.at(35);
+
+        for(int j = 0; j < playerOneFloor.size(); j++){
+            if(playerOneFloor[j] == 'F'){
+                firstPlayer = player1.get();
+            }
+        }
+
+        // Only need to check player 2 if player one was not already assigned to firstPlayer
+        if(firstPlayer == nullptr){
+            for(int j = 0; j < playerTwoFloor.size(); j++){
+                if(playerTwoFloor[j] == 'F'){
+                    firstPlayer = player2.get();
+                }
+            } 
+        }
 
         // Sets up current player
         if (isPlayerOneCurrent)
