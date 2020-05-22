@@ -1,0 +1,22 @@
+After taking the turn, the game will end the round and score:
+
+PlayerONE:
+Move tile R in Row 4 to the mosaic - scoring 3 points
+Move tile B in Row 5 to the mosaic - scoring 1 point
+Remove 6 points for having 4 tiles in the floor line
+
+This brings their total up to 19
+
+PlayerTWO:
+Move tile Y in Row 1 to the mosaic - scoring 7 points
+Move tile R in Row 2 to the mosaic - scoring 8 points
+Move tile L in Row 3 to the mosaic - scoring 8 points
+Remove 1 point for having 1 tile in the floor line
+
+This brings their total up to 39
+
+The game will then conclude because playerTWO has completed a row successfully.
+
+playerTWO will be the winner, having scored a bonus 2 points (for a total of 41) for completing a row
+No other bonuses are awarded
+

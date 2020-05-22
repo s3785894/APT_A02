@@ -1,0 +1,2 @@
+Since both players have full floor lines, whenever they take tiles and place them directly to the floor, the tiles instead go straight to the box-lid.
+Based on the turns taken, what we expect to see is: R R R B B Y added to line 8 of the save file (box-lid line)
