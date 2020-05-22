@@ -399,9 +399,11 @@ void Game::scoreGame()
     // Calculate the end game bonuses for each player
     std::cout << "Score Bonuses for: " << player1->getName() << std::endl;
     player1->scoreBonus();
+    std::cout << std::endl;
 
     std::cout << "Score Bonuses for: " << player2->getName() << std::endl;
     player2->scoreBonus();
+    std::cout << std::endl;
 
     // Get the final scores for each player
     int player1Score = player1->getScore();
