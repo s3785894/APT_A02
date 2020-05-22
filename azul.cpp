@@ -64,6 +64,10 @@ int main(int argc, char **argv)
         }
     }
 
+    // Clean up our memory before exiting
+    delete hasSeeded;
+    delete seed;
+
     return EXIT_SUCCESS;
 }
 
@@ -147,6 +151,7 @@ void newGame(std::string seed, bool hasSeeded)
 void loadGame()
 {
     std::cout << "Enter the filename from which to load the game" << std::endl;
+    
     try
     {
         std::cout << "> ";
@@ -167,8 +172,8 @@ void loadGame()
         game->playGame(true);
     }
     catch (std::exception e)
-    {
-        std::cout << "Error when accessing file - please ensure file exists before attempting to load it.";
+    { 
+        std::cout << "Error when accessing file - please ensure file exists before attempting to load it." << std::endl << std::endl;
     }
 }
 

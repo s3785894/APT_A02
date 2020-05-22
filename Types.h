@@ -20,7 +20,7 @@
 
 #define LINE_DIVIDER    std::cout << "---------------------------------" << std::endl;
 
-// Game Parameters
+// Game Parameters for a basic game of azul as per M1 specifications
 #define NUM_FACTORIES 5
 #define FACTORY_SIZE 4
 #define MOSAIC_DIM 5

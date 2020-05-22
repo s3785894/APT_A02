@@ -146,6 +146,9 @@ void Game::playerTurn()
         {
             saveGame(turnArgs.at(1));
             lastCommandSave = true;
+        } else  if (turnInputLower == "save" && turnArgs.size() > 2)
+        {
+            std::cout << "Filename must not contain spaces. Please try again." << std::endl;
         }
 
         // Exit the game without auto saving
@@ -295,8 +298,7 @@ bool Game::checkEnd()
 
 void Game::saveGame(std::string fileName)
 {
-    // Needs to get Players, their Boards, Bag, Lid(?), and Table via getters and setters
-    // Alternatively, make use of custom toString methods to convert everything to string
+    // Gather the game information from their 'toString' functions, formatted to the structure of the save file format
 
     std::ofstream saveFile;
     saveFile.open(fileName);
@@ -322,6 +324,7 @@ void Game::scoreRound()
 {
     std::cout << "Round Scoring" << std::endl;
     LINE_DIVIDER
+
     // Resolve the board and score the round for each player
     player1->resolveBoard();
     std::cout << std::endl;
@@ -336,10 +339,11 @@ void Game::scoreRound()
 
 void Game::clearBoards()
 {
+    // Clear the player boards of the necessary tiles, retrieving the cleared tiles as a string
     std::string player1String = player1->clearBoard();
     std::string player2String = player2->clearBoard();
 
-    // Take the cleared tiles from both player's board and put combine them in a single string
+    // Take the cleared tiles from both player's board and combine them into a single string
     std::string tiles = player1String + player2String;
 
     // Give this string to the table so it can be passed to bag and the discarded tiles can be placed in the box lid
@@ -358,10 +362,10 @@ bool Game::validateInput(int factory, char tile, int patternLine)
 
     if (0 <= factory && factory <= 5)
     {
-        // Valid, check next
+        // Factory input is within range, check pattern line range
         if (1 <= patternLine && patternLine <= 6)
         {
-            // Valid, check next
+            // Pattern line input is within range, check if the given tile colour is valid
             // Check the tile colour input against our array of tile colours
             for (int i = 0; i < NUM_COLOURS; i++)
             {
