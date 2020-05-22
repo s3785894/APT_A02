@@ -230,7 +230,7 @@ bool Table::checkFactory(int factory, char tileColour)
 
 bool Table::checkFirstPlayerToken()
 {
-    // The first player token, will always be the first index of the table centre, therefore, we just need to check index 0 instead of looping through the whole thing
+    // The first player token will always be the first index of the table centre, therefore, we just need to check index 0 instead of looping through the whole vector
 
     bool tokenExists;
 
@@ -238,6 +238,7 @@ bool Table::checkFirstPlayerToken()
     {
         tokenExists = tableCentre.at(0) == 'F';
 
+        // If the token is on the table, we must also remove it since it will be moved to the player board
         if (tokenExists)
         {
             tableCentre.erase(tableCentre.begin());
@@ -248,6 +249,7 @@ bool Table::checkFirstPlayerToken()
         tokenExists = false;
     }
 
+    // Return whether or not the token is on the table. If true, the game handles the logic of giving this token to the player
     return tokenExists;
 }
 

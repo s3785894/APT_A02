@@ -91,9 +91,11 @@ void Bag::shuffleBag(std::string seed, bool isSeeded)
         // Generate a random number, j, based on our seed in the range of our vector size
         int j = i + rand() % (size - i);
 
-        //Swap the tile at index j with the tile at the current index i
+        // Swap the tile at index j with the tile at the current index i
         std::swap(bag[i], bag[j]);
     }
+
+    // After completing this loop, we can be confident that the bag order is now random
 }
 
 char Bag::grabTile()

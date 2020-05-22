@@ -226,7 +226,6 @@ int Board::patternLineToMosaic(int patternLine)
 
     // Find the position of the colour on the mosaic in the given row
     int position;
-
     for (int i = 0; i < MOSAIC_DIM; i++)
     {
         if (mosaicColours[patternLine][i] == tile)
@@ -327,6 +326,7 @@ int Board::patternLineToMosaic(int patternLine)
         score = 1;
     }
 
+    // Provide the user information about the move and the score gained.
     std::cout << "Scored " << score << " point(s) for moving tile " << tile << " to mosaic in Row " << patternLine + 1 << std::endl;
 
     // Return the score
@@ -398,7 +398,7 @@ std::string Board::clearBoard()
         // Initialise a boolean full to default value true, indicating the line is full
         bool full = true;
 
-        // Check if the starting element on the pattern line is empty, if it is we don't need to bother checking the whole line
+        // Check if the starting element on the pattern line is not empty, if it is we don't need to bother checking the whole line
         if (patternLines[i][column] != '.')
         {
             for (int j = column; j >= (MOSAIC_DIM - 1) - i; j--)
@@ -423,7 +423,7 @@ std::string Board::clearBoard()
         }
     }
 
-    // Add all times from the floor to the string as these are always removed after each round
+    // Add all tiles from the floor to the string as these are always removed after each round
     for (int i = 0; i < floorTile->size(); i++)
     {
         char tile = floorTile->get(i);
@@ -538,7 +538,7 @@ int Board::scoreBonus()
         }
     }
 
-    // Check how many of each colour tile there is:
+    // Create ints to store the count of each colour:
     int red = 0;
     int blue = 0;
     int lBlue = 0;
@@ -605,7 +605,7 @@ int Board::scoreBonus()
     score = score + (rowsComplete * 2) + (colComplete * 7);
 
     std::cout << (rowsComplete * 2) << " bonus points for having " << rowsComplete << " completed row(s)" << std::endl;
-    std::cout << (rowsComplete * 7) << " bonus points for having " << colComplete << " completed column(s)" << std::endl;
+    std::cout << (colComplete * 7) << " bonus points for having " << colComplete << " completed column(s)" << std::endl;
 
     // Return the bonus points
     return score;
