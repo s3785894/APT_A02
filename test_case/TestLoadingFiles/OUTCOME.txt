@@ -1,0 +1,4 @@
+/*
+All input files should load except InvalidGameFormatINPUT.txt, which should print to the console:
+An error has occurred when loading the file. Incorrect file format detected. Terminating program.
+*/

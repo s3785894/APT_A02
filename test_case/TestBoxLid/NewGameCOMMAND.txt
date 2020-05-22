@@ -1,0 +1,9 @@
+/*
+The box lid should have added L B Y Y at the end of the round. 
+1 L from Spring pattern Line Row 2
+2 Y from Spring pattern Line Row 3
+1 B from Alice pattern Line Row 2
+*/
+
+turn 0 L 1
+save TestBoxLid2.txt
