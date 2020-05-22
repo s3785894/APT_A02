@@ -1,0 +1,36 @@
+F
+L L R R
+Y B R U
+L B U L
+U L U B
+L L Y B
+L B Y U R R Y L U R R L Y Y L U B L Y U B Y Y R R B R U Y L R R R U Y B U B L U
+L B B L L L Y Y Y Y U U R R R B B B B R B U U B B B Y Y Y Y Y L L
+Alice
+True
+9
+. 
+. . 
+. . . 
+. . . . 
+. U U U U 
+. Y . . L 
+. B . . U 
+. . . . R 
+. . . B . 
+. . . . . 
+
+Spring
+False
+5
+. 
+. . 
+. . . 
+. R R R 
+. . . . . 
+B . . . L 
+L . . . U 
+. . B Y . 
+. . . . . 
+Y . . . . 
+
