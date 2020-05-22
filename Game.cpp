@@ -19,6 +19,7 @@ Game::Game(std::string playerOneName, std::string playerTwoName, std::string see
     }
 
     current = nullptr;
+    firstPlayer = nullptr;
     gameEnd = false;
 }
 
@@ -44,6 +45,10 @@ void Game::playGame(bool isMidRound)
             table->initialiseRound();
         }
 
+        if(firstPlayer != nullptr){
+            current = firstPlayer;
+        }
+
         playRound();
 
         *skipInitilisation = false;
@@ -66,7 +71,7 @@ void Game::playRound()
     // Checks if there is no "current player" (i.e. this is the first round of a new game)
     // This condition is not met for a turn of a loaded round - therefore, it allows for rounds to continue from their last position
     // By default, player 1 is assigned to be the first player for the game
-    if (current == nullptr)
+    if(current == nullptr)
     {
         current = player1.get();
     }
@@ -276,7 +281,7 @@ void Game::playerTurn()
             table->placeInLid(tileOverflow);
         }
         current->placeInFloor('F', 1);
-        //first = current;
+        firstPlayer = current;
     }
 
     std::cout << std::endl;

@@ -60,6 +60,9 @@ private:
     // Pointer used to track current player
     Player *current;
 
+    // Tracks who the first player for next round is
+    Player* firstPlayer;
+
     // Table ADT
     std::shared_ptr<Table> table;
 
