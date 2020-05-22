@@ -1,0 +1,20 @@
+/*Load INPUT.txt
+Tile Count in bag: 
+B:15 (5 B in pattern Line)
+L:16 (1 L in factory 0 and 3 L in pattern Line)
+R:15 (5 L in pattern Line)
+Y:15 (5 Y in pattern Line)
+
+At the end of the round. the testBagOUTCOME.txt file
+Tile Count in bag: 
+B:10 (5 in factory, 1 in in box lid and  4 in pattern Line)
+L:14 (2 in factory, 1 in in box lid and  3 in pattern Line)
+R:13 (2 in factory, 0 in in box lid and  5 in pattern Line)
+Y:11 (4 in factory, 2 in in box lid and  3 in pattern Line)
+
+The count is correct, with 20 of each colour
+*/
+
+
+turn 0 L 1
+save TestBagActual.txt

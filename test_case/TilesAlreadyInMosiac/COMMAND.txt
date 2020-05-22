@@ -1,0 +1,7 @@
+/*
+The following command should result in:
+Sorry, there is no tile of that colour to be taken!
+Invalid input.
+*/
+
+turn 2 Y 2

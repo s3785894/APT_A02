@@ -1,0 +1,35 @@
+F
+L R R R
+B L B Y
+Y U R L
+B R L B
+B R U L
+
+L U U B U U Y Y Y Y Y U B B R R R L L L L R R R R R R L U B B U U U U B Y L L U U U L Y L U U U B B B B Y Y Y Y Y R Y Y L L L L Y L R Y Y B B B B B
+q
+False
+21
+. 
+. . 
+. . . 
+. R R R 
+. . . . . 
+. Y R U L 
+L B Y . U 
+U L . . R 
+. . L . . 
+. R . . . 
+
+f
+True
+17
+. 
+. . 
+. . . 
+. . . Y 
+. . . U U 
+B . R U L 
+. B Y . U 
+U . B Y . 
+. U . B . 
+Y . . . . 

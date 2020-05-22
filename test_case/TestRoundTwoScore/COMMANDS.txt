@@ -1,0 +1,35 @@
+/*
+Scoring for Alice:
+Scored 2 point(s) for moving tile Y to mosaic in Row 1
+Scored 2 point(s) for moving tile U to mosaic in Row 2
+Scored 3 point(s) for moving tile R to mosaic in Row 3
+Scored 1 point(s) for moving tile B to mosaic in Row 4
+Lost 1 point(s) for having 1 tile(s) in the floor line
+Score for the round: 7
+
+Scoring for Spring:
+Scored 2 point(s) for moving tile B to mosaic in Row 1
+Scored 2 point(s) for moving tile U to mosaic in Row 2
+Scored 2 point(s) for moving tile B to mosaic in Row 3
+Scored 1 point(s) for moving tile Y to mosaic in Row 5
+Lost 4 point(s) for having 3 tile(s) in the floor line
+Score for the round: 3
+
+Alice's total score: 9
+Spring's total score: 5
+
+The game would reach expected if player Spring cannot add tiles to floor line directly with the commands 'turn 0 L 6' or 'turn 0 L floor', since their pattern line would be full.
+
+Spring's boolean of whether they are the first player should be true, since they has the first player token
+*/
+turn 4 U 2
+turn 3 U 2
+turn 1 Y 1
+turn 2 B 1
+turn 5 B 4
+turn 0 Y 5
+turn 0 U 5
+turn 0 B 3
+turn 0 R 3
+turn 0 L 6
+save RoundTwoActual.txt
