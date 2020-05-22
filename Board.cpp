@@ -427,7 +427,12 @@ std::string Board::clearBoard()
     for (int i = 0; i < floorTile->size(); i++)
     {
         char tile = floorTile->get(i);
-        tilesCleared.push_back(tile);
+
+        // Make sure the F token is not being added to the box-lid as we don't want it in the tile bag
+        if(tile != 'F'){
+            tilesCleared.push_back(tile);
+        }
+        
     }
 
     // After this is done, clear the floor
