@@ -416,7 +416,10 @@ std::string Board::clearBoard()
                 // Add the tiles one by one to our string and then clear the pattern line by setting the char to the empty space char
                 for (int j = column; j >= (MOSAIC_DIM - 1) - i; j--)
                 {
-                    tilesCleared.push_back(patternLines[i][j]);
+                    // Make sure the first tile is not added to the box-lid because this tile has already been moved
+                    if(j != column) {
+                        tilesCleared.push_back(patternLines[i][j]);
+                    }
                     patternLines[i][j] = '.';
                 }
             }
